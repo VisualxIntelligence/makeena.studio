@@ -17,6 +17,7 @@ const dir = lang === "ar" ? "rtl" : "ltr";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    <slot name="head" />
   </head>
   <body>
     <main id="main" tabindex="-1">

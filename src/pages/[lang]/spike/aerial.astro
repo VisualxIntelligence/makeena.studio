@@ -1,0 +1,396 @@
+---
+// Phase 0 spike (b): concept 03 scroll-flown aerial with a 150-frame PLACEHOLDER sequence.
+// Not a production page. ProvenanceFigure (08) arrives in Phase 2; captions here are plain text.
+import { readFileSync } from "node:fs";
+import { Picture } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import keyA from "../../../../design/renders/MKN-AER-FLT01-A.jpg";
+import keyB from "../../../../design/renders/MKN-AER-FLT01-B.jpg";
+import keyC from "../../../../design/renders/MKN-AER-FLT01-C.jpg";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
+}
+
+const lang = Astro.params.lang as "en" | "ar";
+const seq = JSON.parse(
+  readFileSync("public/sequences/MKN-AER-FLT01-PLACEHOLDER/sequence.json", "utf8"),
+);
+const frameUrl = (variant: "desktop" | "mobile", n: number) =>
+  seq.variants[variant].path.replace("{NNNN}", String(n).padStart(4, "0"));
+const preloadSrcset = `${frameUrl("mobile", 1)} 828w, ${frameUrl("desktop", 1)} 1600w`;
+
+// Spike copy is English in both locales; Arabic copy is drafted in Phase 5 for native review.
+const chapters = [
+  { id: "MKN-AER-FLT01-A", src: keyA, title: "High approach", alt: "Generated aerial: high oblique approach over a fictional waterfront development at golden hour." },
+  { id: "MKN-AER-FLT01-B", src: keyB, title: "Descent over the marina", alt: "Generated aerial: the camera has descended over the marina of the same fictional development." },
+  { id: "MKN-AER-FLT01-C", src: keyC, title: "Low pass along the promenade", alt: "Generated aerial: low pass along the promenade of the same fictional development." },
+];
+---
+
+<BaseLayout title="Spike 03 · Scroll-flown aerial" lang={lang}>
+  <Fragment slot="head">
+    <script is:inline define:vars={{ preloadSrcset }}>
+      // Before first paint: decide sequence vs stills so the reserved height never shifts.
+      // Only the sequence path preloads its poster frame; stills mode fetches nothing from it.
+      (function () {
+        var q = new URLSearchParams(location.search);
+        var c = navigator.connection;
+        var ok =
+          !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+          !(c && c.saveData) &&
+          !((navigator.deviceMemory || 8) < 4);
+        if (q.has("stills")) ok = false;
+        if (q.has("force")) ok = true;
+        if (!ok) return;
+        document.documentElement.classList.add("seq-ok");
+        var l = document.createElement("link");
+        l.rel = "preload";
+        l.as = "image";
+        l.type = "image/avif";
+        l.setAttribute("fetchpriority", "high");
+        l.setAttribute("imagesrcset", preloadSrcset);
+        l.setAttribute("imagesizes", "(min-width: 1024px) 66vw, 100vw");
+        document.head.appendChild(l);
+      })();
+    </script>
+  </Fragment>
+
+  <div class="wrap intro">
+    <p class="label">03 · SPIKE · <span lang="en">PLACEHOLDER SEQUENCE</span></p>
+    <h1>Scroll-flown aerial.</h1>
+    <p>
+      150 placeholder frames faked from three keyframes. Add <code>?debug</code> for the
+      performance readout, <code>?stills</code> to force the fallback, <code>?force</code> to
+      skip the device-memory check.
+    </p>
+    <a class="skip" href="#after-flight">Skip the flight</a>
+  </div>
+
+  <section
+    class="aerial"
+    aria-labelledby="aerial-h"
+    data-desktop={JSON.stringify(seq.variants.desktop)}
+    data-mobile={JSON.stringify(seq.variants.mobile)}
+  >
+    <div class="aerial__sticky wrap">
+      <h2 id="aerial-h" class="label">03 · GENERATED AERIAL</h2>
+      <figure class="aerial__frame">
+        <img
+          class="aerial__poster"
+          src={frameUrl("desktop", 1)}
+          srcset={preloadSrcset}
+          sizes="(min-width: 1024px) 66vw, 100vw"
+          width="1600"
+          height="900"
+          alt={chapters[0].alt}
+          loading="lazy"
+          fetchpriority="high"
+        />
+        <canvas class="aerial__canvas" role="img" aria-label={chapters[0].alt}></canvas>
+        <figcaption class="aerial__caption">
+          <span class="label">GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW</span>
+          <span class="label aerial__timecode" dir="ltr">FRAME <span data-tc>0000</span> / 0960</span>
+        </figcaption>
+      </figure>
+      <div class="aerial__side">
+        <div class="aerial__rail" aria-hidden="true"><span></span></div>
+        <ol class="aerial__filmstrip">
+          {
+            chapters.map((c, i) => (
+              <li aria-current={i === 0 ? "step" : undefined}>
+                <Picture src={c.src} widths={[240, 480]} sizes="240px" formats={["avif", "webp"]} alt="" loading="lazy" />
+                <span class="label" dir="ltr">0{i + 1}</span>
+                <span>{c.title}</span>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fallback and no-JS: three chapter stills as a stepped figure. -->
+  <ol class="aerial-stills wrap" aria-label="The flight in three stills">
+    {
+      chapters.map((c, i) => (
+        <li>
+          <figure>
+            <Picture src={c.src} widths={[828, 1600]} sizes="(min-width: 1024px) 66vw, 100vw" formats={["avif", "webp"]} alt={c.alt} loading="lazy" />
+            <figcaption>
+              <span class="label" dir="ltr">0{i + 1}</span> {c.title}
+              <span class="label"> · GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW</span>
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div id="after-flight" class="wrap after" tabindex="-1">
+    <p class="label">AFTER THE FLIGHT</p>
+    <p>No aircraft, no flight window, no permit. Content continues here.</p>
+  </div>
+
+  <pre class="hud" hidden></pre>
+</BaseLayout>
+
+<style>
+  .intro {
+    padding-block: 64px 32px;
+  }
+  .skip {
+    display: inline-block;
+    min-block-size: 44px;
+    padding-block: 10px;
+  }
+
+  /* Default (no JS, reduced motion, Save-Data, low memory): stills only. */
+  .aerial {
+    display: none;
+  }
+  :global(.seq-ok) .aerial {
+    display: block;
+    block-size: 400svh; /* reserved in CSS: scroll distance for the flight */
+  }
+  :global(.seq-ok) .aerial-stills {
+    display: none;
+  }
+
+  .aerial__sticky {
+    position: sticky;
+    inset-block-start: 0;
+    block-size: 100svh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 16px;
+  }
+  @media (min-width: 1024px) {
+    .aerial__sticky {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      column-gap: 24px;
+    }
+    .aerial__sticky h2 {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .aerial__frame {
+    position: relative;
+    margin: 0;
+    inline-size: 100%;
+    max-inline-size: calc(70svh * 16 / 9);
+  }
+  .aerial__poster,
+  .aerial__canvas {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .aerial__canvas {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+  }
+  .aerial__canvas[data-ready] {
+    opacity: 1;
+  }
+  .aerial__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    padding-block-start: 8px;
+  }
+
+  .aerial__rail {
+    block-size: 2px;
+    background: color-mix(in srgb, var(--ink) 15%, transparent);
+    margin-block-end: 16px;
+  }
+  .aerial__rail span {
+    display: block;
+    block-size: 100%;
+    inline-size: calc(var(--p, 0) * 100%);
+    background: var(--copper);
+  }
+  .aerial__filmstrip {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .aerial__filmstrip li {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    font-size: 0.875rem;
+    opacity: 0.55;
+    transition: opacity 200ms;
+  }
+  @media (min-width: 1024px) {
+    /* Compact rows (thumb + label) so the sticky block fits a 720 px-tall viewport. */
+    .aerial__filmstrip {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .aerial__filmstrip li {
+      grid-template-columns: 120px minmax(0, 1fr);
+      column-gap: 12px;
+    }
+    .aerial__filmstrip li :global(picture),
+    .aerial__filmstrip li > :global(img) {
+      grid-row: span 2;
+    }
+  }
+  .aerial__filmstrip li[aria-current] {
+    opacity: 1;
+  }
+  .aerial__filmstrip :global(img) {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-block-start: 2px solid transparent;
+  }
+  .aerial__filmstrip li[aria-current] :global(img) {
+    border-block-start-color: var(--copper);
+  }
+  @media (max-width: 1023px) and (max-height: 700px) {
+    .aerial__filmstrip :global(img) {
+      display: none;
+    }
+  }
+
+  .aerial-stills {
+    list-style: none;
+    display: grid;
+    gap: 48px;
+    padding-block: 32px;
+  }
+  .aerial-stills figure {
+    margin: 0;
+  }
+  .aerial-stills :global(img) {
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .after {
+    padding-block: 96px 50svh;
+    border-block-start: 1px solid var(--ink);
+  }
+
+  .hud {
+    position: fixed;
+    inset-block-end: 8px;
+    inset-inline-start: 8px;
+    z-index: 50;
+    margin: 0;
+    padding: 8px;
+    background: var(--night);
+    color: var(--copper-light);
+    font: 11px/1.4 ui-monospace, monospace;
+    direction: ltr;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  const root = document.documentElement;
+  const section = document.querySelector<HTMLElement>(".aerial");
+
+  if (root.classList.contains("seq-ok") && section) {
+    const run = async () => {
+      const [{ gsap }, { ScrollTrigger }, { SequencePlayer }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+        import("../../../spikes/aerial/sequence-player"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+
+      const mobile = matchMedia("(max-width: 767px)").matches;
+      const variant = JSON.parse(section.dataset[mobile ? "mobile" : "desktop"]!);
+      const urls = Array.from({ length: variant.count }, (_, i) =>
+        variant.path.replace("{NNNN}", String(i + 1).padStart(4, "0")),
+      );
+
+      // Frames are AVIF only. Every target browser decodes AVIF; anything that can't
+      // (e.g. Playwright's Windows WebKit build) gets the stills, which ship WebP/JPEG.
+      try {
+        await createImageBitmap(await (await fetch(urls[0])).blob());
+      } catch {
+        root.classList.remove("seq-ok");
+        return;
+      }
+
+      const canvas = section.querySelector<HTMLCanvasElement>(".aerial__canvas")!;
+      const tc = section.querySelector<HTMLElement>("[data-tc]")!;
+      const rail = section.querySelector<HTMLElement>(".aerial__rail span")!;
+      const items = [...section.querySelectorAll<HTMLLIElement>(".aerial__filmstrip li")];
+      const alts = [...document.querySelectorAll<HTMLImageElement>(".aerial-stills img")].map((img) => img.alt);
+
+      const player = new SequencePlayer(canvas, urls, variant.width, variant.height);
+      new ResizeObserver(() => player.resize()).observe(canvas);
+
+      // Fetch only within one viewport of the section, and only after `load`.
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            io.disconnect();
+            player.start();
+          }
+        },
+        { rootMargin: "100% 0px" },
+      );
+      io.observe(section);
+
+      let chapter = 0;
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.4,
+        onUpdate(self) {
+          const p = self.progress;
+          player.setProgress(p);
+          tc.textContent = String(Math.round(p * 960)).padStart(4, "0");
+          rail.style.setProperty("--p", p.toFixed(4));
+          const next = Math.min(2, Math.floor(p * 3));
+          if (next !== chapter) {
+            items[chapter].removeAttribute("aria-current");
+            items[next].setAttribute("aria-current", "step");
+            canvas.setAttribute("aria-label", alts[next]);
+            chapter = next;
+          }
+        },
+      });
+      document.fonts.ready.then(() => ScrollTrigger.refresh());
+
+      if (new URLSearchParams(location.search).has("debug")) {
+        const hud = document.querySelector<HTMLElement>(".hud")!;
+        hud.hidden = false;
+        const mem = () => {
+          const m = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory;
+          return m ? `${(m.usedJSHeapSize / 1e6).toFixed(0)} MB heap` : "heap n/a";
+        };
+        setInterval(() => {
+          const s = player.stats;
+          hud.textContent =
+            `${mobile ? "mobile" : "desktop"} ${variant.width}px · canvas ${canvas.width}×${canvas.height}\n` +
+            `fetched ${s.fetched}/${player.count} · ${(s.fetchedBytes / 1e6).toFixed(2)} MB\n` +
+            `decoded ${s.decoded} (peak ${s.decodedPeak}) · ~${s.decodedMB.toFixed(0)} MB bitmaps\n` +
+            `target ${s.target} drawn ${s.drawn} · misses ${s.misses}\n` +
+            `draws/s ${s.fps} · ${mem()} · deviceMemory ${(navigator as Navigator & { deviceMemory?: number }).deviceMemory ?? "n/a"}`;
+        }, 250);
+      }
+    };
+
+    if (document.readyState === "complete") void run();
+    else addEventListener("load", () => void run(), { once: true });
+  }
+</script>
