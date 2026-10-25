@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import "../styles/base.css";
 import "../styles/view-transitions.css";
 import CutLine from "../components/global/CutLine.astro";
@@ -10,6 +11,7 @@ interface Props {
 
 const { title, lang } = Astro.props;
 const dir = lang === "ar" ? "rtl" : "ltr";
+const isAr = lang === "ar";
 ---
 
 <!doctype html>
@@ -19,17 +21,63 @@ const dir = lang === "ar" ? "rtl" : "ltr";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    <!-- Latin faces on every page (identifiers stay Latin in Arabic); Arabic faces on /ar/ only. -->
+    <Font cssVariable="--font-display" preload={isAr ? false : [{ weight: 400 }]} />
+    <Font cssVariable="--font-body" preload={isAr ? false : [{ weight: 400 }]} />
+    <Font cssVariable="--font-mono" />
+    {isAr && <Font cssVariable="--font-ar-display" preload />}
+    {isAr && <Font cssVariable="--font-ar-body" preload={[{ weight: 400 }]} />}
     <script is:inline>
-      // G2 (PRD §8.2). Inline and synchronous so it runs before the first render.
-      // After an internal navigation, move focus to <main> so keyboard and
-      // screen-reader users start at the new page's content.
-      document.addEventListener("DOMContentLoaded", function () {
-        var ref = document.referrer && new URL(document.referrer);
-        if (ref && ref.origin === location.origin && !location.hash) {
-          var main = document.getElementById("main");
-          if (main) main.focus({ preventScroll: true });
-        }
-      });
+      // G2 (PRD §8.2). Inline and synchronous so the pagereveal listener exists
+      // before the first render of the incoming page.
+      (function () {
+        var KEY = "mkn-vt";
+        var locale = function (path) {
+          return (path.match(/^\/(en|ar)\//) || [])[1];
+        };
+
+        // 12: the language switch keeps the current section and flags the
+        // navigation, because Safari 18 has no navigation.activation to compare URLs.
+        document.addEventListener("click", function (e) {
+          var a = e.target.closest && e.target.closest("a[data-lang-switch]");
+          if (!a) return;
+          a.hash = location.hash;
+          try {
+            sessionStorage.setItem(KEY, "lang");
+          } catch (_) {}
+        });
+
+        addEventListener("pagereveal", function (e) {
+          var flagged = false;
+          try {
+            flagged = sessionStorage.getItem(KEY) === "lang";
+            sessionStorage.removeItem(KEY);
+          } catch (_) {}
+          if (!e.viewTransition) return;
+          var act = window.navigation && navigation.activation;
+          var from = act && act.from && act.from.url;
+          var isLang = from
+            ? locale(new URL(from).pathname) !== locale(location.pathname)
+            : flagged;
+          var root = document.documentElement;
+          var type = isLang ? "lang" : "nav";
+          root.dataset.vt = type;
+          if (e.viewTransition.types) e.viewTransition.types.add(type);
+          e.viewTransition.finished.finally(function () {
+            delete root.dataset.vt;
+          });
+        });
+
+        // After an internal navigation, move focus to <main> so keyboard and
+        // screen-reader users start at the new page's content.
+        document.addEventListener("DOMContentLoaded", function () {
+          var ref = document.referrer && new URL(document.referrer);
+          if (ref && ref.origin === location.origin && !location.hash) {
+            var main = document.getElementById("main");
+            if (main) main.focus({ preventScroll: true });
+          }
+        });
+      })();
     </script>
     <slot name="head" />
   </head>

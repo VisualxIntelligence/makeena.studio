@@ -1,5 +1,6 @@
 ---
 // Phase 0 stand-in for the real Nav (Phase 1). Enough to exercise 11 and 12.
+import { spikeCopy } from "../../spikes/copy";
 interface Props {
   lang: "en" | "ar";
 }
@@ -7,16 +8,17 @@ interface Props {
 const { lang } = Astro.props;
 const other = lang === "en" ? "ar" : "en";
 const counterpart = Astro.url.pathname.replace(/^\/(en|ar)\//, `/${other}/`);
+const nav = spikeCopy[lang].nav;
 const links = [
-  { href: `/${lang}/spike/home/`, label: "Home" },
-  { href: `/${lang}/spike/method/`, label: "Method" },
-  { href: `/${lang}/spike/aerial/`, label: "Aerial" },
+  { href: `/${lang}/spike/home/`, label: nav.home },
+  { href: `/${lang}/spike/method/`, label: nav.method },
+  { href: `/${lang}/spike/aerial/`, label: nav.aerial },
 ];
 ---
 
 <header class="nav">
   <div class="wrap nav__inner">
-    <a class="nav__mark" href={`/${lang}/spike/home/`}>Makeena</a>
+    <a class="nav__mark" href={`/${lang}/spike/home/`} lang="en" dir="ltr">Makeena</a>
     <nav aria-label="Primary">
       <ul>
         {
