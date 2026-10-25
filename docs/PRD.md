@@ -275,12 +275,12 @@ One component, three modes, used by 04, 07 and 03. It owns keyboard support, lab
 
 | Variant | Frames | Width | Format | Budget |
 |---|---|---|---|---|
-| Desktop | 144–180 | 1600 px | AVIF q≈50, WebP fallback | 6–9 MB total |
-| Mobile | 72–96 | 828 px | AVIF / WebP | ≤ 3 MB total |
+| Desktop | 144–180 | 1600 px | AVIF only (≈ q34, 4:2:0; ≤ 60 KB/frame). No WebP sequence: browsers without AVIF get the stills (decision 0003) | 6–9 MB total |
+| Mobile | 72–96 | 828 px | AVIF only (≤ 25 KB/frame) | ≤ 3 MB total |
 | Stills fallback | 3 | responsive | AVIF/WebP via `<picture>` | ≤ 450 KB |
 
 **Fallbacks**
-- Reduced motion, Save-Data, or `navigator.deviceMemory < 4`: no pin, no sequence; the three chapter stills as a stepped figure with captions.
+- Reduced motion, Save-Data, `navigator.deviceMemory < 4`, or no AVIF decoder: no pin, no sequence; the three chapter stills as a stepped figure with captions.
 - No JS: the same three stills.
 
 **RTL:** filmstrip order and progress rail mirror; the frame image and timecode do not.
