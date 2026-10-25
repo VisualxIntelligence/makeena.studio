@@ -1,0 +1,372 @@
+{
+  "generated": "2026-10-25",
+  "note": "Concept-stage renders. Web-sized JPEG derivatives (max 1800 px); full-resolution PNG masters remain in the Higgsfield account under the listed job IDs. Not yet camera-locked from a 3D blockout, so matches are close but not pixel-exact.",
+  "assets": [
+    {
+      "id": "MKN-TWR-CAM01-DUSK",
+      "file": "MKN-TWR-CAM01-DUSK.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "home-hero-poster",
+        "11"
+      ],
+      "description": "Fictional slender residential tower on a Doha-style waterfront at blue hour, seen across calm water. Base image for the CAM01 tower set.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "92a5c631-6e55-4e57-b1aa-b64892651617",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-TWR-CAM01-PLOT",
+      "file": "MKN-TWR-CAM01-PLOT.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "07"
+      ],
+      "description": "Same camera as CAM01, tower removed: empty sandy plot with site hoarding at dusk. Usable as month 00, but lighting differs from the daytime progress frames.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "7808cb03-48d8-49d5-8e2c-d6fedd635b43",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-TWR-CAM01-WIRE",
+      "file": "MKN-TWR-CAM01-WIRE.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "method"
+      ],
+      "description": "Same camera, tower as ink-and-copper line drawing on ivory.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "e2e31056-11dd-44c7-bc85-2ceb0c945bf0",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-TWR-CAM01-CLAY",
+      "file": "MKN-TWR-CAM01-CLAY.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "method"
+      ],
+      "description": "Same camera, whole scene as white clay massing model.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "3d4a9470-42c9-4129-8263-762e9a9c1321",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-TWR-CAM01-OVERCAST",
+      "file": "MKN-TWR-CAM01-OVERCAST.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "07"
+      ],
+      "description": "Same camera, materials in flat overcast daylight, interiors unlit. Used as month 24 (handover).",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "90f062f0-fa60-4e09-8d69-f71f7a923959",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-TWR-CAM01-NIGHT",
+      "file": "MKN-TWR-CAM01-NIGHT.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "13",
+        "11"
+      ],
+      "description": "Same camera at full night, interiors lit. Night variant of the hero for after-hours mode.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "ea2cc619-e24c-455f-9980-6bd117b32e41",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-PRG-CAM01-M06",
+      "file": "MKN-PRG-CAM01-M06.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "07"
+      ],
+      "description": "Same camera, daytime: piling rigs, early concrete core, crane. Month 06.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "ff5a841a-a9c8-4ea0-8dc0-c534caa67ad1",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-PRG-CAM01-M14",
+      "file": "MKN-PRG-CAM01-M14.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "07"
+      ],
+      "description": "Same camera, daytime: concrete frame at about level 20 with tower crane. Month 14.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "6f705d3d-d0fe-4a99-8775-1fc2d68f5d1c",
+        "derivedFrom": "MKN-TWR-CAM01-DUSK"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-A",
+      "file": "MKN-AER-FLT01-A.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03",
+        "08"
+      ],
+      "description": "Generated high oblique aerial of a waterfront development at golden hour. Flight keyframe A (high approach).",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "05d1abd4-7c54-44f7-bc74-c8d5e5ab9a35",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-B",
+      "file": "MKN-AER-FLT01-B.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03"
+      ],
+      "description": "Same development, camera descended over the marina. Flight keyframe B.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "3f1c75d9-3977-44ad-8c89-d618e69099f6",
+        "derivedFrom": "MKN-AER-FLT01-A"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-C",
+      "file": "MKN-AER-FLT01-C.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03"
+      ],
+      "description": "Same development, low pass along the promenade. Flight keyframe C.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "68645d8e-ddd9-43c1-b77c-a2dec3d8025e",
+        "derivedFrom": "MKN-AER-FLT01-A"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-SUN-SKY01-DAWN",
+      "file": "MKN-SUN-SKY01-DAWN.jpg",
+      "width": 1800,
+      "height": 771,
+      "concepts": [
+        "04"
+      ],
+      "description": "Fixed skyline camera at dawn.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "8c28516c-3381-43cd-987a-b68ebcd11688",
+        "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-SUN-SKY01-MIDDAY",
+      "file": "MKN-SUN-SKY01-MIDDAY.jpg",
+      "width": 1800,
+      "height": 771,
+      "concepts": [
+        "04"
+      ],
+      "description": "Fixed skyline camera at midday. Base image for the SKY01 set.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "00a09f33-b4cb-43d0-9b50-d7a2d9993a2e",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-SUN-SKY01-GOLD",
+      "file": "MKN-SUN-SKY01-GOLD.jpg",
+      "width": 1800,
+      "height": 771,
+      "concepts": [
+        "04"
+      ],
+      "description": "Fixed skyline camera at golden hour.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "a03c630a-02f6-4d22-b877-a9cda11c352b",
+        "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-SUN-SKY01-NIGHT",
+      "file": "MKN-SUN-SKY01-NIGHT.jpg",
+      "width": 1800,
+      "height": 771,
+      "concepts": [
+        "04",
+        "12",
+        "13"
+      ],
+      "description": "Fixed skyline camera at night.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "d1fefb09-75d6-4585-8a3b-35abffba89e9",
+        "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AXO-CAM01-EXPLODED",
+      "file": "MKN-AXO-CAM01-EXPLODED.jpg",
+      "width": 1440,
+      "height": 1800,
+      "concepts": [
+        "06"
+      ],
+      "description": "Exploded axonometric of a mid-rise building on ivory. Single flattened image: concept 06 needs separate per-layer cut-outs for production.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "51eef1a8-5b4e-42dc-93e3-4a4032cbde80",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-PLN-TOP01-SITE",
+      "file": "MKN-PLN-TOP01-SITE.jpg",
+      "width": 1800,
+      "height": 1344,
+      "concepts": [
+        "reference"
+      ],
+      "description": "Top-down masterplan of a coastal district. Not used by the selected concepts; kept for reference.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "8e1d6ebb-de68-4f02-9627-27aa23bf4318",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM01-CONTROL",
+      "file": "MKN-STU-CAM01-CONTROL.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Empty broadcast control room at night, no people.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "b681b94c-fb70-48ca-8914-5de08f821700",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM02-RUNBOOK",
+      "file": "MKN-STU-CAM02-RUNBOOK.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Overhead: hands only, open production runbook beside an architectural elevation.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "2dc66944-071f-4232-8a61-0db4efbfb371",
+        "derivedFrom": null
+      },
+      "status": "concept"
+    }
+  ]
+}
