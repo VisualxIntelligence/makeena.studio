@@ -12,7 +12,7 @@ Docs and concept renders only. No app code yet. The next step is **Phase 0: de-r
 - Tailwind CSS v4 (`@theme` tokens), logical-property utilities only
 - GSAP + ScrollTrigger, native scroll (no Lenis or other smooth-scroll library)
 - Native cross-document View Transitions (no `<ClientRouter />` unless the founder decides otherwise after Phase 0)
-- Cloudflare Pages / Workers; Turnstile + Resend for the brief form
+- Cloudflare **Workers** with static assets, deployed by Workers Builds from GitHub (project `makeena-website`). Needs a `wrangler.jsonc` at the repo root (see PRD §11.3). Turnstile + Resend for the brief form
 - No Next.js, no Webflow, no Three.js at launch, no UI kit with its own look
 
 Check current stable versions in official docs before installing; don't rely on remembered versions.
@@ -64,7 +64,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 
 ## How to work
 
-- One branch per task: `phase-{n}/{short-name}` (e.g. `phase-0/section-cut-spike`). Open a pull request for every branch; Cloudflare Pages posts a preview URL the founder reviews on desktop and phones. Don't push directly to `main` once the app exists.
+- One branch per task: `phase-{n}/{short-name}` (e.g. `phase-0/section-cut-spike`). Open a pull request for every branch; Cloudflare Workers Builds comments on the PR with the build status and a preview URL the founder reviews on desktop and phones. Don't push directly to `main` once the app exists.
 - Keep PRs small enough to review on a phone. Each PR description: what changed, how to test on the preview URL (which routes, which browsers, both locales), open questions, placeholders added.
 - Meet the per-PR definition of done (PRD §17.1) before asking for review.
 - Record spike results and decisions as short notes in `docs/decisions/NNNN-title.md`.

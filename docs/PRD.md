@@ -444,7 +444,7 @@ Studio photography, if real, uses `digitalCapture`.
 | Transitions | Native cross-document View Transitions | No `<ClientRouter />` unless decided after Phase 0 |
 | Images | Astro `<Picture>` (Sharp) → AVIF + WebP + JPEG fallback with `srcset`/`sizes` and explicit dimensions | Frame sequences pre-encoded by script and served as static files (or R2) |
 | Video | Mux or Cloudflare Stream for the hero loop (adaptive HLS). Never stream anything that is scrubbed. | **[DECISION: Mux vs Stream]** |
-| Hosting | Cloudflare Pages / Workers | Preview deployment per branch and pull request; production from `main` |
+| Hosting | **Cloudflare Workers with static assets**, deployed by Workers Builds (GitHub-connected project `makeena-website`) | Preview build per branch and pull request; production from `main`. See §11.3 |
 | Forms | Astro endpoint / Worker → Turnstile Siteverify → Resend (+ optional D1) | Secrets as Cloudflare environment variables |
 | Testing | Vitest (units), Playwright (e2e in Chromium + WebKit, both locales, reduced-motion project), axe-core, Lighthouse CI | |
 | Lint | ESLint, Prettier, Stylelint (bans gradients, `backdrop-filter`, physical `left/right` in components) | |
@@ -456,6 +456,7 @@ Not used: Next.js, Webflow, Lenis, Three.js (at launch), any UI kit with its own
 ```
 /
 ├─ CLAUDE.md
+├─ wrangler.jsonc               ← Cloudflare Workers config (static assets from dist/)
 ├─ docs/
 │  ├─ PRD.md                    ← this file
 │  └─ reference/homepage-ux.md
@@ -487,10 +488,17 @@ Not used: Next.js, Webflow, Lenis, Three.js (at launch), any UI kit with its own
 | Environment | Source | URL |
 |---|---|---|
 | Production | `main` | makeena.studio **[DECISION: confirm domain]** |
-| Preview | every branch and pull request | Cloudflare Pages preview URL, posted on the PR |
+| Preview | every branch and pull request | Workers preview URL, posted as a comment on the PR (may be behind Cloudflare Access) |
 | Local | `npm run dev` | localhost |
 
-Environment variables (never committed): `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL`, video provider keys.
+**Cloudflare setup (already done by the founder, 25 Oct 2026).** Workers & Pages project `makeena-website` is connected to this repo with: build command `npm run build`, deploy command `npx wrangler deploy`, preview command `npx wrangler preview`, root directory `/`, preview builds on. The first build failed only because the repo had no `package.json` yet.
+
+What the repo must provide (Phase 0's first PR):
+- `package.json` with a `build` script that produces `dist/`, and `wrangler` as a dev dependency.
+- `wrangler.jsonc` at the root: `name: "makeena-website"`, a current `compatibility_date`, and `assets: { directory: "./dist" }` (plus `not_found_handling` for the 404 page). Check the current Cloudflare docs for the exact keys.
+- For the `/api/brief` endpoint (Phase 4), either the Astro Cloudflare adapter or a small Worker entry (`main`) that handles `/api/*` and serves everything else from the assets binding. Decide in Phase 1 and record it in `docs/decisions/`.
+
+Environment variables (never committed; set in the Worker's Settings > Variables and Secrets, separately for production and preview): `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL`, video provider keys.
 
 ## 12. Assets
 
