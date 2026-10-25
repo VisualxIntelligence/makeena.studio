@@ -86,5 +86,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run dev` | Astro dev server on localhost |
 | `npm run build` | Static build into `dist/` (what Workers Builds runs) |
 | `npm run preview` | Build, then serve `dist/` through `wrangler dev` (closest to production) |
+| `npm run test:e2e` | Playwright against `astro preview` (run `npm run build` first; `npx playwright install chromium webkit` once) |
+| `npm run sequences:placeholder` | Regenerate the Phase 0 placeholder aerial sequence (needs ffmpeg) |
 
 Phase 1 adds lint and test commands.
