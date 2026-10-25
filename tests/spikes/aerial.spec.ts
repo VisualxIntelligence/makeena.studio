@@ -16,9 +16,11 @@ for (const lang of ["en", "ar"] as const) {
     await page.locator(".aerial").scrollIntoViewIfNeeded();
     await page.waitForFunction(() => document.querySelector(".aerial__canvas")?.hasAttribute("data-ready"));
 
-    const box = await page.locator(".aerial").boundingBox();
-    const top = await page.evaluate(() => document.querySelector<HTMLElement>(".aerial")!.offsetTop);
-    const travel = box!.height - page.viewportSize()!.height;
+    // GSAP wraps the pinned section in a .pin-spacer that carries the scroll distance.
+    const { top, travel } = await page.evaluate(() => {
+      const spacer = document.querySelector<HTMLElement>(".pin-spacer")!;
+      return { top: spacer.offsetTop, travel: spacer.offsetHeight - innerHeight };
+    });
 
     for (let pass = 0; pass < 5; pass++) {
       for (const dir of [1, -1]) {
@@ -85,9 +87,9 @@ test("throttled mobile Chromium: frame intervals during the scrub", async ({ pag
   await page.waitForTimeout(3000); // let the progressive fetch finish
 
   const result = await page.evaluate(async () => {
-    const section = document.querySelector<HTMLElement>(".aerial")!;
-    const top = section.offsetTop;
-    const travel = section.offsetHeight - innerHeight;
+    const spacer = document.querySelector<HTMLElement>(".pin-spacer")!;
+    const top = spacer.offsetTop;
+    const travel = spacer.offsetHeight - innerHeight;
     const gaps: number[] = [];
     let last = performance.now();
     let running = true;
@@ -115,4 +117,24 @@ test("throttled mobile Chromium: frame intervals during the scrub", async ({ pag
   });
   const hud = await page.locator(".hud").textContent();
   console.log(`[throttled] ${JSON.stringify(result)} | ${hud?.replace(/\n/g, " | ")}`);
+});
+
+// GSAP inserts its pin-spacer when the script runs (after `load`). Measure the shift it causes.
+test("pinning on load causes no layout shift", async ({ page, browserName }, info) => {
+  test.skip(browserName !== "chromium");
+  await page.addInitScript(() => {
+    const w = window as Window & { __cls?: number };
+    w.__cls = 0;
+    new PerformanceObserver((list) => {
+      for (const e of list.getEntries() as (PerformanceEntry & { value: number; hadRecentInput: boolean })[]) {
+        if (!e.hadRecentInput) w.__cls! += e.value;
+      }
+    }).observe({ type: "layout-shift", buffered: true });
+  });
+  await page.goto("/en/spike/aerial/?force", { waitUntil: "load" });
+  await page.waitForSelector(".pin-spacer");
+  await page.waitForTimeout(1500);
+  const cls = await page.evaluate(() => (window as Window & { __cls?: number }).__cls!);
+  console.log(`[${info.project.name}] aerial load CLS=${cls.toFixed(4)}`);
+  expect(cls).toBeLessThanOrEqual(0.1);
 });

@@ -1,6 +1,6 @@
 # 0002 — Spike (a): concept 11 section-cut page transition
 
-**Date:** 25 October 2026 · **Phase:** 0 · **Status:** works in Chromium and WebKit (Playwright); **real-device Safari check pending (founder)**
+**Date:** 25 October 2026 · **Phase:** 0 · **Status:** accepted. Android and desktop passed on the preview (founder); iOS Safari deferred to Phase 2. **Founder decision: adopt Astro `<ClientRouter />`** (see below)
 
 ## What was built
 
@@ -18,10 +18,17 @@
 4. **Light first paint.** The Method page is text only, so the reveal looks right even before images arrive (Safari has no render-blocking for cross-document transitions). The Home hero image arrives within the reveal on a fast connection; on slow connections the hero box shows ivory behind the line, which reads acceptably. Real pages should keep explicit image dimensions so the revealed layout doesn't jump.
 5. Firefox stable has no cross-document view transitions: plain navigation, as the PRD accepts. Not tested here (no Firefox in the local Playwright install).
 
-## Still to verify (exit criterion)
+## Real-device results
 
-On the preview URL, on a **real iPhone with Safari 18.2+** and in desktop Safari and Chrome: open `/en/spike/home/`, tap Method and Home a few times, then repeat on `/ar/spike/home/`. Expected: a copper line with "A" markers crossing left→right on English and right→left on Arabic, the new page revealed behind it, no flash or jump at the end.
+- **Android (founder's phone) and desktop:** the sweep runs in the correct direction for each locale. Passed.
+- **iOS Safari: not tested (no iPhone available). Deferred to Phase 2** by founder decision; re-test on a real iPhone (borrowed, or a BrowserStack/LambdaTest device) before the Phase 2 transitions are merged. Evidence so far: Playwright WebKit desktop and iPhone 15 emulation.
 
-## Decision requested
+## Decision: Astro `<ClientRouter />` (founder, 25 October 2026)
 
-**[DECISION]** Firefox: accept plain navigation at launch (recommended; no extra code), or adopt Astro `<ClientRouter />` to animate it too (adds a client router and a second transition implementation).
+Firefox should animate too, so Phase 2 adopts Astro's `<ClientRouter />` instead of native cross-document transitions. What that means:
+
+- The router handles navigation in **every** browser and runs **same-document** view transitions (`document.startViewTransition`), which Firefox supports since 144, Safari since 18 and Chrome since 111. It replaces `@view-transition { navigation: auto }`: one implementation, not two.
+- Carries over: the `::view-transition-*` CSS (reveal, cut line, markers), the `html[dir]` direction selectors and the WebKit lesson (draw the line on the group, not in an off-screen element). Re-verify all three under the router.
+- Changes: `pagereveal`/`pageswap` are not used for routed navigations; the 11/12 type logic moves to Astro's `astro:before-preparation` / `astro:before-swap` events. Page scripts run once, so every effect initialises on `astro:page-load` and tears down on `astro:before-swap` (GSAP ScrollTriggers, the 03 player, observers). The G1 motion controller (PRD §8.1) owns that lifecycle. Reduced motion must still navigate instantly.
+- Gains: the router fetches the next page before the transition starts, so Safari no longer reveals an unpainted page. Costs: a few KB of router JS on every page (within the §13 budget; measure in Phase 2) and the script-lifecycle discipline above.
+- Browsers without view transitions fall back to the router's `fallback` behaviour (`animate` by default). Decide `animate` vs `swap` in Phase 2.

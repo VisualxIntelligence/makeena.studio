@@ -211,7 +211,7 @@ One engine, two transition types, built on native **cross-document View Transiti
 
 **Both**
 - `@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }`.
-- Unsupported browsers (Firefox stable as of Oct 2026) get a plain navigation. That is acceptable at launch. **[DECISION after Phase 0: accept, or adopt Astro `<ClientRouter />` to animate Firefox too.]**
+- **Decided after Phase 0 (founder, 25 Oct 2026): adopt Astro `<ClientRouter />`** so Firefox animates too. The router runs same-document view transitions in every browser and replaces native cross-document transitions; see `docs/decisions/0002`. The `pageswap`/`pagereveal` wording in this section becomes the router's `astro:before-preparation`/`astro:before-swap` events in Phase 2.
 - Focus lands on the new page's `<main>` / `h1`.
 - The incoming page's first paint must be light (Safari has no render-blocking for cross-document transitions), so hero media must not be required for the reveal to look right.
 
@@ -275,12 +275,12 @@ One component, three modes, used by 04, 07 and 03. It owns keyboard support, lab
 
 | Variant | Frames | Width | Format | Budget |
 |---|---|---|---|---|
-| Desktop | 144–180 | 1600 px | AVIF q≈50, WebP fallback | 6–9 MB total |
-| Mobile | 72–96 | 828 px | AVIF / WebP | ≤ 3 MB total |
+| Desktop | 144–180 | 1600 px | AVIF only (≈ q34, 4:2:0; ≤ 60 KB/frame). No WebP sequence: browsers without AVIF get the stills (decision 0003) | 6–9 MB total |
+| Mobile | 72–96 | 828 px | AVIF only (≤ 25 KB/frame) | ≤ 3 MB total |
 | Stills fallback | 3 | responsive | AVIF/WebP via `<picture>` | ≤ 450 KB |
 
 **Fallbacks**
-- Reduced motion, Save-Data, or `navigator.deviceMemory < 4`: no pin, no sequence; the three chapter stills as a stepped figure with captions.
+- Reduced motion, Save-Data, `navigator.deviceMemory < 4`, or no AVIF decoder: no pin, no sequence; the three chapter stills as a stepped figure with captions.
 - No JS: the same three stills.
 
 **RTL:** filmstrip order and progress rail mirror; the frame image and timecode do not.
@@ -441,7 +441,7 @@ Studio photography, if real, uses `digitalCapture`.
 | Framework | **Astro 6**, `output: 'static'`, built-in i18n (`locales: ['en','ar']`, `prefixDefaultLocale: true`) | Islands only where effects live. Check the current stable version at install time. |
 | Styling | Tailwind CSS v4 with `@theme` tokens, plus component CSS where clearer | Logical-property utilities (`ps-*`, `ms-*`, `start-*`, `text-start`) |
 | Motion | GSAP 3.13+ with ScrollTrigger (free for commercial use, all plugins) | `gsap.matchMedia()` for breakpoints and reduced motion. CSS scroll-driven animations only for trivial reveals behind `@supports`. |
-| Transitions | Native cross-document View Transitions | No `<ClientRouter />` unless decided after Phase 0 |
+| Transitions | Astro `<ClientRouter />` (same-document View Transitions) | Decided after Phase 0 so Firefox animates too (decision 0002) |
 | Images | Astro `<Picture>` (Sharp) → AVIF + WebP + JPEG fallback with `srcset`/`sizes` and explicit dimensions | Frame sequences pre-encoded by script and served as static files (or R2) |
 | Video | Mux or Cloudflare Stream for the hero loop (adaptive HLS). Never stream anything that is scrubbed. | **[DECISION: Mux vs Stream]** |
 | Hosting | **Cloudflare Workers with static assets**, deployed by Workers Builds (GitHub-connected project `makeena-website`) | Preview build per branch and pull request; production from `main`. See §11.3 |
@@ -606,7 +606,7 @@ Build order: spikes → foundation → 11/12 → 08 → scrubber (04, then 07) �
 | Native Arabic copy review | Founder (editor) | Phase 5 |
 | Full address, auditor, data statement, rights terms, phone, email | Founder | Phase 4 |
 | Per-phase deliverables copy for 07 | Founder | Phase 3 |
-| Animate Firefox (ClientRouter) or accept plain navigation | Founder after Phase 0 | Phase 2 |
+| ~~Animate Firefox (ClientRouter) or accept plain navigation~~ Decided: ClientRouter (decision 0002) | Founder | Done |
 | Mux vs Cloudflare Stream for the hero loop | Founder | Phase 1 |
 | Analytics tool (privacy-friendly) | Founder | Phase 4 |
 | Production domain | Founder | Phase 1 |
