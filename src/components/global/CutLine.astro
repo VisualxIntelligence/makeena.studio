@@ -1,0 +1,19 @@
+---
+// Concept 11: anchor for the section-cut line. It paints nothing; its only job is to
+// create the `cut-line` view-transition group, which view-transitions.css draws and
+// animates. (WebKit does not paint off-viewport elements into snapshots, so the line
+// cannot live in this element's pixels; see docs/decisions/0002.)
+---
+
+<div class="cut" aria-hidden="true"></div>
+
+<style>
+  .cut {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: calc(var(--vt-cut-width) * -1);
+    inline-size: var(--vt-cut-width);
+    pointer-events: none;
+    view-transition-name: cut-line;
+  }
+</style>

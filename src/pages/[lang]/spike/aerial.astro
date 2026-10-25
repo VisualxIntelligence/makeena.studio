@@ -4,6 +4,7 @@
 import { readFileSync } from "node:fs";
 import { Picture } from "astro:assets";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SpikeNav from "../../../components/global/SpikeNav.astro";
 import keyA from "../../../../design/renders/MKN-AER-FLT01-A.jpg";
 import keyB from "../../../../design/renders/MKN-AER-FLT01-B.jpg";
 import keyC from "../../../../design/renders/MKN-AER-FLT01-C.jpg";
@@ -29,6 +30,7 @@ const chapters = [
 ---
 
 <BaseLayout title="Spike 03 · Scroll-flown aerial" lang={lang}>
+  <SpikeNav slot="header" lang={lang} />
   <Fragment slot="head">
     <script is:inline define:vars={{ preloadSrcset }}>
       // Before first paint: decide sequence vs stills so the reserved height never shifts.

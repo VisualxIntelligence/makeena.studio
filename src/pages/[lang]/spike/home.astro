@@ -1,0 +1,82 @@
+---
+// Phase 0 spikes (a) and (c): a home-like page to navigate from and to.
+import { Picture } from "astro:assets";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SpikeNav from "../../../components/global/SpikeNav.astro";
+import heroDusk from "../../../../design/renders/MKN-TWR-CAM01-DUSK.jpg";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
+}
+
+const lang = Astro.params.lang as "en" | "ar";
+---
+
+<BaseLayout title="Spike · Home" lang={lang}>
+  <SpikeNav slot="header" lang={lang} />
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <p class="label"><bdi dir="ltr">00 · DOHA · QFC 04998</bdi></p>
+      <h1 class="display">Every real estate developer is now a media company.</h1>
+      <p class="lede">Most are not staffed like one.</p>
+      <p class="ctas">
+        <a href={`/${lang}/spike/method/`}>See the four gates</a>
+      </p>
+    </div>
+    <figure class="wrap hero__media">
+      <Picture
+        src={heroDusk}
+        widths={[828, 1280, 1800]}
+        sizes="(min-width: 1280px) 1232px, calc(100vw - 48px)"
+        formats={["avif", "webp"]}
+        alt="Generated image: a fictional slender residential tower on a waterfront at blue hour."
+        loading="eager"
+        fetchpriority="high"
+      />
+      <figcaption class="label">GENERATED · MKN-TWR-CAM01-DUSK</figcaption>
+    </figure>
+  </section>
+  <section class="wrap band" id="position">
+    <p class="label"><bdi dir="ltr">01</bdi> · POSITION</p>
+    <p>
+      A broadcast studio that works at the speed of a content team. A content partner that
+      finishes to the standard of a broadcast studio.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero__inner {
+    padding-block: 64px 32px;
+  }
+  .display {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    max-inline-size: 14ch;
+    margin-block: 16px;
+  }
+  .lede {
+    font-size: 1.25rem;
+    color: var(--muted);
+  }
+  .ctas a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+  .hero__media {
+    margin-block: 0;
+  }
+  .hero__media :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+  .band {
+    padding-block: 96px;
+    max-inline-size: 70ch;
+  }
+</style>
