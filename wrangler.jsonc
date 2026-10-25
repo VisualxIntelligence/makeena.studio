@@ -1,0 +1,18 @@
+// Cloudflare Workers with static assets (PRD §11.3).
+// Static-only for now: no `main`. Phase 1 decides between the Astro Cloudflare
+// adapter and a small Worker entry for /api/brief (docs/decisions/).
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "makeena-website",
+  "compatibility_date": "2026-10-25",
+  // Per-branch preview links on workers.dev for founder review. Wrangler's default is
+  // false and the config overrides the dashboard toggle, so it must be set here.
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  },
+  // Required by `npx wrangler preview` (the Workers Builds preview command); may stay empty.
+  // Assets and compatibility settings stay top level.
+  "previews": {}
+}

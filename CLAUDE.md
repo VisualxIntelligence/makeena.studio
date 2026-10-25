@@ -8,7 +8,7 @@ Docs and concept renders only. No app code yet. The next step is **Phase 0: de-r
 
 ## Stack (PRD §11)
 
-- Astro 6, static output, built-in i18n: `/en/…` and `/ar/…` with `prefixDefaultLocale: true`
+- Astro 7 (current stable; PRD says 6, see `docs/decisions/0001`), static output, built-in i18n: `/en/…` and `/ar/…` with `prefixDefaultLocale: true`
 - Tailwind CSS v4 (`@theme` tokens), logical-property utilities only
 - GSAP + ScrollTrigger, native scroll (no Lenis or other smooth-scroll library)
 - Native cross-document View Transitions (no `<ClientRouter />` unless the founder decides otherwise after Phase 0)
@@ -81,4 +81,10 @@ Use these numbers in branch names, commits, comments and PR titles.
 
 ## Commands
 
-None yet. Add the real commands here (dev, build, test, lint, preview) once Phase 1 scaffolds the project.
+| Command | What it does |
+|---|---|
+| `npm run dev` | Astro dev server on localhost |
+| `npm run build` | Static build into `dist/` (what Workers Builds runs) |
+| `npm run preview` | Build, then serve `dist/` through `wrangler dev` (closest to production) |
+
+Phase 1 adds lint and test commands.
