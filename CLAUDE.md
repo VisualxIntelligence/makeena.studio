@@ -4,7 +4,9 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 ## Current state
 
-Docs and concept renders only. No app code yet. The next step is **Phase 0: de-risk spikes** (PRD §17).
+**Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is planned but not started; it is waiting on seven founder decisions. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
+
+What exists today: an Astro 7 static site with `/en/` and `/ar/`, Phase 0 spike pages under `/{lang}/spike/` (to be removed from production in Phase 1), self-hosted fonts, and Playwright spike tests. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
 ## Stack (PRD §11)
 
@@ -74,9 +76,14 @@ Use these numbers in branch names, commits, comments and PR titles.
 
 | Path | Contents |
 |---|---|
-| `docs/PRD.md` | Product requirements (read first) |
+| `progress.md` | Current status and resume point (read first) |
+| `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records (create as needed) |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts |
+| `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
+| `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
+| `public/sequences/` | Encoded AVIF frame sequences |
+| `tests/spikes/` | Playwright spike measurements |
 | `design/renders/` | 19 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type). Source material, not served directly. Known gaps: PRD §12.3 |
 
 ## Commands
