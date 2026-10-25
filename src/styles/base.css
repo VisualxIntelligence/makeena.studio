@@ -1,0 +1,63 @@
+/* Phase 0 spike styles. Phase 1 replaces this with Tailwind v4 @theme tokens. */
+:root {
+  --ivory: #f6f2ea;
+  --sand: #efeae1;
+  --ink: #1a1a1a;
+  --copper: #b4653a;
+  --copper-deep: #9a522c;
+  --muted: #5c5650;
+  --night: #141414;
+  --copper-light: #c8a27a;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--ivory);
+  color: var(--ink);
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--copper-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--copper-deep);
+  outline-offset: 2px;
+}
+
+.wrap {
+  max-inline-size: 80rem;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    padding-inline: 16px;
+  }
+}
+
+.label {
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--copper-deep);
+}
+
+:lang(ar) .label {
+  letter-spacing: 0;
+  text-transform: none;
+}

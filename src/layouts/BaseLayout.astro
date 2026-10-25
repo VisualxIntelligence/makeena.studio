@@ -1,0 +1,26 @@
+---
+import "../styles/base.css";
+
+interface Props {
+  title: string;
+  lang: "en" | "ar";
+}
+
+const { title, lang } = Astro.props;
+const dir = lang === "ar" ? "rtl" : "ltr";
+---
+
+<!doctype html>
+<html lang={lang} dir={dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+  </body>
+</html>

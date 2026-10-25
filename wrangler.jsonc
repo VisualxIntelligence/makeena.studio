@@ -1,0 +1,12 @@
+// Cloudflare Workers with static assets (PRD §11.3).
+// Static-only for now: no `main`. Phase 1 decides between the Astro Cloudflare
+// adapter and a small Worker entry for /api/brief (docs/decisions/).
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "makeena-website",
+  "compatibility_date": "2026-10-25",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
