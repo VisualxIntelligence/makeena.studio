@@ -75,7 +75,7 @@ const chapters = [
     data-desktop={JSON.stringify(seq.variants.desktop)}
     data-mobile={JSON.stringify(seq.variants.mobile)}
   >
-    <div class="aerial__sticky wrap">
+    <div class="aerial__stage wrap">
       <h2 id="aerial-h" class="label">03 · GENERATED AERIAL</h2>
       <figure class="aerial__frame">
         <img
@@ -153,15 +153,13 @@ const chapters = [
   }
   :global(.seq-ok) .aerial {
     display: block;
-    block-size: 400svh; /* reserved in CSS: scroll distance for the flight */
   }
   :global(.seq-ok) .aerial-stills {
     display: none;
   }
 
-  .aerial__sticky {
-    position: sticky;
-    inset-block-start: 0;
+  /* GSAP pins the whole section (founder decision, docs/decisions/0003); the stage is one viewport tall. */
+  .aerial__stage {
     block-size: 100svh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -169,11 +167,11 @@ const chapters = [
     gap: 16px;
   }
   @media (min-width: 1024px) {
-    .aerial__sticky {
+    .aerial__stage {
       grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
       column-gap: 24px;
     }
-    .aerial__sticky h2 {
+    .aerial__stage h2 {
       grid-column: 1 / -1;
     }
   }
@@ -314,6 +312,8 @@ const chapters = [
         import("../../../spikes/aerial/sequence-player"),
       ]);
       gsap.registerPlugin(ScrollTrigger);
+      // iOS/Android address-bar show/hide resizes the viewport; don't re-pin on every scroll.
+      ScrollTrigger.config({ ignoreMobileResize: true });
 
       const mobile = matchMedia("(max-width: 767px)").matches;
       const variant = JSON.parse(section.dataset[mobile ? "mobile" : "desktop"]!);
@@ -354,8 +354,10 @@ const chapters = [
       let chapter = 0;
       ScrollTrigger.create({
         trigger: section,
+        pin: true,
+        anticipatePin: 1,
         start: "top top",
-        end: "bottom bottom",
+        end: "+=300%", // scroll distance of the flight: three viewports
         scrub: 0.4,
         onUpdate(self) {
           const p = self.progress;
