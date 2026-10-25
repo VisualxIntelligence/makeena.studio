@@ -11,7 +11,7 @@ Docs and concept renders only. No app code yet. The next step is **Phase 0: de-r
 - Astro 7 (current stable; PRD says 6, see `docs/decisions/0001`), static output, built-in i18n: `/en/…` and `/ar/…` with `prefixDefaultLocale: true`
 - Tailwind CSS v4 (`@theme` tokens), logical-property utilities only
 - GSAP + ScrollTrigger, native scroll (no Lenis or other smooth-scroll library)
-- Native cross-document View Transitions (no `<ClientRouter />` unless the founder decides otherwise after Phase 0)
+- Astro `<ClientRouter />` for page transitions (founder decision after Phase 0, `docs/decisions/0002`): same-document View Transitions in every browser, including Firefox. Effects initialise on `astro:page-load` and tear down on `astro:before-swap`
 - Cloudflare **Workers** with static assets, deployed by Workers Builds from GitHub (project `makeena-website`). Needs a `wrangler.jsonc` at the repo root (see PRD §11.3). Turnstile + Resend for the brief form
 - No Next.js, no Webflow, no Three.js at launch, no UI kit with its own look
 

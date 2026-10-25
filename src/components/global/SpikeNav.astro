@@ -1,0 +1,74 @@
+---
+// Phase 0 stand-in for the real Nav (Phase 1). Enough to exercise 11 and 12.
+interface Props {
+  lang: "en" | "ar";
+}
+
+const { lang } = Astro.props;
+const other = lang === "en" ? "ar" : "en";
+const counterpart = Astro.url.pathname.replace(/^\/(en|ar)\//, `/${other}/`);
+const links = [
+  { href: `/${lang}/spike/home/`, label: "Home" },
+  { href: `/${lang}/spike/method/`, label: "Method" },
+  { href: `/${lang}/spike/aerial/`, label: "Aerial" },
+];
+---
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="nav__mark" href={`/${lang}/spike/home/`}>Makeena</a>
+    <nav aria-label="Primary">
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={Astro.url.pathname === l.href ? "page" : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={counterpart} lang={other} hreflang={other} data-lang-switch>
+            {other === "ar" ? "عربي" : "English"}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    border-block-end: 1px solid var(--ink);
+  }
+  .nav__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    min-block-size: 64px;
+  }
+  .nav__mark {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 1.25rem;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+  a[aria-current="page"] {
+    color: var(--ink);
+  }
+</style>

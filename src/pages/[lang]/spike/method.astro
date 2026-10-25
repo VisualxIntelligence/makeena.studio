@@ -1,0 +1,56 @@
+---
+// Phase 0 spikes (a) and (c): the second page of the pair. Text only, so the
+// incoming first paint is light (Safari has no render-blocking for these transitions).
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import SpikeNav from "../../../components/global/SpikeNav.astro";
+
+export function getStaticPaths() {
+  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
+}
+
+const lang = Astro.params.lang as "en" | "ar";
+const gates = ["01", "02", "03", "04"];
+---
+
+<BaseLayout title="Spike · Method" lang={lang}>
+  <SpikeNav slot="header" lang={lang} />
+  <div class="wrap page">
+    <p class="label"><bdi dir="ltr">02</bdi> · METHOD</p>
+    <h1 class="display">Four gates.</h1>
+    <p>Nothing reaches a client that has not cleared all of them.</p>
+    <ol class="gates">
+      {
+        gates.map((g) => (
+          <li>
+            <span class="label" dir="ltr">{g}</span>
+            <span>[PLACEHOLDER: gate {g} name and description from the brief]</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    padding-block: 64px 128px;
+  }
+  .display {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    margin-block: 16px;
+  }
+  .gates {
+    list-style: none;
+    padding: 0;
+    margin-block: 48px 0;
+  }
+  .gates li {
+    display: flex;
+    gap: 24px;
+    padding-block: 24px;
+    border-block-start: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+</style>

@@ -1,5 +1,7 @@
 ---
 import "../styles/base.css";
+import "../styles/view-transitions.css";
+import CutLine from "../components/global/CutLine.astro";
 
 interface Props {
   title: string;
@@ -17,11 +19,31 @@ const dir = lang === "ar" ? "rtl" : "ltr";
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    <script is:inline>
+      // G2 (PRD §8.2). Inline and synchronous so it runs before the first render.
+      // After an internal navigation, move focus to <main> so keyboard and
+      // screen-reader users start at the new page's content.
+      document.addEventListener("DOMContentLoaded", function () {
+        var ref = document.referrer && new URL(document.referrer);
+        if (ref && ref.origin === location.origin && !location.hash) {
+          var main = document.getElementById("main");
+          if (main) main.focus({ preventScroll: true });
+        }
+      });
+    </script>
     <slot name="head" />
   </head>
   <body>
+    <slot name="header" />
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    <CutLine />
   </body>
 </html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

@@ -1,0 +1,111 @@
+/* G2 — navigation transitions (PRD §8.2). Phase 0 spike (a): concept 11 section-cut.
+   Native cross-document View Transitions, no client router.
+
+   - The whole page is the `root` snapshot. The incoming page is revealed behind a
+     copper line; the outgoing page stays put underneath (no crossfade).
+   - Sweep direction comes from the NEW document's `dir`: the ::view-transition
+     pseudo-tree hangs off the new <html>, so `html[dir="rtl"]::view-transition-*`
+     works with no JS.
+   - The line is a real element (`.cut`, view-transition-name: cut-line) parked just
+     outside the viewport so it is always captured; only its group is animated. */
+
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+:root {
+  --vt-duration: 550ms;
+  --vt-ease: cubic-bezier(0.65, 0, 0.35, 1); /* crisp ease-in-out, no bounce */
+  --vt-cut-width: 40px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --vt-duration: 350ms;
+  }
+}
+
+/* Page snapshots: no default crossfade, no plus-lighter blending. */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: vt-reveal-ltr var(--vt-duration) var(--vt-ease) both;
+}
+
+html[dir="rtl"]::view-transition-new(root) {
+  animation-name: vt-reveal-rtl;
+}
+
+/* The line. The anchor element's snapshots are discarded; the group box itself is
+   drawn: a 2 px copper rule plus an A marker (circle, letter, arrow) at each end.
+   The arrow points in the sweep direction; the letter never mirrors. */
+::view-transition-old(cut-line),
+::view-transition-new(cut-line) {
+  display: none;
+}
+
+::view-transition-group(cut-line) {
+  inline-size: var(--vt-cut-width);
+  block-size: 100vh;
+  --vt-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='42' viewBox='0 0 24 42'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23F6F2EA' stroke='%23B4653A' stroke-width='2'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='ui-monospace,monospace' font-size='11' font-weight='500' fill='%239A522C'%3EA%3C/text%3E%3Cpolygon points='7,29 18,35 7,41' fill='%23B4653A'/%3E%3C/svg%3E");
+  --vt-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='8'%3E%3Crect width='2' height='8' fill='%23B4653A'/%3E%3C/svg%3E");
+  background:
+    var(--vt-marker) no-repeat center 24px / 24px 42px,
+    var(--vt-marker) no-repeat center calc(100% - 24px) / 24px 42px,
+    var(--vt-rule) repeat-y center / 2px 8px;
+  animation: vt-line-ltr var(--vt-duration) var(--vt-ease) both;
+}
+
+html[dir="rtl"]::view-transition-group(cut-line) {
+  --vt-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='42' viewBox='0 0 24 42'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23F6F2EA' stroke='%23B4653A' stroke-width='2'/%3E%3Ctext x='12' y='16' text-anchor='middle' font-family='ui-monospace,monospace' font-size='11' font-weight='500' fill='%239A522C'%3EA%3C/text%3E%3Cpolygon points='17,29 6,35 17,41' fill='%23B4653A'/%3E%3C/svg%3E");
+  animation-name: vt-line-rtl;
+}
+
+/* Group transforms are absolute within the viewport, so these keyframes are
+   physical by design. The line's centre travels 0 → 100vw, exactly on the reveal edge. */
+@keyframes vt-line-ltr {
+  from {
+    transform: translateX(calc(var(--vt-cut-width) / -2));
+  }
+  to {
+    transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
+  }
+}
+
+@keyframes vt-line-rtl {
+  from {
+    transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
+  }
+  to {
+    transform: translateX(calc(var(--vt-cut-width) / -2));
+  }
+}
+
+/* The reveal edge tracks the centre of the line. */
+@keyframes vt-reveal-ltr {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes vt-reveal-rtl {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
