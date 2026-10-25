@@ -5,7 +5,9 @@
 // cannot live in this element's pixels; see docs/decisions/0002.)
 ---
 
+<!-- Two anchors: 11 uses `cut-line`; 12 also uses `cut-line-b` for the second half of the split. -->
 <div class="cut" aria-hidden="true"></div>
+<div class="cut cut--b" aria-hidden="true"></div>
 
 <style>
   .cut {
@@ -15,5 +17,8 @@
     inline-size: var(--vt-cut-width);
     pointer-events: none;
     view-transition-name: cut-line;
+  }
+  .cut--b {
+    view-transition-name: cut-line-b;
   }
 </style>

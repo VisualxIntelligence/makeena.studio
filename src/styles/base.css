@@ -23,9 +23,29 @@ html {
 
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: var(--font-body);
   font-size: 1.0625rem;
   line-height: 1.6;
+}
+
+/* Arabic faces carry only Arabic glyphs; Latin identifiers fall through to the Latin stack. */
+:lang(ar) body {
+  font-family: var(--font-ar-body), var(--font-body);
+  font-size: 1.15rem; /* ~8% larger than Latin body (PRD §6.2) */
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+:lang(ar) .display {
+  font-family: var(--font-ar-display), var(--font-display);
+  line-height: 1.35;
+  letter-spacing: 0;
 }
 
 a {
@@ -50,7 +70,8 @@ a {
 }
 
 .label {
-  font-family: ui-monospace, monospace;
+  font-family: var(--font-mono);
+  font-weight: 500;
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -58,6 +79,13 @@ a {
 }
 
 :lang(ar) .label {
+  font-family: var(--font-ar-body), var(--font-mono);
   letter-spacing: 0;
   text-transform: none;
+}
+
+/* Latin identifiers inside Arabic labels keep the mono label style. */
+:lang(ar) .label [dir="ltr"] {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
 }

@@ -3,27 +3,30 @@
 // incoming first paint is light (Safari has no render-blocking for these transitions).
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SpikeNav from "../../../components/global/SpikeNav.astro";
+import { spikeCopy } from "../../../spikes/copy";
 
 export function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
 }
 
 const lang = Astro.params.lang as "en" | "ar";
+const t = spikeCopy[lang];
 const gates = ["01", "02", "03", "04"];
 ---
 
 <BaseLayout title="Spike · Method" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
+  {t.draftNote && <p class="wrap label draft" lang="en" dir="ltr">{t.draftNote}</p>}
   <div class="wrap page">
-    <p class="label"><bdi dir="ltr">02</bdi> · METHOD</p>
-    <h1 class="display">Four gates.</h1>
-    <p>Nothing reaches a client that has not cleared all of them.</p>
+    <p class="label"><span dir="ltr">02</span> · {t.methodLabel}</p>
+    <h1 class="display">{t.methodTitle}</h1>
+    <p>{t.methodLede}</p>
     <ol class="gates">
       {
         gates.map((g) => (
-          <li>
+          <li id={`gate-${g}`}>
             <span class="label" dir="ltr">{g}</span>
-            <span>[PLACEHOLDER: gate {g} name and description from the brief]</span>
+            <span lang="en" dir="ltr">[PLACEHOLDER: gate {g} name and description from the brief]</span>
           </li>
         ))
       }
@@ -32,14 +35,14 @@ const gates = ["01", "02", "03", "04"];
 </BaseLayout>
 
 <style>
+  .draft {
+    padding-block: 8px;
+    color: var(--muted);
+  }
   .page {
     padding-block: 64px 128px;
   }
   .display {
-    font-family: Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(2.5rem, 6vw, 5.5rem);
-    line-height: 1.05;
     margin-block: 16px;
   }
   .gates {
