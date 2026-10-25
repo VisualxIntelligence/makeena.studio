@@ -5,6 +5,9 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "makeena-website",
   "compatibility_date": "2026-10-25",
+  // Per-branch preview links on workers.dev for founder review. Wrangler's default is
+  // false and the config overrides the dashboard toggle, so it must be set here.
+  "preview_urls": true,
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
