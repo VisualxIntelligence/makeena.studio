@@ -21,6 +21,8 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test tests/e2e",
     "test:spikes": "cross-env MKN_SPIKES=1 astro build && playwright test tests/spikes",
+    "budget": "node scripts/budget/check.mjs",
+    "lighthouse": "npx --yes @lhci/cli@0.15.1 autorun",
     "sequences:placeholder": "node scripts/sequences/placeholder-aerial.mjs",
     "fonts:arabic": "python -I scripts/fonts/subset_arabic.py"
   },

@@ -58,6 +58,9 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
           return (path.match(/^\/(en|ar)\//) || [])[1];
         };
 
+        // Lets CSS tell JS-enhanced components (the menu) from their no-JS fallbacks.
+        document.documentElement.classList.add("js");
+
         // PRD §5: remember the locale the visitor is reading, so `/` sends them back to it.
         try {
           localStorage.setItem("mkn-lang", document.documentElement.lang);

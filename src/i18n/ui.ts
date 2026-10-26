@@ -11,6 +11,7 @@ interface Ui {
   primaryNav: string;
   nav: Partial<Record<RouteKey, string>>;
   sendBrief: string;
+  menu: string;
   /** Label of the switch to this locale, written in this locale's own language. */
   languageName: string;
   footerNav: string;
@@ -32,6 +33,7 @@ export const ui: Record<Lang, Ui> = {
       studio: "Studio",
     },
     sendBrief: "Send a brief",
+    menu: "Menu",
     languageName: "English",
     footerNav: "Footer",
     entity: "Entity",
@@ -55,6 +57,7 @@ export const ui: Record<Lang, Ui> = {
       studio: "الاستوديو",
     },
     sendBrief: "أرسل موجزاً",
+    menu: "القائمة",
     languageName: "عربي",
     footerNav: "تذييل الصفحة",
     entity: "الكيان",

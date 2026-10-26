@@ -1,6 +1,7 @@
 ---
-// Footer on every page (PRD §5): legal line, Entity link, language switch, ©. The keyboard-
-// shortcut and after-hours toggles arrive with 13 in Phase 2.
+// Footer on every page (PRD §5, UX doc §3.8): the mono legal line at the start; Entity, Privacy,
+// language switch and © at the end; ivory with a top rule. The keyboard-shortcut and after-hours
+// toggles arrive with 13 in Phase 2.
 import { getEntry } from "astro:content";
 import { pathTo, type Lang } from "../../i18n/config";
 import { ui } from "../../i18n/ui";
@@ -17,8 +18,8 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <p class="label" lang="en" dir="ltr">
+  <div class="wrap site-footer__bar">
+    <p class="label site-footer__legal" lang="en" dir="ltr">
       {site.legalLine}
     </p>
     <nav aria-label={t.footerNav}>
@@ -32,38 +33,44 @@ const year = new Date().getFullYear();
         <li>
           <LanguageSwitch lang={lang} />
         </li>
+        <li class="site-footer__rights">
+          <span dir="ltr">
+            © {year} {site.copyrightHolder}
+          </span>
+          <span class="visually-hidden">{t.rights}</span>
+        </li>
       </ul>
     </nav>
-    <p class="site-footer__rights">
-      <span dir="ltr">
-        © {year} {site.copyrightHolder}.
-      </span>
-      {t.rights}
-    </p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    margin-block-start: 96px;
-    border-block-start: 1px solid var(--color-ink);
+    border-block-start: var(--rule);
   }
 
-  .site-footer__inner {
+  .site-footer__bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 8px 24px;
-    padding-block: 24px;
+    gap: 8px 32px;
+    padding-block: 16px;
+  }
+
+  .site-footer__legal {
+    margin: 0;
   }
 
   ul {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0 20px;
     margin: 0;
     padding: 0;
     list-style: none;
+    font-size: 0.875rem;
   }
 
   a {
@@ -73,7 +80,6 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__rights {
-    margin: 0;
     color: var(--color-muted);
   }
 </style>

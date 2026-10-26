@@ -42,7 +42,19 @@ jobs:
       - run: npm ci
       - run: npm run test:unit
       - run: npm run build
-      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run budget
+      # Browsers are cached per Playwright version; a cold download once took 15 minutes.
+      - id: playwright
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v6
+        id: browsers
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+      - if: steps.browsers.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium webkit
+      - if: steps.browsers.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: failure()
@@ -51,4 +63,25 @@ jobs:
           path: |
             playwright-report/
             test-results/
+          retention-days: 7
+
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Uses the runner's Chrome. Reports stay private: saved as a build artifact, not uploaded.
+      - run: npm run lighthouse
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
           retention-days: 7

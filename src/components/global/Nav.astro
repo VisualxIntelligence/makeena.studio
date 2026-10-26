@@ -1,7 +1,9 @@
 ---
-// Site navigation (PRD §5): wordmark · Capability · Method · Engagement · Studio · language ·
-// Send a brief. Functional placeholder styling; phase-1/layout-nav-footer adds the sticky bar,
-// the 12-column layout and the mobile menu.
+// Site navigation (PRD §5, UX doc §3.0): a sticky 64px bar. Wordmark · Capability · Method ·
+// Engagement · Studio · language · Send a brief. Below 1024px the four links move behind a
+// labelled Menu button (not icon-only); the wordmark, language switch and CTA stay visible.
+// Without JS the links simply wrap under the bar. The bar stays solid for now; transparency over
+// the hero film arrives with the hero in Phase 3.
 import { pathTo, type Lang, type RouteKey } from "../../i18n/config";
 import { ui } from "../../i18n/ui";
 import LanguageSwitch from "./LanguageSwitch.astro";
@@ -17,74 +19,212 @@ const current = Astro.url.pathname;
 ---
 
 <header class="site-header">
-  <div class="wrap site-header__inner">
+  <div class="wrap site-header__bar">
     <a class="site-header__mark" href={pathTo(lang, "home")} lang="en" dir="ltr">
       Makeena
+      <span class="site-header__dot" aria-hidden="true">
+        .
+      </span>
     </a>
-    <nav aria-label={t.primaryNav}>
+    <nav class="site-nav" id="site-nav" aria-label={t.primaryNav} data-open="false">
       <ul>
         {items.map(([route, label]) => {
           const href = pathTo(lang, route);
+          const here = current === href ? "page" : current.startsWith(href) ? "true" : undefined;
           return (
             <li>
-              <a
-                href={href}
-                aria-current={
-                  current === href ? "page" : current.startsWith(href) ? "true" : undefined
-                }
-              >
+              <a href={href} aria-current={here}>
                 {label}
               </a>
             </li>
           );
         })}
-        <li>
-          <LanguageSwitch lang={lang} />
-        </li>
-        <li>
-          <a href={pathTo(lang, "studio", "brief")}>{t.sendBrief}</a>
-        </li>
       </ul>
     </nav>
+    <div class="site-header__actions">
+      <LanguageSwitch lang={lang} class="site-header__lang" />
+      <a class="button" href={pathTo(lang, "studio", "brief")}>
+        {t.sendBrief}
+      </a>
+      <button
+        class="site-header__menu"
+        type="button"
+        aria-controls="site-nav"
+        aria-expanded="false"
+        hidden
+      >
+        {t.menu}
+      </button>
+    </div>
   </div>
 </header>
 
+<script>
+  // Menu toggle for narrow screens. The button stays hidden without JS, where the links show
+  // inline instead. Esc and a link click close the menu; focus returns to the button on Esc.
+  const button = document.querySelector<HTMLButtonElement>(".site-header__menu");
+  const nav = document.getElementById("site-nav");
+  if (button && nav) {
+    const set = (open: boolean) => {
+      button.setAttribute("aria-expanded", String(open));
+      nav.dataset.open = String(open);
+    };
+    button.hidden = false;
+    button.addEventListener("click", () => set(button.getAttribute("aria-expanded") !== "true"));
+    nav.addEventListener("click", (e) => {
+      if ((e.target as Element).closest("a")) set(false);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && button.getAttribute("aria-expanded") === "true") {
+        set(false);
+        button.focus();
+      }
+    });
+    matchMedia("(width >= 64rem)").addEventListener("change", () => set(false));
+  }
+</script>
+
 <style>
   .site-header {
-    border-block-end: 1px solid var(--color-ink);
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--z-nav);
+    background: var(--color-ivory);
+    border-block-end: var(--rule);
   }
 
-  .site-header__inner {
+  .site-header__bar {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px 24px;
-    min-block-size: 64px;
+    gap: 12px;
+    min-block-size: var(--header-height);
   }
 
   .site-header__mark {
+    flex: none;
+    font-family: var(--ff-mono);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--color-ink);
     text-decoration: none;
   }
 
-  ul {
+  .site-header__dot {
+    color: var(--color-copper-deep);
+  }
+
+  .site-nav ul {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 20px;
+    gap: 0 24px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  /* 44 × 44 px targets (CLAUDE.md). */
-  a {
+  .site-nav a,
+  .site-header__actions :global(.site-header__lang) {
     display: inline-flex;
     align-items: center;
     min-block-size: 44px;
+    color: var(--color-ink);
+    text-decoration: none;
   }
 
-  [aria-current] {
+  .site-nav a:hover,
+  .site-header__actions :global(.site-header__lang:hover) {
+    color: var(--color-copper-deep);
+  }
+
+  .site-nav [aria-current] {
+    text-decoration: underline;
+    text-decoration-color: var(--color-copper);
+    text-underline-offset: 0.4em;
+  }
+
+  .site-header__actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 12px;
+    margin-inline-start: auto;
+  }
+
+  .site-header__menu {
+    min-block-size: 44px;
+    padding-inline: 12px;
+    border: var(--rule);
+    border-radius: var(--radius-sm);
+    background: transparent;
     color: var(--color-ink);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  /* Desktop: links centred in the bar, no menu button. */
+  @media (width >= 64rem) {
+    .site-header__bar {
+      gap: 32px;
+    }
+
+    .site-nav {
+      margin-inline: auto;
+    }
+
+    .site-header__actions {
+      margin-inline-start: 0;
+    }
+
+    .site-header__menu {
+      display: none;
+    }
+  }
+
+  /* Narrow screens with JS: the links become a panel under the bar, opened by the button. */
+  @media (width < 64rem) {
+    :global(html.js) .site-nav {
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: 100%;
+      z-index: var(--z-menu);
+      padding: 8px var(--gutter) 16px;
+      background: var(--color-ivory);
+      border-block-end: var(--rule);
+    }
+
+    :global(html.js) .site-nav[data-open="false"] {
+      display: none;
+    }
+
+    :global(html.js) .site-nav ul {
+      flex-direction: column;
+    }
+
+    :global(html.js) .site-nav a {
+      inline-size: 100%;
+      font-size: 1.25rem;
+    }
+
+    /* Without JS, the links wrap onto a second row of the bar. */
+    :global(html:not(.js)) .site-header__bar {
+      flex-wrap: wrap;
+    }
+
+    :global(html:not(.js)) .site-nav {
+      order: 3;
+      inline-size: 100%;
+    }
+  }
+
+  @media (width < 24rem) {
+    .site-header__actions {
+      gap: 8px;
+    }
+
+    .site-header__mark {
+      letter-spacing: 0.08em;
+    }
   }
 </style>
