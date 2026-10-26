@@ -5,6 +5,29 @@ export default {
   extends: ["stylelint-config-standard", "stylelint-config-html/astro"],
   ignoreFiles: ["dist/**", ".astro/**", "public/**", "node_modules/**"],
   rules: {
+    // Tailwind v4 syntax: @theme and friends, `@import "tailwindcss"`, and theme variables such as
+    // `--text-display--line-height` and the `--color-*: initial` reset.
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: [
+          "theme",
+          "source",
+          "utility",
+          "variant",
+          "custom-variant",
+          "apply",
+          "reference",
+          "plugin",
+          "config",
+        ],
+      },
+    ],
+    "import-notation": "string",
+    "custom-property-pattern": [
+      "^[a-z][a-z0-9]*(-{1,2}[a-z0-9]+)*(-\\*)?$",
+      { message: "Use kebab-case custom properties (Tailwind `--token--modifier` allowed)" },
+    ],
     // Scoped styles plus :global() make source order a poor proxy for specificity.
     "no-descending-specificity": null,
     // Astro scoped-style escape hatch. Ignoring it also sidesteps a Stylelint 17.16 crash on

@@ -5,7 +5,5 @@ import { getViteConfig } from "astro/config";
 export default getViteConfig({
   test: {
     include: ["src/**/*.test.ts", "tests/unit/**/*.test.ts"],
-    // The first unit tests (token contrast) arrive with phase-1/tokens-type.
-    passWithNoTests: true,
   },
 });

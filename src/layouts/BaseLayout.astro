@@ -1,6 +1,6 @@
 ---
 import { Font } from "astro:assets";
-import "../styles/base.css";
+import "../styles/global.css";
 import "../styles/view-transitions.css";
 import CutLine from "../components/global/CutLine.astro";
 
@@ -22,11 +22,11 @@ const isAr = lang === "ar";
     <meta name="robots" content="noindex" />
     <title>{title}</title>
     <!-- Latin faces on every page (identifiers stay Latin in Arabic); Arabic faces on /ar/ only. -->
-    <Font cssVariable="--font-display" preload={isAr ? false : [{ weight: 400 }]} />
-    <Font cssVariable="--font-body" preload={isAr ? false : [{ weight: 400 }]} />
-    <Font cssVariable="--font-mono" />
-    {isAr && <Font cssVariable="--font-ar-display" preload />}
-    {isAr && <Font cssVariable="--font-ar-body" preload={[{ weight: 400 }]} />}
+    <Font cssVariable="--ff-display" preload={isAr ? false : [{ weight: 400 }]} />
+    <Font cssVariable="--ff-body" preload={isAr ? false : [{ weight: 400 }]} />
+    <Font cssVariable="--ff-mono" />
+    {isAr && <Font cssVariable="--ff-ar-display" preload />}
+    {isAr && <Font cssVariable="--ff-ar-body" preload={[{ weight: 400 }]} />}
     <script is:inline>
       // G2 (PRD §8.2). Inline and synchronous so the pagereveal listener exists
       // before the first render of the incoming page.
