@@ -7,67 +7,125 @@
       "ar": "[PLACEHOLDER: rights terms]"
     },
     "gatesCleared": [],
-    "metadataRetained": { "iptc": false, "c2pa": false, "on": "master" },
+    "metadataRetained": {
+      "iptc": false,
+      "c2pa": false,
+      "on": "master"
+    },
     "arReviewed": false
   },
   "assets": {
     "MKN-TWR-CAM01-DUSK": {
-      "light": { "label": { "en": "Blue hour", "ar": "الساعة الزرقاء" } },
-      "caption": { "en": "GENERATED RENDER · BLUE HOUR", "ar": "صورة مولّدة · الساعة الزرقاء" },
+      "light": {
+        "label": {
+          "en": "Blue hour",
+          "ar": "الساعة الزرقاء"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · BLUE HOUR",
+        "ar": "صورة مولّدة · الساعة الزرقاء"
+      },
       "alt": {
         "en": "Generated image: a fictional slender residential tower on a waterfront at blue hour, seen across calm water.",
         "ar": "صورة مولّدة: برج سكني نحيف متخيَّل على واجهة بحرية في الساعة الزرقاء، يُرى عبر مياه هادئة."
       }
     },
     "MKN-TWR-CAM01-PLOT": {
-      "light": { "label": { "en": "Dusk", "ar": "الغسق" } },
-      "caption": { "en": "GENERATED RENDER · EMPTY PLOT · MONTH 00", "ar": "صورة مولّدة · أرض خالية · الشهر 00" },
+      "light": {
+        "label": {
+          "en": "Dusk",
+          "ar": "الغسق"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · EMPTY PLOT · MONTH 00",
+        "ar": "صورة مولّدة · أرض خالية · الشهر 00"
+      },
       "alt": {
         "en": "Generated image: the same waterfront view with the tower removed, an empty sandy plot behind site hoarding at dusk.",
         "ar": "صورة مولّدة: المشهد نفسه على الواجهة البحرية من دون البرج، أرض رملية خالية خلف سياج الموقع عند الغسق."
       }
     },
     "MKN-TWR-CAM01-WIRE": {
-      "caption": { "en": "GENERATED RENDER · LINE DRAWING", "ar": "صورة مولّدة · رسم خطي" },
+      "caption": {
+        "en": "GENERATED RENDER · LINE DRAWING",
+        "ar": "صورة مولّدة · رسم خطي"
+      },
       "alt": {
         "en": "Generated image: the same waterfront view with the tower drawn as an ink and copper line drawing on ivory.",
         "ar": "صورة مولّدة: المشهد نفسه والبرج مرسوم بخطوط من الحبر والنحاس على خلفية عاجية."
       }
     },
     "MKN-TWR-CAM01-CLAY": {
-      "caption": { "en": "GENERATED RENDER · CLAY MASSING", "ar": "صورة مولّدة · مجسم كتلي" },
+      "caption": {
+        "en": "GENERATED RENDER · CLAY MASSING",
+        "ar": "صورة مولّدة · مجسم كتلي"
+      },
       "alt": {
         "en": "Generated image: the same waterfront view rendered as a white clay massing model.",
         "ar": "صورة مولّدة: المشهد نفسه على هيئة مجسم كتلي من الطين الأبيض."
       }
     },
     "MKN-TWR-CAM01-OVERCAST": {
-      "light": { "label": { "en": "Overcast daylight", "ar": "نهار غائم" } },
-      "caption": { "en": "GENERATED RENDER · OVERCAST · MONTH 24", "ar": "صورة مولّدة · نهار غائم · الشهر 24" },
+      "light": {
+        "label": {
+          "en": "Overcast daylight",
+          "ar": "نهار غائم"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · OVERCAST · MONTH 24",
+        "ar": "صورة مولّدة · نهار غائم · الشهر 24"
+      },
       "alt": {
         "en": "Generated image: the fictional tower complete, in flat overcast daylight with unlit interiors.",
         "ar": "صورة مولّدة: البرج المتخيَّل مكتملاً في ضوء نهار غائم، والمساحات الداخلية غير مضاءة."
       }
     },
     "MKN-TWR-CAM01-NIGHT": {
-      "light": { "label": { "en": "Night", "ar": "الليل" } },
-      "caption": { "en": "GENERATED RENDER · NIGHT", "ar": "صورة مولّدة · الليل" },
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · NIGHT",
+        "ar": "صورة مولّدة · الليل"
+      },
       "alt": {
         "en": "Generated image: the fictional tower at night with its interiors lit.",
         "ar": "صورة مولّدة: البرج المتخيَّل ليلاً وقد أُضيئت مساحاته الداخلية."
       }
     },
     "MKN-PRG-CAM01-M06": {
-      "light": { "label": { "en": "Daylight", "ar": "النهار" } },
-      "caption": { "en": "GENERATED RENDER · CONSTRUCTION · MONTH 06", "ar": "صورة مولّدة · مرحلة البناء · الشهر 06" },
+      "light": {
+        "label": {
+          "en": "Daylight",
+          "ar": "النهار"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · CONSTRUCTION · MONTH 06",
+        "ar": "صورة مولّدة · مرحلة البناء · الشهر 06"
+      },
       "alt": {
         "en": "Generated image: the same site in daylight at month 6 of construction, with piling rigs, an early concrete core and a crane.",
         "ar": "صورة مولّدة: الموقع نفسه نهاراً في الشهر السادس من البناء، مع معدات دق الأساسات ونواة خرسانية أولى ورافعة."
       }
     },
     "MKN-PRG-CAM01-M14": {
-      "light": { "label": { "en": "Daylight", "ar": "النهار" } },
-      "caption": { "en": "GENERATED RENDER · CONSTRUCTION · MONTH 14", "ar": "صورة مولّدة · مرحلة البناء · الشهر 14" },
+      "light": {
+        "label": {
+          "en": "Daylight",
+          "ar": "النهار"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · CONSTRUCTION · MONTH 14",
+        "ar": "صورة مولّدة · مرحلة البناء · الشهر 14"
+      },
       "alt": {
         "en": "Generated image: the same site in daylight at month 14, the concrete frame at about level 20 with a tower crane.",
         "ar": "صورة مولّدة: الموقع نفسه نهاراً في الشهر الرابع عشر، والهيكل الخرساني عند الطابق العشرين تقريباً مع رافعة برجية."
@@ -75,7 +133,12 @@
     },
     "MKN-AER-FLT01-A": {
       "aircraft": "none",
-      "light": { "label": { "en": "Golden hour", "ar": "الساعة الذهبية" } },
+      "light": {
+        "label": {
+          "en": "Golden hour",
+          "ar": "الساعة الذهبية"
+        }
+      },
       "caption": {
         "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
         "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
@@ -87,7 +150,12 @@
     },
     "MKN-AER-FLT01-B": {
       "aircraft": "none",
-      "light": { "label": { "en": "Golden hour", "ar": "الساعة الذهبية" } },
+      "light": {
+        "label": {
+          "en": "Golden hour",
+          "ar": "الساعة الذهبية"
+        }
+      },
       "caption": {
         "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
         "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
@@ -99,7 +167,12 @@
     },
     "MKN-AER-FLT01-C": {
       "aircraft": "none",
-      "light": { "label": { "en": "Golden hour", "ar": "الساعة الذهبية" } },
+      "light": {
+        "label": {
+          "en": "Golden hour",
+          "ar": "الساعة الذهبية"
+        }
+      },
       "caption": {
         "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
         "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
@@ -110,63 +183,143 @@
       }
     },
     "MKN-SUN-SKY01-DAWN": {
-      "light": { "label": { "en": "Dawn", "ar": "الفجر" }, "timeLocal": "05:30" },
-      "caption": { "en": "GENERATED RENDER · DAWN 05:30", "ar": "صورة مولّدة · الفجر 05:30" },
+      "light": {
+        "label": {
+          "en": "Dawn",
+          "ar": "الفجر"
+        },
+        "timeLocal": "05:30"
+      },
+      "caption": {
+        "en": "GENERATED RENDER · DAWN 05:30",
+        "ar": "صورة مولّدة · الفجر 05:30"
+      },
       "alt": {
         "en": "Generated image: a fictional skyline from a fixed camera at dawn.",
         "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة عند الفجر."
       }
     },
     "MKN-SUN-SKY01-MIDDAY": {
-      "light": { "label": { "en": "Midday", "ar": "الظهيرة" } },
-      "caption": { "en": "GENERATED RENDER · MIDDAY", "ar": "صورة مولّدة · الظهيرة" },
+      "light": {
+        "label": {
+          "en": "Midday",
+          "ar": "الظهيرة"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · MIDDAY",
+        "ar": "صورة مولّدة · الظهيرة"
+      },
       "alt": {
         "en": "Generated image: a fictional skyline from a fixed camera at midday.",
         "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الظهيرة."
       }
     },
     "MKN-SUN-SKY01-GOLD": {
-      "light": { "label": { "en": "Golden hour", "ar": "الساعة الذهبية" }, "timeLocal": "17:30" },
-      "caption": { "en": "GENERATED RENDER · GOLDEN HOUR 17:30", "ar": "صورة مولّدة · الساعة الذهبية 17:30" },
+      "light": {
+        "label": {
+          "en": "Golden hour",
+          "ar": "الساعة الذهبية"
+        },
+        "timeLocal": "17:30"
+      },
+      "caption": {
+        "en": "GENERATED RENDER · GOLDEN HOUR 17:30",
+        "ar": "صورة مولّدة · الساعة الذهبية 17:30"
+      },
       "alt": {
         "en": "Generated image: a fictional skyline from a fixed camera at golden hour.",
         "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الساعة الذهبية."
       }
     },
     "MKN-SUN-SKY01-NIGHT": {
-      "light": { "label": { "en": "Night", "ar": "الليل" }, "timeLocal": "20:30" },
-      "caption": { "en": "GENERATED RENDER · NIGHT 20:30", "ar": "صورة مولّدة · الليل 20:30" },
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        },
+        "timeLocal": "20:30"
+      },
+      "caption": {
+        "en": "GENERATED RENDER · NIGHT 20:30",
+        "ar": "صورة مولّدة · الليل 20:30"
+      },
       "alt": {
         "en": "Generated image: a fictional skyline from a fixed camera at night.",
         "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة ليلاً."
       }
     },
     "MKN-AXO-CAM01-EXPLODED": {
-      "caption": { "en": "GENERATED RENDER · EXPLODED AXONOMETRIC", "ar": "صورة مولّدة · منظور محوري مفكك" },
+      "caption": {
+        "en": "GENERATED RENDER · EXPLODED AXONOMETRIC",
+        "ar": "صورة مولّدة · منظور محوري مفكك"
+      },
       "alt": {
         "en": "Generated image: an exploded axonometric drawing of a mid-rise building on ivory.",
         "ar": "صورة مولّدة: رسم منظور محوري مفكك لمبنى متوسط الارتفاع على خلفية عاجية."
       }
     },
     "MKN-PLN-TOP01-SITE": {
-      "caption": { "en": "GENERATED RENDER · MASTERPLAN · REFERENCE", "ar": "صورة مولّدة · مخطط عام · مرجع" },
+      "caption": {
+        "en": "GENERATED RENDER · MASTERPLAN · REFERENCE",
+        "ar": "صورة مولّدة · مخطط عام · مرجع"
+      },
       "alt": {
         "en": "Generated image: a top-down masterplan of a fictional coastal district.",
         "ar": "صورة مولّدة: مخطط عام من الأعلى لحي ساحلي متخيَّل."
       }
     },
     "MKN-STU-CAM01-CONTROL": {
-      "caption": { "en": "GENERATED IMAGE · CONTROL ROOM", "ar": "صورة مولّدة · غرفة التحكم" },
+      "caption": {
+        "en": "GENERATED IMAGE · CONTROL ROOM",
+        "ar": "صورة مولّدة · غرفة التحكم"
+      },
       "alt": {
         "en": "Generated image: an empty broadcast control room at night.",
         "ar": "صورة مولّدة: غرفة تحكم بث خالية ليلاً."
       }
     },
     "MKN-STU-CAM02-RUNBOOK": {
-      "caption": { "en": "GENERATED IMAGE · PRODUCTION RUNBOOK", "ar": "صورة مولّدة · دليل الإنتاج" },
+      "caption": {
+        "en": "GENERATED IMAGE · PRODUCTION RUNBOOK",
+        "ar": "صورة مولّدة · دليل الإنتاج"
+      },
       "alt": {
         "en": "Generated image: an overhead view of hands beside an open production runbook and an architectural elevation.",
         "ar": "صورة مولّدة: منظر علوي ليدين بجانب دليل إنتاج مفتوح وواجهة معمارية مرسومة."
+      }
+    },
+    "MKN-SUN-SKY01-MORNING": {
+      "light": {
+        "label": {
+          "en": "Morning",
+          "ar": "الصباح"
+        },
+        "timeLocal": "08:30"
+      },
+      "caption": {
+        "en": "GENERATED RENDER · MORNING 08:30",
+        "ar": "صورة مولّدة · الصباح 08:30"
+      },
+      "alt": {
+        "en": "Generated image: a fictional skyline from a fixed camera in the morning, low sun and long shadows.",
+        "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الصباح، والشمس منخفضة والظلال طويلة."
+      }
+    },
+    "MKN-PRG-CAM01-M00": {
+      "light": {
+        "label": {
+          "en": "Daylight",
+          "ar": "النهار"
+        }
+      },
+      "caption": {
+        "en": "GENERATED RENDER · EMPTY PLOT · MONTH 00",
+        "ar": "صورة مولّدة · أرض خالية · الشهر 00"
+      },
+      "alt": {
+        "en": "Generated image: the construction site in daylight before work starts, an empty sandy plot behind site hoarding.",
+        "ar": "صورة مولّدة: موقع البناء نهاراً قبل بدء الأعمال، أرض رملية خالية خلف سياج الموقع."
       }
     }
   }

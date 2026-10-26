@@ -1,0 +1,46 @@
+{
+  "id": "MKN-SUN-SKY01-MORNING",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "04"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Morning",
+      "ar": "الصباح"
+    },
+    "timeLocal": "08:30"
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · MORNING 08:30",
+    "ar": "صورة مولّدة · الصباح 08:30"
+  },
+  "alt": {
+    "en": "Generated image: a fictional skyline from a fixed camera in the morning, low sun and long shadows.",
+    "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الصباح، والشمس منخفضة والظلال طويلة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "1bd24115-9648-4393-8cd7-d0db5b60451c",
+    "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+  },
+  "source": {
+    "file": "design/renders/MKN-SUN-SKY01-MORNING.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

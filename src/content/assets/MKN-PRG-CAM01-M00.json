@@ -1,0 +1,45 @@
+{
+  "id": "MKN-PRG-CAM01-M00",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "07"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Daylight",
+      "ar": "النهار"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · EMPTY PLOT · MONTH 00",
+    "ar": "صورة مولّدة · أرض خالية · الشهر 00"
+  },
+  "alt": {
+    "en": "Generated image: the construction site in daylight before work starts, an empty sandy plot behind site hoarding.",
+    "ar": "صورة مولّدة: موقع البناء نهاراً قبل بدء الأعمال، أرض رملية خالية خلف سياج الموقع."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "3fe6b03b-13ce-4ba5-af4a-ef15d379d7c5",
+    "derivedFrom": "MKN-PRG-CAM01-M06"
+  },
+  "source": {
+    "file": "design/renders/MKN-PRG-CAM01-M00.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}
