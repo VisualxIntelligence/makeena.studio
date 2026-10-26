@@ -123,7 +123,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     coverage = {}
     for filename, source, codepoints, family in OUTPUTS:
-        font = TTFont(fetch(source))
+        # Keep the upstream timestamp so re-running the script gives byte-identical files.
+        font = TTFont(fetch(source), recalcTimestamp=False)
         options = subset.Options()
         options.flavor = "woff2"
         options.layout_features = FEATURES
@@ -144,10 +145,8 @@ def main():
 
     for name in ("Amiri-OFL.txt", "IBMPlexSansArabic-OFL.txt"):
         (OUT / name).write_bytes(fetch(name).read_bytes())
-    (OUT / "coverage.json").write_text(
-        json.dumps({k: [f"{c:04X}" for c in v] for k, v in coverage.items()}, indent=1) + "\n",
-        encoding="utf-8",
-    )
+    coverage_json = json.dumps({k: [f"{c:04X}" for c in v] for k, v in coverage.items()}, indent=1)
+    (OUT / "coverage.json").write_bytes((coverage_json + "\n").encode("utf-8"))  # LF on Windows too
 
 
 if __name__ == "__main__":
