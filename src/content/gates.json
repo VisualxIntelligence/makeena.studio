@@ -1,0 +1,50 @@
+[
+  {
+    "id": "gate-01",
+    "number": "01",
+    "name": {
+      "en": "[PLACEHOLDER: gate 01 name from the brief]",
+      "ar": "[PLACEHOLDER: gate 01 name from the brief]"
+    },
+    "description": {
+      "en": "[PLACEHOLDER: gate 01 description from the brief]",
+      "ar": "[PLACEHOLDER: gate 01 description from the brief]"
+    }
+  },
+  {
+    "id": "gate-02",
+    "number": "02",
+    "name": {
+      "en": "[PLACEHOLDER: gate 02 name from the brief]",
+      "ar": "[PLACEHOLDER: gate 02 name from the brief]"
+    },
+    "description": {
+      "en": "[PLACEHOLDER: gate 02 description from the brief]",
+      "ar": "[PLACEHOLDER: gate 02 description from the brief]"
+    }
+  },
+  {
+    "id": "gate-03",
+    "number": "03",
+    "name": {
+      "en": "[PLACEHOLDER: gate 03 name from the brief]",
+      "ar": "[PLACEHOLDER: gate 03 name from the brief]"
+    },
+    "description": {
+      "en": "[PLACEHOLDER: gate 03 description from the brief]",
+      "ar": "[PLACEHOLDER: gate 03 description from the brief]"
+    }
+  },
+  {
+    "id": "gate-04",
+    "number": "04",
+    "name": {
+      "en": "[PLACEHOLDER: gate 04 name from the brief]",
+      "ar": "[PLACEHOLDER: gate 04 name from the brief]"
+    },
+    "description": {
+      "en": "[PLACEHOLDER: gate 04 description from the brief]",
+      "ar": "[PLACEHOLDER: gate 04 description from the brief]"
+    }
+  }
+]

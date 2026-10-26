@@ -1,0 +1,21 @@
+{
+  "route": "aerial",
+  "lang": "ar",
+  "title": "المنظور الجوي · Makeena",
+  "description": "لقطات جوية مولّدة: بلا طائرات، وبلا نوافذ طيران.",
+  "label": "00 · المنظور الجوي",
+  "heading": "المنظور الجوي.",
+  "lede": "بلا طائرات. وبلا نوافذ طيران.",
+  "sections": [
+    {
+      "id": "flight",
+      "label": "01 · الرحلة",
+      "body": ["[PLACEHOLDER: 03 scroll-flown aerial, built in Phase 3]"]
+    },
+    {
+      "id": "argument",
+      "label": "02 · بلا طائرات",
+      "body": ["[PLACEHOLDER: the no-aircraft, no-flight-window argument from the brief]"]
+    }
+  ]
+}

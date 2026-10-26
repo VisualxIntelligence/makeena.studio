@@ -1,0 +1,42 @@
+{
+  "route": "engagement",
+  "lang": "en",
+  "title": "Engagement · Makeena",
+  "description": "Fixed, event-triggered packages and retained standing capacity.",
+  "label": "00 · ENGAGEMENT",
+  "heading": "Two ways in.",
+  "lede": "Both scoped to the client, not to a menu.",
+  "sections": [
+    {
+      "id": "fixed",
+      "label": "01 · FIXED",
+      "heading": "Event-triggered package.",
+      "body": ["[PLACEHOLDER: fixed engagement copy from the brief]"],
+      "links": [
+        {
+          "text": "Scope a pre-event package",
+          "route": "studio",
+          "hash": "brief-fixed"
+        }
+      ]
+    },
+    {
+      "id": "retained",
+      "label": "02 · RETAINED",
+      "heading": "Standing capacity.",
+      "body": ["[PLACEHOLDER: retained engagement copy from the brief]"],
+      "links": [
+        {
+          "text": "Scope standing capacity",
+          "route": "studio",
+          "hash": "brief-retained"
+        }
+      ]
+    },
+    {
+      "id": "exclusions",
+      "label": "03 · PUBLISHED EXCLUSIONS",
+      "body": ["[PLACEHOLDER: exclusions paragraph from the brief]"]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+---
+// A string of page copy. On Arabic pages, text with no Arabic letters (English names,
+// identifiers, `[PLACEHOLDER: …]` markers) is marked lang="en" dir="ltr" so it is announced,
+// shaped and set as Latin.
+import type { Lang } from "../../i18n/config";
+import { isLatinOnly } from "../../i18n/text";
+
+interface Props {
+  text: string;
+  lang: Lang;
+}
+
+const { text, lang } = Astro.props;
+const latin = lang === "ar" && isLatinOnly(text);
+---
+
+{latin ? (
+  <span lang="en" dir="ltr">
+    {text}
+  </span>
+) : (
+  text
+)}

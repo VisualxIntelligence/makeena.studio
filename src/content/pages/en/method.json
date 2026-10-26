@@ -1,0 +1,27 @@
+{
+  "route": "method",
+  "lang": "en",
+  "title": "Method · Makeena",
+  "description": "Four gates, and the provenance kept on every delivered asset.",
+  "label": "00 · METHOD",
+  "heading": "Four gates.",
+  "lede": "Nothing reaches a client that has not cleared all of them.",
+  "sections": [
+    {
+      "id": "gates",
+      "label": "01 · THE GATES",
+      "body": ["[PLACEHOLDER: method intro copy from the brief]"]
+    },
+    {
+      "id": "provenance",
+      "label": "02 · PROVENANCE",
+      "heading": "Provenance metadata retained on all delivered assets.",
+      "body": ["[PLACEHOLDER: what the provenance metadata contains]"]
+    },
+    {
+      "id": "verify",
+      "label": "03 · VERIFY A FILE",
+      "body": ["[PLACEHOLDER: how to verify a file]"]
+    }
+  ]
+}

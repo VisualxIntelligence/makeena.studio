@@ -1,0 +1,17 @@
+{
+  "route": "standing",
+  "lang": "ar",
+  "title": "الإنتاج المستمر · Makeena",
+  "description": "قدرة إنتاجية مستمرة طوال عمر المشروع.",
+  "label": "00 · الإنتاج المستمر",
+  "heading": "الإنتاج المستمر.",
+  "sections": [
+    {
+      "id": "time-lapse",
+      "label": "01 · الشهر 00 · 06 · 14 · 24",
+      "body": [
+        "[PLACEHOLDER: 07 construction time-lapse and per-phase deliverables, built in Phase 3]"
+      ]
+    }
+  ]
+}

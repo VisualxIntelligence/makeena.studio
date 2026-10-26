@@ -1,0 +1,42 @@
+{
+  "route": "engagement",
+  "lang": "ar",
+  "title": "التعاقد · Makeena",
+  "description": "باقات ثابتة مرتبطة بحدث، وقدرة إنتاجية مستمرة.",
+  "label": "00 · التعاقد",
+  "heading": "طريقتان للبدء.",
+  "lede": "كلتاهما مصممة حسب العميل، لا وفق قائمة جاهزة.",
+  "sections": [
+    {
+      "id": "fixed",
+      "label": "01 · ثابت",
+      "heading": "باقة مرتبطة بحدث.",
+      "body": ["[PLACEHOLDER: fixed engagement copy from the brief]"],
+      "links": [
+        {
+          "text": "حدّد نطاق باقة ما قبل الحدث",
+          "route": "studio",
+          "hash": "brief-fixed"
+        }
+      ]
+    },
+    {
+      "id": "retained",
+      "label": "02 · مستمر",
+      "heading": "قدرة إنتاجية دائمة.",
+      "body": ["[PLACEHOLDER: retained engagement copy from the brief]"],
+      "links": [
+        {
+          "text": "حدّد نطاق القدرة الدائمة",
+          "route": "studio",
+          "hash": "brief-retained"
+        }
+      ]
+    },
+    {
+      "id": "exclusions",
+      "label": "03 · الاستثناءات المنشورة",
+      "body": ["[PLACEHOLDER: exclusions paragraph from the brief]"]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+---
+// Footer on every page (PRD §5): legal line, Entity link, language switch, ©. The keyboard-
+// shortcut and after-hours toggles arrive with 13 in Phase 2.
+import { getEntry } from "astro:content";
+import { pathTo, type Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+import LanguageSwitch from "./LanguageSwitch.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const site = (await getEntry("site", "site"))!.data;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <p class="label" lang="en" dir="ltr">
+      {site.legalLine}
+    </p>
+    <nav aria-label={t.footerNav}>
+      <ul>
+        <li>
+          <a href={pathTo(lang, "studio", "register")}>{t.entity}</a>
+        </li>
+        <li>
+          <a href={pathTo(lang, "privacy")}>{t.privacy}</a>
+        </li>
+        <li>
+          <LanguageSwitch lang={lang} />
+        </li>
+      </ul>
+    </nav>
+    <p class="site-footer__rights">
+      <span dir="ltr">
+        © {year} {site.copyrightHolder}.
+      </span>
+      {t.rights}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: 96px;
+    border-block-start: 1px solid var(--color-ink);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-block: 24px;
+  }
+
+  ul {
+    display: flex;
+    gap: 0 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  .site-footer__rights {
+    margin: 0;
+    color: var(--color-muted);
+  }
+</style>

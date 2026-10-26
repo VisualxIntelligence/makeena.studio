@@ -1,0 +1,21 @@
+---
+// Mono section label (PRD §6.3). In Arabic, Latin and digit runs are marked dir="ltr" so they
+// keep the mono identifier style and Western digits read in order.
+import type { Lang } from "../../i18n/config";
+import { labelParts } from "../../i18n/text";
+
+interface Props {
+  text: string;
+  lang: Lang;
+  as?: "p" | "span";
+  id?: string;
+}
+
+const { text, lang, as: Tag = "p", id } = Astro.props;
+---
+
+<Tag class="label" id={id}>
+  {lang === "ar"
+    ? labelParts(text).map((part) => (part.ltr ? <span dir="ltr">{part.text}</span> : part.text))
+    : text}
+</Tag>

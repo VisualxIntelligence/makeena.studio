@@ -1,0 +1,53 @@
+---
+// Corporate register (PRD §5, /studio/#register). Identifiers stay LTR with Western digits.
+import type { Lang } from "../../i18n/config";
+import { getRegister } from "../../lib/content";
+import Copy from "./Copy.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const rows = await getRegister();
+---
+
+<dl class="register">
+  {rows.map((r) => (
+    <div class="register__row">
+      <dt class="label">{r.key[lang]}</dt>
+      <dd>
+        {r.ltr ? (
+          <span dir="ltr" lang="en">
+            {r.value[lang]}
+          </span>
+        ) : (
+          <Copy text={r.value[lang]} lang={lang} />
+        )}
+      </dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .register {
+    margin: 0;
+    max-inline-size: 48rem;
+  }
+
+  .register__row {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1fr) 2fr;
+    gap: 16px;
+    padding-block: 12px;
+    border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
+  }
+
+  dt {
+    margin: 0;
+  }
+
+  dd {
+    margin: 0;
+  }
+</style>

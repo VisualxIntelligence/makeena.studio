@@ -6,7 +6,7 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 **Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is in progress; its seven founder decisions are recorded in `docs/decisions/0005`. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
 
-What exists today: an Astro 7 static site with `/en/` and `/ar/`, Phase 0 spike pages under `/{lang}/spike/` (to be removed from production in Phase 1), self-hosted fonts, and Playwright spike tests. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
+What exists today: an Astro 7 static site with every PRD §5 route in `/en/` and `/ar/` (placeholder content from `src/content/`), localised 404s, sitemap, hreflang, the root language redirect, tokens and type for both scripts, and CI. The Phase 0 spike pages are no longer built for production; `npm run test:spikes` builds them with `MKN_SPIKES=1`. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
 ## Stack (PRD §11)
 
@@ -84,6 +84,10 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
+| `src/i18n/` | Locales, route table and path helpers (`config.ts`), UI strings (`ui.ts`), bidi helpers (`text.ts`) |
+| `src/content/`, `src/content.config.ts` | Content collections: `pages/{lang}/{route}.json`, `services`, `gates`, `register`, `site` (PRD §10.1) |
+| `src/layouts/` | `BaseLayout` (html lang/dir, head, fonts, nav/footer), `Page` (route shell: header + sections from content) |
+| `src/pages/[lang]/` | One file per PRD §5 route; extras go into a section via a slot named after the section id |
 | `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences |
@@ -102,7 +106,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run typecheck` | `astro check` |
 | `npm run test:unit` | Vitest: token values and contrast pairs, class-lint rules |
 | `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, two phones, reduced motion (run `npm run build` first; `npx playwright install chromium webkit` once) |
-| `npm run test:spikes` | Phase 0 measurements in `tests/spikes/` (local only; timing-sensitive) |
+| `npm run test:spikes` | Builds with the spike pages (`MKN_SPIKES=1`) and runs the Phase 0 measurements in `tests/spikes/` (local only; timing-sensitive). Run `npm run build` afterwards before `test:e2e` |
 | `npm run fonts:arabic` | Rebuild the Arabic font subsets (needs Python + `pip install -r scripts/fonts/requirements.txt`) |
 | `npm run sequences:placeholder` | Regenerate the Phase 0 placeholder aerial sequence (needs ffmpeg) |
 

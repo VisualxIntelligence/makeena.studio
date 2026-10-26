@@ -1,20 +1,50 @@
 ---
-// Phase 1 adds the Arabic browser-preference redirect and persisted choice (PRD §5).
+// `/` sends visitors to a locale (PRD §5): the locale they last read (stored by BaseLayout),
+// else Arabic when the browser prefers Arabic over English, else English. Without JS, English.
+// Mirrors preferredLang() in src/i18n/config.ts, which is unit-tested.
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="refresh" content="0;url=/en/" />
     <meta name="robots" content="noindex" />
-    <link rel="canonical" href="https://makeena.studio/en/" />
     <title>Makeena</title>
+    <script is:inline>
+      (function () {
+        let lang = null;
+        try {
+          lang = localStorage.getItem("mkn-lang");
+        } catch {
+          // Storage blocked: use the browser preference.
+        }
+        if (lang !== "en" && lang !== "ar") {
+          lang = "en";
+          const prefs = navigator.languages || [navigator.language || ""];
+          for (let i = 0; i < prefs.length; i++) {
+            const base = String(prefs[i]).toLowerCase().split("-")[0];
+            if (base === "en" || base === "ar") {
+              lang = base;
+              break;
+            }
+          }
+        }
+        location.replace("/" + lang + "/" + location.search + location.hash);
+      })();
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/en/" />
+    </noscript>
+    <link rel="alternate" hreflang="en" href="https://makeena.studio/en/" />
+    <link rel="alternate" hreflang="ar" href="https://makeena.studio/ar/" />
+    <link rel="alternate" hreflang="x-default" href="https://makeena.studio/" />
   </head>
   <body>
-    <a href="/en/">Makeena · English</a> ·{" "}
-    <a href="/ar/" lang="ar" hreflang="ar">
-      عربي
-    </a>
+    <p>
+      <a href="/en/">Makeena · English</a> ·
+      <a href="/ar/" lang="ar" hreflang="ar">
+        عربي
+      </a>
+    </p>
   </body>
 </html>

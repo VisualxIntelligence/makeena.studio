@@ -5,16 +5,14 @@ import BaseLayout from "../../../layouts/BaseLayout.astro";
 import SpikeNav from "../../../components/global/SpikeNav.astro";
 import { spikeCopy } from "../../../spikes/copy";
 
-export function getStaticPaths() {
-  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
-}
+export { spikePaths as getStaticPaths } from "../../../spikes/paths";
 
 const lang = Astro.params.lang as "en" | "ar";
 const t = spikeCopy[lang];
 const gates = ["01", "02", "03", "04"];
 ---
 
-<BaseLayout title="Spike · Method" lang={lang}>
+<BaseLayout chrome={false} title="Spike · Method" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
   {t.draftNote && (
     <p class="wrap label draft" lang="en" dir="ltr">

@@ -1,0 +1,90 @@
+{
+  "route": "home",
+  "lang": "ar",
+  "title": "Makeena · استوديو إنتاج واستشارات محتوى بالذكاء الاصطناعي، الدوحة",
+  "description": "Makeena استوديو إنتاج واستشارات محتوى بالذكاء الاصطناعي في الدوحة. ترخيص QFC رقم 04998.",
+  "label": "00 · الدوحة · QFC 04998",
+  "heading": "كل مطوّر عقاري أصبح اليوم مؤسسة إعلامية.",
+  "lede": "ومعظمهم لا يملك الفريق المناسب لذلك.",
+  "sections": [
+    {
+      "id": "position",
+      "label": "01 · التموضع",
+      "heading": "استوديو بمعايير البث يعمل بسرعة فريق المحتوى. وشريك محتوى ينجز أعماله بمعايير استوديو البث.",
+      "body": ["[PLACEHOLDER: three-constraint copy from the brief]"]
+    },
+    {
+      "id": "capability",
+      "label": "02 · القدرات",
+      "heading": "خدمتان في الصدارة. وبقية الخدمات ضمن تعاقد مستمر.",
+      "links": [
+        {
+          "text": "المنظور الجوي",
+          "route": "aerial"
+        },
+        {
+          "text": "الإنتاج المستمر",
+          "route": "standing"
+        },
+        {
+          "text": "تصوير المشاريع على الخارطة",
+          "route": "offPlan"
+        },
+        {
+          "text": "السجل الكامل",
+          "route": "capability",
+          "hash": "register"
+        }
+      ]
+    },
+    {
+      "id": "method",
+      "label": "03 · المنهجية",
+      "heading": "أربع بوابات. لا يصل إلى العميل أي عمل لم يجتزها كلها.",
+      "links": [
+        {
+          "text": "اطّلع على البوابات الأربع",
+          "route": "method",
+          "hash": "gates"
+        }
+      ]
+    },
+    {
+      "id": "engagement",
+      "label": "04 · التعاقد",
+      "heading": "طريقتان للبدء. كلتاهما مصممة حسب العميل، لا وفق قائمة جاهزة.",
+      "links": [
+        {
+          "text": "التعاقد الثابت والمستمر",
+          "route": "engagement"
+        }
+      ]
+    },
+    {
+      "id": "studio",
+      "label": "05 · الاستوديو",
+      "heading": "المؤهلات بشفافية.",
+      "body": ["[PLACEHOLDER: studio summary]"],
+      "links": [
+        {
+          "text": "السجل المؤسسي",
+          "route": "studio",
+          "hash": "register"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "06 · تواصل",
+      "heading": "أرسل موجزاً.",
+      "body": ["[PLACEHOLDER: phone, email and domain]"],
+      "links": [
+        {
+          "text": "أرسل موجزاً",
+          "route": "studio",
+          "hash": "brief"
+        }
+      ]
+    }
+  ]
+}

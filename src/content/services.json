@@ -1,0 +1,148 @@
+[
+  {
+    "id": "aerial-perspective",
+    "kind": "lead",
+    "order": 1,
+    "route": "aerial",
+    "name": {
+      "en": "Aerial perspective",
+      "ar": "المنظور الجوي"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: aerial perspective summary]",
+      "ar": "[PLACEHOLDER: aerial perspective summary]"
+    }
+  },
+  {
+    "id": "standing-production",
+    "kind": "lead",
+    "order": 2,
+    "route": "standing",
+    "name": {
+      "en": "Standing production",
+      "ar": "الإنتاج المستمر"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: standing production summary]",
+      "ar": "[PLACEHOLDER: standing production summary]"
+    }
+  },
+  {
+    "id": "off-plan-visualisation",
+    "kind": "lead",
+    "order": 3,
+    "route": "offPlan",
+    "name": {
+      "en": "Off-plan visualisation",
+      "ar": "تصوير المشاريع على الخارطة"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: off-plan visualisation summary]",
+      "ar": "[PLACEHOLDER: off-plan visualisation summary]"
+    }
+  },
+  {
+    "id": "twin",
+    "kind": "register",
+    "order": 1,
+    "name": {
+      "en": "The Twin",
+      "ar": "The Twin"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Twin summary]",
+      "ar": "[PLACEHOLDER: The Twin summary and Arabic name]"
+    }
+  },
+  {
+    "id": "velocity",
+    "kind": "register",
+    "order": 2,
+    "name": {
+      "en": "The Velocity",
+      "ar": "The Velocity"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Velocity summary]",
+      "ar": "[PLACEHOLDER: The Velocity summary and Arabic name]"
+    }
+  },
+  {
+    "id": "launch",
+    "kind": "register",
+    "order": 3,
+    "name": {
+      "en": "The Launch",
+      "ar": "The Launch"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Launch summary]",
+      "ar": "[PLACEHOLDER: The Launch summary and Arabic name]"
+    }
+  },
+  {
+    "id": "marquee",
+    "kind": "register",
+    "order": 4,
+    "name": {
+      "en": "The Marquee",
+      "ar": "The Marquee"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Marquee summary]",
+      "ar": "[PLACEHOLDER: The Marquee summary and Arabic name]"
+    }
+  },
+  {
+    "id": "stage",
+    "kind": "register",
+    "order": 5,
+    "name": {
+      "en": "The Stage",
+      "ar": "The Stage"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Stage summary]",
+      "ar": "[PLACEHOLDER: The Stage summary and Arabic name]"
+    }
+  },
+  {
+    "id": "season-plus",
+    "kind": "register",
+    "order": 6,
+    "name": {
+      "en": "The Season+",
+      "ar": "The Season+"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Season+ summary]",
+      "ar": "[PLACEHOLDER: The Season+ summary and Arabic name]"
+    }
+  },
+  {
+    "id": "pipeline",
+    "kind": "register",
+    "order": 7,
+    "name": {
+      "en": "The Pipeline",
+      "ar": "The Pipeline"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Pipeline summary]",
+      "ar": "[PLACEHOLDER: The Pipeline summary and Arabic name]"
+    }
+  },
+  {
+    "id": "host",
+    "kind": "register",
+    "order": 8,
+    "name": {
+      "en": "The Host",
+      "ar": "The Host"
+    },
+    "summary": {
+      "en": "[PLACEHOLDER: The Host summary]",
+      "ar": "[PLACEHOLDER: The Host summary and Arabic name]"
+    }
+  }
+]

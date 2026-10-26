@@ -1,0 +1,90 @@
+---
+// Site navigation (PRD §5): wordmark · Capability · Method · Engagement · Studio · language ·
+// Send a brief. Functional placeholder styling; phase-1/layout-nav-footer adds the sticky bar,
+// the 12-column layout and the mobile menu.
+import { pathTo, type Lang, type RouteKey } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+import LanguageSwitch from "./LanguageSwitch.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const items = Object.entries(t.nav) as [RouteKey, string][];
+const current = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="site-header__mark" href={pathTo(lang, "home")} lang="en" dir="ltr">
+      Makeena
+    </a>
+    <nav aria-label={t.primaryNav}>
+      <ul>
+        {items.map(([route, label]) => {
+          const href = pathTo(lang, route);
+          return (
+            <li>
+              <a
+                href={href}
+                aria-current={
+                  current === href ? "page" : current.startsWith(href) ? "true" : undefined
+                }
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })}
+        <li>
+          <LanguageSwitch lang={lang} />
+        </li>
+        <li>
+          <a href={pathTo(lang, "studio", "brief")}>{t.sendBrief}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-block-end: 1px solid var(--color-ink);
+  }
+
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    min-block-size: 64px;
+  }
+
+  .site-header__mark {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* 44 × 44 px targets (CLAUDE.md). */
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  [aria-current] {
+    color: var(--color-ink);
+  }
+</style>

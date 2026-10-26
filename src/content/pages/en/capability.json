@@ -1,0 +1,19 @@
+{
+  "route": "capability",
+  "lang": "en",
+  "title": "Capability · Makeena",
+  "description": "Three lead services and the full register of eight.",
+  "label": "00 · CAPABILITY",
+  "heading": "Two services lead. The rest sit inside a retained engagement.",
+  "sections": [
+    {
+      "id": "lead",
+      "label": "01 · LEAD SERVICES"
+    },
+    {
+      "id": "register",
+      "label": "02 · THE FULL REGISTER",
+      "heading": "The full register."
+    }
+  ]
+}

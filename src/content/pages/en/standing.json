@@ -1,0 +1,17 @@
+{
+  "route": "standing",
+  "lang": "en",
+  "title": "Standing production · Makeena",
+  "description": "Retained, standing production capacity across a development's life.",
+  "label": "00 · STANDING PRODUCTION",
+  "heading": "Standing production.",
+  "sections": [
+    {
+      "id": "time-lapse",
+      "label": "01 · MONTH 00 · 06 · 14 · 24",
+      "body": [
+        "[PLACEHOLDER: 07 construction time-lapse and per-phase deliverables, built in Phase 3]"
+      ]
+    }
+  ]
+}

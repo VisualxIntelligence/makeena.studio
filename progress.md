@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is in progress: tooling, decisions and tokens-type are merged (PRs #6–#8); `phase-1/arabic-fonts` is in review. The seven Phase 1 decisions are made (decision 0005).
+**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is in progress: tooling, decisions, tokens-type and arabic-fonts are merged (PRs #6–#9); `phase-1/routes-i18n` is in review. The seven Phase 1 decisions are made (decision 0005).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (scaffold + spike pages, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`, e.g. `phase-1-tooling-makeena-website…`. Cloudflare also posts a per-commit URL on each PR.
@@ -37,6 +37,9 @@ Write-ups: `docs/decisions/0001`–`0004`. 47 Playwright tests (`npm run build &
 - Astro's automatic font fallbacks are tuned to Latin metrics; they're off for the Arabic faces.
 - GSAP pin caveat: a reload while scrolled past a pinned section shifts content once. G1 should create pins before restoring scroll position.
 
+- Placeholder copy: every `[PLACEHOLDER: …]` lives in `src/content/` (`grep -rn PLACEHOLDER src/content`). Arabic page copy, nav strings and register keys are unreviewed drafts; the draft banner shows on every `/ar/` page until Phase 5. Register service names (The Twin … The Host) are English in both locales pending Arabic names.
+- Localised 404s: Cloudflare serves the nearest `404.html`; an Astro build hook moves `/{lang}/404/index.html` to `/{lang}/404.html`. `astro preview` always serves the root 404, so check `/ar/404.html` directly locally.
+
 ### Environment gotchas
 
 - `wrangler.jsonc` needs `"previews": {}` (or `wrangler preview` fails) and `"preview_urls": true`. Wrangler defaults it to false, and the config overrides the dashboard toggle.
@@ -59,8 +62,8 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 |---|---|---|
 | 1 | `phase-1/tooling` | **Merged (#6).** ESLint, Prettier, Stylelint (no gradients / backdrop-filter / physical left-right), Vitest, Playwright matrix, axe, GitHub Actions CI |
 | 2 | `phase-1/tokens-type` | **Merged (#8).** Tailwind v4 `@theme` tokens, both-script typography, contrast test, Tailwind class linter |
-| 2b | `phase-1/arabic-fonts` | **In review.** Arabic subsets: critical fonts on `/ar/` 147.8 → 118.5 KB (decision 0006) |
-| 3 | `phase-1/routes-i18n` | All §5 routes × 2 locales, content collections, i18n helpers, Arabic-preference root redirect, hreflang/canonical, sitemap, localised 404, spike pages removed from production |
+| 2b | `phase-1/arabic-fonts` | **Merged (#9).** Arabic subsets: critical fonts on `/ar/` 147.8 → 118.5 KB (decision 0006) |
+| 3 | `phase-1/routes-i18n` | **In review.** All §5 routes × 2 locales, content collections, i18n helpers, Arabic-preference root redirect, hreflang/canonical, sitemap, localised 404, spike pages removed from production |
 | 4 | `phase-1/layout-nav-footer` | BaseLayout, 12-col grid, section labels, Nav + mobile menu, skip link, Footer (toggles inert until Phase 2) |
 | 5 | `phase-1/motion-controller` | G1 `src/lib/motion/`, built around the ClientRouter lifecycle |
 | 6 | `phase-1/provenance` | §10.2 schema + `scripts/provenance/` (exiftool → JSON), seeded from `design/renders/manifest.json` |
@@ -76,4 +79,4 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 6. Domain `makeena.studio`, attached at launch.
 7. exiftool installed locally; its JSON output is committed.
 
-**To resume:** merge `phase-1/arabic-fonts`, then continue with `phase-1/routes-i18n` (PR 3).
+**To resume:** merge `phase-1/routes-i18n`, then continue with `phase-1/layout-nav-footer` (PR 4: grid, sticky nav, mobile menu, footer styling; Lighthouse CI; metric-matched Arabic fallbacks).

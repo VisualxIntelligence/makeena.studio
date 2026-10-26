@@ -1,0 +1,55 @@
+---
+// Lead services (with links to their pages) or the register of eight (PRD §5, UX doc §3).
+import { pathTo, type Lang } from "../../i18n/config";
+import { getServices } from "../../lib/content";
+import Copy from "./Copy.astro";
+
+interface Props {
+  kind: "lead" | "register";
+  lang: Lang;
+}
+
+const { kind, lang } = Astro.props;
+const services = await getServices(kind);
+---
+
+<dl class="service-list">
+  {services.map((s, i) => (
+    <div class="service-list__row">
+      <dt>
+        <span class="label" dir="ltr">
+          {String(i + 1).padStart(2, "0")}
+        </span>
+        {s.route ? (
+          <a href={pathTo(lang, s.route)}>
+            <Copy text={s.name[lang]} lang={lang} />
+          </a>
+        ) : (
+          <Copy text={s.name[lang]} lang={lang} />
+        )}
+      </dt>
+      <dd>
+        <Copy text={s.summary[lang]} lang={lang} />
+      </dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .service-list {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+  }
+
+  dt {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  dd {
+    margin: 4px 0 0;
+    color: var(--color-muted);
+  }
+</style>

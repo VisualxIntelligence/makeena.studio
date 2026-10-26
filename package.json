@@ -20,11 +20,12 @@
     "typecheck": "astro check",
     "test:unit": "vitest run",
     "test:e2e": "playwright test tests/e2e",
-    "test:spikes": "playwright test tests/spikes",
+    "test:spikes": "cross-env MKN_SPIKES=1 astro build && playwright test tests/spikes",
     "sequences:placeholder": "node scripts/sequences/placeholder-aerial.mjs",
     "fonts:arabic": "python -I scripts/fonts/subset_arabic.py"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.2",
     "gsap": "^3.15.0",
@@ -37,6 +38,7 @@
     "@playwright/test": "^1.64.1",
     "@types/node": "^24.19.2",
     "astro-eslint-parser": "^3.2.0",
+    "cross-env": "^10.1.0",
     "eslint": "^10.13.0",
     "eslint-plugin-astro": "^3.2.1",
     "eslint-plugin-jsx-a11y-x": "^0.2.0",

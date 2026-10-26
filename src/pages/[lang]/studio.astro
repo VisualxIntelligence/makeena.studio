@@ -1,0 +1,21 @@
+---
+import RegisterList from "../../components/content/RegisterList.astro";
+import type { Lang } from "../../i18n/config";
+import Page from "../../layouts/Page.astro";
+import { langPaths } from "../../lib/content";
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+
+<Page route="studio" lang={lang}>
+  <RegisterList slot="register" lang={lang} />
+  <Fragment slot="brief">
+    <p id="brief-fixed" lang="en" dir="ltr">
+      [PLACEHOLDER: brief form, engagement preset to Fixed]
+    </p>
+    <p id="brief-retained" lang="en" dir="ltr">
+      [PLACEHOLDER: brief form, engagement preset to Retained]
+    </p>
+  </Fragment>
+</Page>

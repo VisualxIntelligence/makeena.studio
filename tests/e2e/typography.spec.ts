@@ -26,7 +26,7 @@ test("English: Latin faces, uppercase tracked labels", async ({ page }) => {
   expect(display.family).toMatch(/^"?Cormorant Garamond/);
   expect(display.lineHeight).toBeCloseTo(1.05, 2);
 
-  const label = await style(page, ".label");
+  const label = await style(page, "main .label");
   expect(label.family).toMatch(/^"?JetBrains Mono/);
   expect(label.transform).toBe("uppercase");
   expect(label.letterSpacing).not.toBe("normal");
@@ -50,7 +50,7 @@ test("Arabic: Arabic faces first, larger body, no uppercase or letter-spacing", 
   expect(display.lineHeight).toBeLessThanOrEqual(1.4);
   expect(["0px", "normal"]).toContain(display.letterSpacing);
 
-  const label = await style(page, ".label");
+  const label = await style(page, "main .label");
   expect(label.family).toMatch(/^"?MKN Sans Arabic/);
   expect(label.transform).toBe("none");
   expect(["0px", "normal"]).toContain(label.letterSpacing);

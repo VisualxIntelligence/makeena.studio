@@ -1,0 +1,21 @@
+{
+  "route": "aerial",
+  "lang": "en",
+  "title": "Aerial perspective · Makeena",
+  "description": "Generated aerials: no aircraft, no flight window.",
+  "label": "00 · AERIAL PERSPECTIVE",
+  "heading": "Aerial perspective.",
+  "lede": "No aircraft. No flight window.",
+  "sections": [
+    {
+      "id": "flight",
+      "label": "01 · THE FLIGHT",
+      "body": ["[PLACEHOLDER: 03 scroll-flown aerial, built in Phase 3]"]
+    },
+    {
+      "id": "argument",
+      "label": "02 · NO AIRCRAFT",
+      "body": ["[PLACEHOLDER: the no-aircraft, no-flight-window argument from the brief]"]
+    }
+  ]
+}

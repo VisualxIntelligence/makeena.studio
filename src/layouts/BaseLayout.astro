@@ -3,24 +3,46 @@ import { Font } from "astro:assets";
 import "../styles/global.css";
 import "../styles/view-transitions.css";
 import CutLine from "../components/global/CutLine.astro";
+import Footer from "../components/global/Footer.astro";
+import Nav from "../components/global/Nav.astro";
+import { counterpartPath, dirOf, type Lang } from "../i18n/config";
+import { ui } from "../i18n/ui";
 
 interface Props {
   title: string;
-  lang: "en" | "ar";
+  lang: Lang;
+  description?: string;
+  /** Canonical and hreflang links (PRD §7.1). Off for 404 pages, which have no counterpart. */
+  alternates?: boolean;
+  /** Site nav and footer. The Phase 0 spike pages bring their own header. */
+  chrome?: boolean;
 }
 
-const { title, lang } = Astro.props;
-const dir = lang === "ar" ? "rtl" : "ltr";
+const { title, lang, description, alternates = true, chrome = true } = Astro.props;
 const isAr = lang === "ar";
+const t = ui[lang];
+const path = Astro.url.pathname;
+const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
 ---
 
 <!doctype html>
-<html lang={lang} dir={dir}>
+<html lang={lang} dir={dirOf(lang)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Not indexed until launch (decision 0005: makeena.studio is attached at launch). -->
     <meta name="robots" content="noindex" />
     <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {alternates && (
+      <>
+        <link rel="canonical" href={new URL(path, Astro.site).href} />
+        <link rel="alternate" hreflang="en" href={href("en")} />
+        <link rel="alternate" hreflang="ar" href={href("ar")} />
+        <link rel="alternate" hreflang="x-default" href={href("en")} />
+      </>
+    )}
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <!-- Latin faces on every page (identifiers stay Latin in Arabic); Arabic faces on /ar/ only. -->
     <Font cssVariable="--ff-display" preload={isAr ? false : [{ weight: 400 }]} />
     <Font cssVariable="--ff-body" preload={isAr ? false : [{ weight: 400 }]} />
@@ -35,6 +57,13 @@ const isAr = lang === "ar";
         const locale = function (path) {
           return (path.match(/^\/(en|ar)\//) || [])[1];
         };
+
+        // PRD §5: remember the locale the visitor is reading, so `/` sends them back to it.
+        try {
+          localStorage.setItem("mkn-lang", document.documentElement.lang);
+        } catch {
+          // Storage blocked: `/` falls back to the browser's language preference.
+        }
 
         // 12: the language switch keeps the current section and flags the
         // navigation, because Safari 18 has no navigation.activation to compare URLs.
@@ -86,10 +115,19 @@ const isAr = lang === "ar";
     <slot name="head" />
   </head>
   <body>
-    <slot name="header" />
+    <a class="skip-link" href="#main">
+      {t.skipLink}
+    </a>
+    {t.draftNotice && (
+      <p class="draft-notice label" lang="en" dir="ltr">
+        {t.draftNotice}
+      </p>
+    )}
+    {chrome ? <Nav lang={lang} /> : <slot name="header" />}
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    {chrome && <Footer lang={lang} />}
     <CutLine />
   </body>
 </html>
@@ -97,5 +135,28 @@ const isAr = lang === "ar";
 <style>
   main:focus {
     outline: none;
+  }
+
+  /* Visible on focus only; first stop for keyboard users. */
+  .skip-link {
+    position: absolute;
+    inset-inline-start: 16px;
+    inset-block-start: -100px;
+    z-index: var(--z-toast);
+    padding: 12px 16px;
+    background: var(--color-ink);
+    color: var(--color-ivory);
+  }
+
+  .skip-link:focus {
+    inset-block-start: 8px;
+  }
+
+  .draft-notice {
+    margin: 0;
+    padding: 8px 16px;
+    background: var(--color-sand);
+    color: var(--color-ink);
+    text-align: center;
   }
 </style>
