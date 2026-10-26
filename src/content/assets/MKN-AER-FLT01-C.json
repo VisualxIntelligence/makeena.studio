@@ -1,0 +1,46 @@
+{
+  "id": "MKN-AER-FLT01-C",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "03"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Golden hour",
+      "ar": "الساعة الذهبية"
+    }
+  },
+  "aircraft": "none",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
+    "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
+  },
+  "alt": {
+    "en": "Generated aerial: a low pass along the development's promenade.",
+    "ar": "لقطة جوية مولّدة: مرور منخفض على امتداد ممشى المشروع."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "68645d8e-ddd9-43c1-b77c-a2dec3d8025e",
+    "derivedFrom": "MKN-AER-FLT01-A"
+  },
+  "source": {
+    "file": "design/renders/MKN-AER-FLT01-C.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

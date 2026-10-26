@@ -1,0 +1,45 @@
+{
+  "id": "MKN-PRG-CAM01-M06",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "07"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Daylight",
+      "ar": "النهار"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · CONSTRUCTION · MONTH 06",
+    "ar": "صورة مولّدة · مرحلة البناء · الشهر 06"
+  },
+  "alt": {
+    "en": "Generated image: the same site in daylight at month 6 of construction, with piling rigs, an early concrete core and a crane.",
+    "ar": "صورة مولّدة: الموقع نفسه نهاراً في الشهر السادس من البناء، مع معدات دق الأساسات ونواة خرسانية أولى ورافعة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "ff5a841a-a9c8-4ea0-8dc0-c534caa67ad1",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-PRG-CAM01-M06.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

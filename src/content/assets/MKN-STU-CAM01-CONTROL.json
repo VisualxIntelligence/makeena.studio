@@ -1,0 +1,38 @@
+{
+  "id": "MKN-STU-CAM01-CONTROL",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · CONTROL ROOM",
+    "ar": "صورة مولّدة · غرفة التحكم"
+  },
+  "alt": {
+    "en": "Generated image: an empty broadcast control room at night.",
+    "ar": "صورة مولّدة: غرفة تحكم بث خالية ليلاً."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "b681b94c-fb70-48ca-8914-5de08f821700"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM01-CONTROL.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}

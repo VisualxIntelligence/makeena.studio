@@ -1,0 +1,45 @@
+{
+  "id": "MKN-PRG-CAM01-M14",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "07"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Daylight",
+      "ar": "النهار"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · CONSTRUCTION · MONTH 14",
+    "ar": "صورة مولّدة · مرحلة البناء · الشهر 14"
+  },
+  "alt": {
+    "en": "Generated image: the same site in daylight at month 14, the concrete frame at about level 20 with a tower crane.",
+    "ar": "صورة مولّدة: الموقع نفسه نهاراً في الشهر الرابع عشر، والهيكل الخرساني عند الطابق العشرين تقريباً مع رافعة برجية."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "6f705d3d-d0fe-4a99-8775-1fc2d68f5d1c",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-PRG-CAM01-M14.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

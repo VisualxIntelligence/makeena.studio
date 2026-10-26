@@ -1,0 +1,45 @@
+{
+  "id": "MKN-TWR-CAM01-OVERCAST",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "07"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Overcast daylight",
+      "ar": "نهار غائم"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · OVERCAST · MONTH 24",
+    "ar": "صورة مولّدة · نهار غائم · الشهر 24"
+  },
+  "alt": {
+    "en": "Generated image: the fictional tower complete, in flat overcast daylight with unlit interiors.",
+    "ar": "صورة مولّدة: البرج المتخيَّل مكتملاً في ضوء نهار غائم، والمساحات الداخلية غير مضاءة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "90f062f0-fa60-4e09-8d69-f71f7a923959",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-TWR-CAM01-OVERCAST.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

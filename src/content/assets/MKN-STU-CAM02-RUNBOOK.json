@@ -1,0 +1,38 @@
+{
+  "id": "MKN-STU-CAM02-RUNBOOK",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · PRODUCTION RUNBOOK",
+    "ar": "صورة مولّدة · دليل الإنتاج"
+  },
+  "alt": {
+    "en": "Generated image: an overhead view of hands beside an open production runbook and an architectural elevation.",
+    "ar": "صورة مولّدة: منظر علوي ليدين بجانب دليل إنتاج مفتوح وواجهة معمارية مرسومة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "2dc66944-071f-4232-8a61-0db4efbfb371"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM02-RUNBOOK.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}
