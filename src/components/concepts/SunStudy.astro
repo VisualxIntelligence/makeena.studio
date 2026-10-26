@@ -4,7 +4,8 @@
 // the sun's position for Doha on 21 June 2026 (decision 0013), computed at build time.
 import type { Lang } from "../../i18n/config";
 import { sunSteps } from "../../lib/sun";
-import MatchedFrameScrubber, { type ScrubberFrame } from "../scrubber/MatchedFrameScrubber.astro";
+import MatchedFrameScrubber from "../scrubber/MatchedFrameScrubber.astro";
+import type { ScrubberFrame } from "../scrubber/types";
 
 interface Props {
   lang: Lang;

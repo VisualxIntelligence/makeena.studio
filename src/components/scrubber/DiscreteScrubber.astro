@@ -1,0 +1,313 @@
+---
+// MatchedFrameScrubber, discrete mode (PRD §9.1, used by 07). Stops are a native radio group of
+// thumbnails (arrow keys move between them); a polite live region announces the stop; a range
+// control wipes between the selected stop and the one before it (clip-path), hidden under
+// reduced motion. Chronology follows `dir`: the first stop sits at the inline start.
+// With JS, only the selected frame is displayed, so the others are not fetched until the visitor
+// interacts. Without JS, every stop is shown as a labelled grid with its notes.
+import { Picture } from "astro:assets";
+import { getAsset, imageFor, nextSheetId } from "../../lib/assets";
+import Copy from "../content/Copy.astro";
+import InfoButton from "../media/InfoButton.astro";
+import ProvenanceSheet from "../media/ProvenanceSheet.astro";
+import type { DiscreteProps } from "./types";
+
+type Props = DiscreteProps;
+
+const {
+  mode,
+  lang,
+  frames,
+  value,
+  label,
+  announce,
+  notes,
+  compare,
+  priority = false,
+  sizes = "(width >= 80rem) 1280px, calc(100vw - 32px)",
+} = Astro.props;
+
+const ordered = [...frames].sort((a, b) => a.value - b.value);
+const assets = await Promise.all(ordered.map((f) => getAsset(f.assetId)));
+const sheets = assets.map((a) => nextSheetId(a.id));
+const selected = Math.max(
+  0,
+  ordered.findIndex((f) => f.value === value),
+);
+const group = `${sheets[0]}-stops`;
+const wipeId = `${sheets[0]}-wipe`;
+const first = imageFor(assets[0]);
+---
+
+<figure
+  class="scrubber scrubber--discrete"
+  data-scrubber
+  data-mode={mode}
+  data-provenance={assets[selected].id}
+  aria-label={label}
+>
+  <div class="pfig__media scrubber__stage" style={`aspect-ratio: ${first.width} / ${first.height}`}>
+    {assets.map((asset, i) => (
+      <div
+        class="scrubber__layer"
+        data-provenance={asset.id}
+        data-value={ordered[i].value}
+        data-sheet={sheets[i]}
+        data-caption={asset.caption[lang]}
+        data-active={i === selected ? "" : undefined}
+      >
+        <Picture
+          src={imageFor(asset)}
+          alt={asset.alt[lang]}
+          widths={[480, 828, 1200, 1600]}
+          sizes={sizes}
+          formats={["avif", "webp"]}
+          loading={priority && i === selected ? "eager" : "lazy"}
+          fetchpriority={priority && i === selected ? "high" : "auto"}
+        />
+        <p class="label scrubber__layer-label">{ordered[i].label[lang]}</p>
+      </div>
+    ))}
+    <span class="pfig__corners" aria-hidden="true"></span>
+    <InfoButton sheet={sheets[selected]} assetId={assets[selected].id} lang={lang} />
+  </div>
+
+  <fieldset class="scrubber__stops">
+    <legend class="visually-hidden">{label}</legend>
+    {assets.map((asset, i) => (
+      <label class="scrubber__stop">
+        <input
+          class="visually-hidden"
+          type="radio"
+          name={group}
+          value={ordered[i].value}
+          checked={i === selected}
+        />
+        <Picture
+          src={imageFor(asset)}
+          alt=""
+          widths={[240, 480]}
+          sizes="160px"
+          formats={["avif", "webp"]}
+          loading="lazy"
+          fetchpriority="low"
+        />
+        <span class="label">{ordered[i].label[lang]}</span>
+      </label>
+    ))}
+  </fieldset>
+
+  <div class="scrubber__wipe" data-scrubber-wipe hidden>
+    <label class="label" for={wipeId} data-scrubber-wipe-label>
+      {compare[ordered[Math.max(1, selected)].value]}
+    </label>
+    <input
+      class="scrubber__input"
+      id={wipeId}
+      type="range"
+      min="0"
+      max="100"
+      step="1"
+      value="0"
+      data-scrubber-wipe-input
+    />
+  </div>
+
+  <p class="visually-hidden" aria-live="polite" data-scrubber-live></p>
+
+  <div class="scrubber__notes">
+    {ordered.map((frame, i) => (
+      <div
+        class="scrubber__note"
+        data-value={frame.value}
+        data-active={i === selected ? "" : undefined}
+      >
+        <p class="label">{frame.label[lang]}</p>
+        <p>
+          <Copy text={notes[frame.value]} lang={lang} />
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <figcaption class="label pfig__caption" data-scrubber-caption>
+    {assets[selected].caption[lang]}
+  </figcaption>
+  {assets.map((asset, i) => (
+    <ProvenanceSheet asset={asset} lang={lang} id={sheets[i]} />
+  ))}
+  <script
+    type="application/json"
+    data-scrubber-text
+    is:inline
+    set:html={JSON.stringify({ announce, compare })}
+  />
+</figure>
+
+<script>
+  import "./scrubber";
+</script>
+
+<style>
+  .scrubber {
+    margin: 0;
+  }
+
+  .scrubber__stage {
+    position: relative;
+  }
+
+  /* With JS: frames stack; only the selected one (and, during a wipe, the one before it) is
+     displayed, so the others are not fetched until needed. */
+  :global(html.js) .scrubber__layer {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+
+  :global(html.js) .scrubber__layer[data-active],
+  :global(html.js) .scrubber__layer[data-before] {
+    display: block;
+  }
+
+  .scrubber__stage :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .scrubber__layer-label {
+    display: none;
+  }
+
+  /* Without JS: every stop as a labelled grid; the stop picker and wipe need JS. */
+  :global(html:not(.js)) .scrubber__stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 16px;
+    aspect-ratio: auto !important;
+    background: none;
+  }
+
+  :global(html:not(.js)) .scrubber__layer-label {
+    display: block;
+    margin-block: 8px 0;
+  }
+
+  /* The ⓘ button belongs to InfoButton, hence :global. Without JS it could only ever open the
+     first stop's sheet, so it is hidden with the stop picker. */
+  :global(html:not(.js)) .scrubber__stops,
+  :global(html:not(.js) .scrubber--discrete .pfig__info),
+  :global(html:not(.js)) .pfig__caption {
+    display: none;
+  }
+
+  /* Fieldsets default to min-content width; without this the strip widens the page instead of
+     scrolling. */
+  .scrubber__stops {
+    display: flex;
+    gap: 8px;
+    min-inline-size: 0;
+    margin: 16px 0 0;
+    padding: 0;
+    border: 0;
+    overflow-x: auto;
+    scroll-snap-type: inline mandatory;
+  }
+
+  /* Positioned so the visually hidden radio stays inside the scrolling strip (it is absolute). */
+  .scrubber__stop {
+    position: relative;
+    display: grid;
+    flex: none;
+    gap: 4px;
+    inline-size: 160px;
+    padding-block-end: 4px;
+    border-block-start: 2px solid transparent;
+    scroll-snap-align: start;
+    cursor: pointer;
+  }
+
+  .scrubber__stop:has(:checked) {
+    border-block-start-color: var(--color-copper);
+  }
+
+  .scrubber__stop:has(:focus-visible) {
+    outline: 2px solid var(--color-copper-deep);
+    outline-offset: 2px;
+  }
+
+  .scrubber__stop :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .scrubber__wipe {
+    display: grid;
+    gap: 4px;
+    margin-block-start: 16px;
+  }
+
+  .scrubber__wipe[hidden] {
+    display: none;
+  }
+
+  /* A copper handle on a hairline track; 44 px hit area. */
+  .scrubber__input {
+    inline-size: 100%;
+    block-size: 44px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .scrubber__input::-webkit-slider-runnable-track {
+    block-size: 1px;
+    background: var(--color-ink);
+  }
+
+  .scrubber__input::-moz-range-track {
+    block-size: 1px;
+    background: var(--color-ink);
+  }
+
+  .scrubber__input::-webkit-slider-thumb {
+    inline-size: 44px;
+    block-size: 44px;
+    margin-block-start: -22px;
+    border: 0;
+    background: var(--scrubber-handle) center / 6px 24px no-repeat;
+    appearance: none;
+  }
+
+  .scrubber__input::-moz-range-thumb {
+    inline-size: 44px;
+    block-size: 44px;
+    border: 0;
+    background: var(--scrubber-handle) center / 6px 24px no-repeat;
+  }
+
+  .scrubber--discrete {
+    --scrubber-handle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 24'%3E%3Crect width='6' height='24' fill='%23B4653A'/%3E%3C/svg%3E");
+  }
+
+  .scrubber__notes {
+    margin-block-start: 16px;
+  }
+
+  :global(html.js) .scrubber__note {
+    display: none;
+  }
+
+  :global(html.js) .scrubber__note[data-active] {
+    display: block;
+  }
+
+  .scrubber__note > :global(*) {
+    max-inline-size: var(--container-measure);
+    margin-block: 0 8px;
+  }
+</style>

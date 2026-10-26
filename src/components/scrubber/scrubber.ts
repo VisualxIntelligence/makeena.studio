@@ -1,7 +1,8 @@
-// MatchedFrameScrubber behaviour (PRD §9.1). Continuous mode: the range value picks the two
+// MatchedFrameScrubber behaviour (PRD §9.1). Continuous mode (04): the range value picks the two
 // nearest frames and crossfades between them by opacity (GPU-composited, no canvas); under
 // reduced motion the nearest frame swaps in instantly. The ⓘ button, caption and figure ID
 // always follow the frame on screen. Set up per page (ClientRouter lifecycle).
+import { crossfade } from "../../lib/crossfade";
 import { onPage } from "../../lib/lifecycle";
 import { motion } from "../../lib/motion";
 
@@ -88,10 +89,95 @@ function setup(root: HTMLElement, signal: AbortSignal): void {
   render();
 }
 
+/**
+ * Discrete mode (07): the checked radio picks the frame, through crossfade() (a short fade, or
+ * instant without motion). The
+ * wipe shows the stop before on the inline-start side of a divider, clip-path on the inline end.
+ */
+function setupDiscrete(root: HTMLElement, signal: AbortSignal): void {
+  const radios = [...root.querySelectorAll<HTMLInputElement>('input[type="radio"]')];
+  const layers = [...root.querySelectorAll<HTMLElement>(".scrubber__layer")];
+  const notes = [...root.querySelectorAll<HTMLElement>(".scrubber__note")];
+  const live = root.querySelector<HTMLElement>("[data-scrubber-live]");
+  const caption = root.querySelector<HTMLElement>("[data-scrubber-caption]");
+  const info = root.querySelector<HTMLButtonElement>(".pfig__info");
+  const wipe = root.querySelector<HTMLElement>("[data-scrubber-wipe]");
+  const wipeInput = root.querySelector<HTMLInputElement>("[data-scrubber-wipe-input]");
+  const wipeLabel = root.querySelector<HTMLElement>("[data-scrubber-wipe-label]");
+  const text: { announce: Record<string, string>; compare: Record<string, string> } = JSON.parse(
+    root.querySelector("[data-scrubber-text]")?.textContent ?? "{}",
+  );
+  const rtl = () => getComputedStyle(root).direction === "rtl";
+
+  // Frames not on screen are display:none and lazy; load them all on first contact. WebKit never
+  // fetches a lazy image that was hidden at load once shown, so make them eager (decision 0012).
+  const wake = () => {
+    for (const img of root.querySelectorAll<HTMLImageElement>(".scrubber__layer img")) {
+      img.loading = "eager";
+    }
+  };
+  for (const type of ["pointerenter", "focusin", "touchstart"]) {
+    root.addEventListener(type, wake, { once: true, passive: true, signal });
+  }
+
+  const index = () =>
+    Math.max(
+      0,
+      radios.findIndex((r) => r.checked),
+    );
+
+  const applyWipe = () => {
+    const i = index();
+    const before = layers[i - 1];
+    const current = layers[i];
+    const v = Number(wipeInput?.value ?? 0);
+    for (const layer of layers) layer.toggleAttribute("data-before", layer === before && v > 0);
+    current.style.clipPath =
+      before && v > 0 ? (rtl() ? `inset(0 ${v}% 0 0)` : `inset(0 0 0 ${v}%)`) : "";
+    wipeInput?.setAttribute("aria-valuetext", `${v}%`);
+  };
+
+  const show = () => {
+    const i = index();
+    const value = radios[i].value;
+    layers.forEach((layer, k) => {
+      layer.toggleAttribute("data-active", k === i);
+      layer.style.clipPath = "";
+    });
+    notes.forEach((note, k) => note.toggleAttribute("data-active", k === i));
+    const layer = layers[i];
+    root.dataset.provenance = layer.dataset.provenance;
+    if (caption) caption.textContent = layer.dataset.caption ?? "";
+    if (info && layer.dataset.sheet) {
+      info.setAttribute("popovertarget", layer.dataset.sheet);
+      info.setAttribute(
+        "aria-label",
+        info.getAttribute("aria-label")!.replace(/: .*$/, `: ${layer.dataset.provenance}`),
+      );
+    }
+    if (wipe && wipeInput && wipeLabel) {
+      wipe.hidden = i === 0 || !motion.allowed;
+      wipeInput.value = "0";
+      wipeLabel.textContent = text.compare[value] ?? "";
+    }
+    applyWipe();
+  };
+
+  const select = () => {
+    wake();
+    if (live) live.textContent = text.announce[radios[index()].value] ?? "";
+    void crossfade(show);
+  };
+
+  for (const radio of radios) radio.addEventListener("change", select, { signal });
+  wipeInput?.addEventListener("input", applyWipe, { signal });
+  motion.onChange(show, signal);
+  show();
+}
+
 onPage((signal) => {
-  for (const root of document.querySelectorAll<HTMLElement>(
-    "[data-scrubber][data-mode='continuous']",
-  )) {
-    setup(root, signal);
+  for (const root of document.querySelectorAll<HTMLElement>("[data-scrubber]")) {
+    if (root.dataset.mode === "continuous") setup(root, signal);
+    if (root.dataset.mode === "discrete") setupDiscrete(root, signal);
   }
 });

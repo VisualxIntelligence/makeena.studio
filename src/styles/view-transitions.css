@@ -185,18 +185,18 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   }
 }
 
-/* ── 13 After hours (same-document swap, src/lib/hours.ts) ───────────────────────
+/* ── Same-document crossfades (src/lib/crossfade.ts): 13 after hours, 07's stops ──
    A plain 300 ms crossfade of the page: no sweep, no line. */
-html[data-vt="hours"]::view-transition-old(root) {
+html[data-vt="fade"]::view-transition-old(root) {
   animation: vt-fade-out 300ms ease both;
 }
 
-html[data-vt="hours"]::view-transition-new(root) {
+html[data-vt="fade"]::view-transition-new(root) {
   animation: vt-fade-in 300ms ease both;
 }
 
-html[data-vt="hours"]::view-transition-group(cut-line),
-html[data-vt="hours"]::view-transition-group(cut-line-b) {
+html[data-vt="fade"]::view-transition-group(cut-line),
+html[data-vt="fade"]::view-transition-group(cut-line-b) {
   display: none;
 }
 

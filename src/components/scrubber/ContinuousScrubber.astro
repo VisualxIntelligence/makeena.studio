@@ -1,0 +1,280 @@
+---
+// MatchedFrameScrubber, continuous mode (PRD §9.1, used by 04). Every frame is a provenance
+// asset; the ⓘ button always opens the sheet for the frame on screen. A native range input
+// crossfades between the two nearest frames (an instant swap under reduced motion). Without JS:
+// the initial frame plus the labelled thumbnail row.
+// Only the initial frame loads with the page; the others sit in <template>s (never fetched) until
+// the visitor points at, focuses or touches the scrubber, so they never compete with the LCP.
+import { Picture } from "astro:assets";
+import { getAsset, imageFor, nextSheetId } from "../../lib/assets";
+import InfoButton from "../media/InfoButton.astro";
+import ProvenanceSheet from "../media/ProvenanceSheet.astro";
+import type { ContinuousProps } from "./types";
+
+type Props = ContinuousProps;
+
+const {
+  mode,
+  lang,
+  frames,
+  min,
+  max,
+  step,
+  value,
+  label,
+  readout,
+  note,
+  directionLock = "inherit",
+  priority = false,
+  sizes = "(width >= 80rem) 1280px, calc(100vw - 32px)",
+} = Astro.props;
+
+const ordered = [...frames].sort((a, b) => a.value - b.value);
+const assets = await Promise.all(ordered.map((f) => getAsset(f.assetId)));
+const sheets = assets.map((a) => nextSheetId(a.id));
+const nearest = ordered.reduce(
+  (best, f, i) => (Math.abs(f.value - value) < Math.abs(ordered[best].value - value) ? i : best),
+  0,
+);
+const inputId = `${sheets[nearest]}-input`;
+const first = imageFor(assets[0]);
+---
+
+<figure
+  class="scrubber"
+  data-scrubber
+  data-mode={mode}
+  data-provenance={assets[nearest].id}
+  aria-label={label}
+>
+  <div class="pfig__media scrubber__stage" style={`aspect-ratio: ${first.width} / ${first.height}`}>
+    {assets.map((asset, i) => (
+      <div
+        class="scrubber__layer"
+        data-provenance={asset.id}
+        data-value={ordered[i].value}
+        data-sheet={sheets[i]}
+        data-caption={asset.caption[lang]}
+        data-active={i === nearest ? "" : undefined}
+      >
+        {i === nearest ? (
+          <Picture
+            src={imageFor(asset)}
+            alt={asset.alt[lang]}
+            widths={[480, 828, 1200, 1600]}
+            sizes={sizes}
+            formats={["avif", "webp"]}
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : "auto"}
+          />
+        ) : (
+          <template data-deferred>
+            <Picture
+              src={imageFor(asset)}
+              alt={asset.alt[lang]}
+              widths={[480, 828, 1200, 1600]}
+              sizes={sizes}
+              formats={["avif", "webp"]}
+              loading="lazy"
+            />
+          </template>
+        )}
+      </div>
+    ))}
+    <span class="pfig__corners" aria-hidden="true"></span>
+    <InfoButton sheet={sheets[nearest]} assetId={assets[nearest].id} lang={lang} />
+  </div>
+
+  <div class="scrubber__controls">
+    <label class="visually-hidden" for={inputId}>
+      {label}
+    </label>
+    <input
+      class="scrubber__input"
+      id={inputId}
+      type="range"
+      min={min}
+      max={max}
+      step={step}
+      value={value}
+      dir={directionLock === "ltr" ? "ltr" : undefined}
+      aria-valuetext={readout[value]}
+      data-scrubber-input
+    />
+    <output class="scrubber__readout" for={inputId} data-scrubber-output>
+      {readout[value]}
+    </output>
+    {note && <p class="label scrubber__note">{note}</p>}
+  </div>
+
+  <ol class="scrubber__thumbs" dir={directionLock === "ltr" ? "ltr" : undefined}>
+    {assets.map((asset, i) => (
+      <li>
+        <button
+          class="scrubber__thumb"
+          type="button"
+          data-value={ordered[i].value}
+          aria-pressed={i === nearest ? "true" : "false"}
+        >
+          <Picture
+            src={imageFor(asset)}
+            alt=""
+            widths={[240, 480]}
+            sizes="160px"
+            formats={["avif", "webp"]}
+            loading="lazy"
+            fetchpriority="low"
+          />
+          <span class="label">{ordered[i].label[lang]}</span>
+        </button>
+      </li>
+    ))}
+  </ol>
+
+  <figcaption class="label pfig__caption" data-scrubber-caption>
+    {assets[nearest].caption[lang]}
+  </figcaption>
+  {assets.map((asset, i) => (
+    <ProvenanceSheet asset={asset} lang={lang} id={sheets[i]} />
+  ))}
+  <script
+    type="application/json"
+    data-scrubber-readout
+    is:inline
+    set:html={JSON.stringify(readout)}
+  />
+</figure>
+
+<script>
+  import "./scrubber";
+</script>
+
+<style>
+  .scrubber {
+    --scrubber-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%23B4653A'/%3E%3C/svg%3E");
+
+    margin: 0;
+  }
+
+  /* The stage's height comes from its aspect ratio alone, so frames arriving later (they load on
+     first contact) never change the layout. */
+  .scrubber__stage {
+    position: relative;
+  }
+
+  /* Frames stack exactly; only the active one shows until JS crossfades. */
+  .scrubber__layer {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .scrubber__layer[data-active] {
+    opacity: 1;
+  }
+
+  .scrubber__stage :global(img) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .scrubber__controls {
+    display: grid;
+    gap: 8px;
+    margin-block-start: 16px;
+  }
+
+  /* The control does nothing without JS: show the thumbnails only. */
+  :global(html:not(.js)) .scrubber__controls {
+    display: none;
+  }
+
+  /* A copper sun (SVG, not a rounded box) on a hairline track; 44 px hit area. */
+  .scrubber__input {
+    inline-size: 100%;
+    block-size: 44px;
+    margin: 0;
+    background: transparent;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .scrubber__input::-webkit-slider-runnable-track {
+    block-size: 1px;
+    background: var(--color-ink);
+  }
+
+  .scrubber__input::-moz-range-track {
+    block-size: 1px;
+    background: var(--color-ink);
+  }
+
+  .scrubber__input::-webkit-slider-thumb {
+    inline-size: 44px;
+    block-size: 44px;
+    margin-block-start: -22px;
+    border: 0;
+    background: var(--scrubber-sun) center / 24px 24px no-repeat;
+    appearance: none;
+  }
+
+  .scrubber__input::-moz-range-thumb {
+    inline-size: 44px;
+    block-size: 44px;
+    border: 0;
+    background: var(--scrubber-sun) center / 24px 24px no-repeat;
+  }
+
+  /* Two lines reserved: the text changes length as the value moves, and must not push the
+     note and thumbnails around (PRD §9.3: no layout shift on interaction). */
+  .scrubber__readout {
+    display: block;
+    min-block-size: 3em;
+    font-family: var(--ff-mono);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  :lang(ar) .scrubber__readout {
+    font-family: var(--font-body);
+  }
+
+  .scrubber__note {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .scrubber__thumbs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 0;
+    padding: 0;
+    overflow-x: auto;
+    list-style: none;
+  }
+
+  .scrubber__thumb {
+    display: grid;
+    gap: 4px;
+    inline-size: 160px;
+    padding: 0 0 4px;
+    border: 0;
+    border-block-start: 2px solid transparent;
+    background: none;
+    color: var(--color-ink);
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .scrubber__thumb[aria-pressed="true"] {
+    border-block-start-color: var(--color-copper);
+  }
+
+  .scrubber__thumb :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+</style>
