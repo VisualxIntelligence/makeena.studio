@@ -1,6 +1,6 @@
 # 0011 — 11 section-cut and 12 mirror-line on the ClientRouter
 
-**Date:** 26 October 2026 · **Phase:** 2 · **Status:** accepted; merge waits on the iPhone check (`docs/qa/ios-safari-checklist.md`)
+**Date:** 26 October 2026 · **Phase:** 2 · **Status:** accepted; real-iPhone check passed on 26 Oct 2026 (`docs/qa/ios-safari-checklist.md`)
 
 ## How it works
 
@@ -38,6 +38,6 @@ In Playwright's WebKit build for Windows (WinCairo, not Apple's Safari), the pag
 
 So it's in WebKit's same-document view transition (or the router's scroll-to-top inside it), not our CSS, and it predates this PR: routed navigations have used view transitions since #12, with animations silenced. A regression test runs on Linux WebKit in CI and is skipped only on Windows WebKit. The real-iPhone checklist has the same step.
 
-## Still to verify
+## Real iOS Safari
 
-**Real iOS Safari** (PRD §8.2 acceptance), using the checklist. This PR merges only after it passes.
+Passed on 26 October 2026: the founder ran the full checklist on a real iPhone. That covers the sweep in both directions, the mirror-line split with the section kept, reduced motion, Safari's swipe-back, the info sheet, and the scrolled-page footer tap. The Windows-WebKit crash doesn't happen on real Safari.
