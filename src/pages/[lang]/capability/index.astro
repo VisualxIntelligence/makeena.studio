@@ -1,0 +1,14 @@
+---
+import ServiceList from "../../../components/content/ServiceList.astro";
+import type { Lang } from "../../../i18n/config";
+import Page from "../../../layouts/Page.astro";
+import { langPaths } from "../../../lib/content";
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+
+<Page route="capability" lang={lang}>
+  <ServiceList slot="lead" kind="lead" lang={lang} />
+  <ServiceList slot="register" kind="register" lang={lang} />
+</Page>

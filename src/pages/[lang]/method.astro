@@ -1,0 +1,13 @@
+---
+import GateList from "../../components/content/GateList.astro";
+import type { Lang } from "../../i18n/config";
+import Page from "../../layouts/Page.astro";
+import { langPaths } from "../../lib/content";
+
+export const getStaticPaths = langPaths;
+const lang = Astro.params.lang as Lang;
+---
+
+<Page route="method" lang={lang}>
+  <GateList slot="gates" lang={lang} />
+</Page>

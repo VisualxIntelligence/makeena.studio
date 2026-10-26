@@ -1,0 +1,15 @@
+{
+  "route": "privacy",
+  "lang": "en",
+  "title": "Privacy and data · Makeena",
+  "description": "How Makeena handles personal data.",
+  "label": "00 · PRIVACY",
+  "heading": "Privacy and data.",
+  "sections": [
+    {
+      "id": "privacy",
+      "label": "01 · PRIVACY",
+      "body": ["[PLACEHOLDER: privacy text, to be confirmed by Qatari counsel]"]
+    }
+  ]
+}

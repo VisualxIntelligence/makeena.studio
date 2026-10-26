@@ -1,0 +1,25 @@
+---
+// 12 · language switch (PRD §7.1). Links to the same page in the other locale; the inline script
+// in BaseLayout carries the current #section across and remembers the choice. The label is in
+// the target language and marked up with its lang.
+import { counterpartPath, otherLang, type Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const to = otherLang(lang);
+---
+
+<a
+  class={className}
+  href={counterpartPath(Astro.url.pathname, to)}
+  lang={to}
+  hreflang={to}
+  data-lang-switch
+>
+  {ui[to].languageName}
+</a>

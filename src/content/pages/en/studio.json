@@ -1,0 +1,26 @@
+{
+  "route": "studio",
+  "lang": "en",
+  "title": "Studio · Makeena",
+  "description": "The studio, its credentials and the corporate register.",
+  "label": "00 · STUDIO",
+  "heading": "The studio.",
+  "sections": [
+    {
+      "id": "studio",
+      "label": "01 · STUDIO",
+      "body": ["[PLACEHOLDER: studio paragraph and photography, built in Phase 4]"]
+    },
+    {
+      "id": "register",
+      "label": "02 · CORPORATE REGISTER",
+      "heading": "Corporate register."
+    },
+    {
+      "id": "brief",
+      "label": "03 · SEND A BRIEF",
+      "heading": "Send a brief.",
+      "body": ["[PLACEHOLDER: brief form with Turnstile, built in Phase 4]"]
+    }
+  ]
+}

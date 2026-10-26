@@ -6,15 +6,13 @@ import SpikeNav from "../../../components/global/SpikeNav.astro";
 import { spikeCopy } from "../../../spikes/copy";
 import heroDusk from "../../../../design/renders/MKN-TWR-CAM01-DUSK.jpg";
 
-export function getStaticPaths() {
-  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
-}
+export { spikePaths as getStaticPaths } from "../../../spikes/paths";
 
 const lang = Astro.params.lang as "en" | "ar";
 const t = spikeCopy[lang];
 ---
 
-<BaseLayout title="Spike · Home" lang={lang}>
+<BaseLayout chrome={false} title="Spike · Home" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
   {t.draftNote && (
     <p class="wrap label draft" lang="en" dir="ltr">

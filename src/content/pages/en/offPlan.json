@@ -1,0 +1,20 @@
+{
+  "route": "offPlan",
+  "lang": "en",
+  "title": "Off-plan visualisation · Makeena",
+  "description": "Visualisation and engineering for buildings that do not exist yet.",
+  "label": "00 · OFF-PLAN VISUALISATION",
+  "heading": "Off-plan visualisation.",
+  "sections": [
+    {
+      "id": "sun-study",
+      "label": "01 · SUN STUDY",
+      "body": ["[PLACEHOLDER: 04 sun study, built in Phase 3]"]
+    },
+    {
+      "id": "axonometric",
+      "label": "02 · AXONOMETRIC",
+      "body": ["[PLACEHOLDER: 06 exploded axonometric, built in Phase 3]"]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "route": "studio",
+  "lang": "ar",
+  "title": "الاستوديو · Makeena",
+  "description": "الاستوديو ومؤهلاته والسجل المؤسسي.",
+  "label": "00 · الاستوديو",
+  "heading": "الاستوديو.",
+  "sections": [
+    {
+      "id": "studio",
+      "label": "01 · الاستوديو",
+      "body": ["[PLACEHOLDER: studio paragraph and photography, built in Phase 4]"]
+    },
+    {
+      "id": "register",
+      "label": "02 · السجل المؤسسي",
+      "heading": "السجل المؤسسي."
+    },
+    {
+      "id": "brief",
+      "label": "03 · أرسل موجزاً",
+      "heading": "أرسل موجزاً.",
+      "body": ["[PLACEHOLDER: brief form with Turnstile, built in Phase 4]"]
+    }
+  ]
+}

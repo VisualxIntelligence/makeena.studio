@@ -1,0 +1,90 @@
+{
+  "route": "home",
+  "lang": "en",
+  "title": "Makeena · Production studio and AI content consultancy, Doha",
+  "description": "Makeena is a Doha production studio and AI content consultancy. QFC licence 04998.",
+  "label": "00 · DOHA · QFC 04998",
+  "heading": "Every real estate developer is now a media company.",
+  "lede": "Most are not staffed like one.",
+  "sections": [
+    {
+      "id": "position",
+      "label": "01 · POSITION",
+      "heading": "A broadcast studio that works at the speed of a content team. A content partner that finishes to the standard of a broadcast studio.",
+      "body": ["[PLACEHOLDER: three-constraint copy from the brief]"]
+    },
+    {
+      "id": "capability",
+      "label": "02 · CAPABILITY",
+      "heading": "Two services lead. The rest sit inside a retained engagement.",
+      "links": [
+        {
+          "text": "Aerial perspective",
+          "route": "aerial"
+        },
+        {
+          "text": "Standing production",
+          "route": "standing"
+        },
+        {
+          "text": "Off-plan visualisation",
+          "route": "offPlan"
+        },
+        {
+          "text": "The full register",
+          "route": "capability",
+          "hash": "register"
+        }
+      ]
+    },
+    {
+      "id": "method",
+      "label": "03 · METHOD",
+      "heading": "Four gates. Nothing reaches a client that has not cleared all of them.",
+      "links": [
+        {
+          "text": "See the four gates",
+          "route": "method",
+          "hash": "gates"
+        }
+      ]
+    },
+    {
+      "id": "engagement",
+      "label": "04 · ENGAGEMENT",
+      "heading": "Two ways in. Both scoped to the client, not to a menu.",
+      "links": [
+        {
+          "text": "Fixed and retained engagements",
+          "route": "engagement"
+        }
+      ]
+    },
+    {
+      "id": "studio",
+      "label": "05 · STUDIO",
+      "heading": "Credentials in the open.",
+      "body": ["[PLACEHOLDER: studio summary]"],
+      "links": [
+        {
+          "text": "Corporate register",
+          "route": "studio",
+          "hash": "register"
+        }
+      ]
+    },
+    {
+      "id": "contact",
+      "label": "06 · CONTACT",
+      "heading": "Send a brief.",
+      "body": ["[PLACEHOLDER: phone, email and domain]"],
+      "links": [
+        {
+          "text": "Send a brief",
+          "route": "studio",
+          "hash": "brief"
+        }
+      ]
+    }
+  ]
+}

@@ -9,9 +9,7 @@ import keyA from "../../../../design/renders/MKN-AER-FLT01-A.jpg";
 import keyB from "../../../../design/renders/MKN-AER-FLT01-B.jpg";
 import keyC from "../../../../design/renders/MKN-AER-FLT01-C.jpg";
 
-export function getStaticPaths() {
-  return [{ params: { lang: "en" } }, { params: { lang: "ar" } }];
-}
+export { spikePaths as getStaticPaths } from "../../../spikes/paths";
 
 const lang = Astro.params.lang as "en" | "ar";
 const seq = JSON.parse(
@@ -44,7 +42,7 @@ const chapters = [
 ];
 ---
 
-<BaseLayout title="Spike 03 · Scroll-flown aerial" lang={lang}>
+<BaseLayout chrome={false} title="Spike 03 · Scroll-flown aerial" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
   <Fragment slot="head">
     <script is:inline define:vars={{ preloadSrcset }}>

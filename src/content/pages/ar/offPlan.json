@@ -1,0 +1,20 @@
+{
+  "route": "offPlan",
+  "lang": "ar",
+  "title": "تصوير المشاريع على الخارطة · Makeena",
+  "description": "تصوير وهندسة لمبان لم تشيد بعد.",
+  "label": "00 · المشاريع على الخارطة",
+  "heading": "تصوير المشاريع على الخارطة.",
+  "sections": [
+    {
+      "id": "sun-study",
+      "label": "01 · دراسة الشمس",
+      "body": ["[PLACEHOLDER: 04 sun study, built in Phase 3]"]
+    },
+    {
+      "id": "axonometric",
+      "label": "02 · المنظور المحوري",
+      "body": ["[PLACEHOLDER: 06 exploded axonometric, built in Phase 3]"]
+    }
+  ]
+}

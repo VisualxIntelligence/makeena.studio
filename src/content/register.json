@@ -1,0 +1,101 @@
+[
+  {
+    "id": "entity",
+    "order": 1,
+    "key": {
+      "en": "Legal entity",
+      "ar": "الكيان القانوني"
+    },
+    "value": {
+      "en": "Makeena LLC",
+      "ar": "Makeena LLC"
+    },
+    "ltr": true
+  },
+  {
+    "id": "licence",
+    "order": 2,
+    "key": {
+      "en": "Licence",
+      "ar": "الترخيص"
+    },
+    "value": {
+      "en": "QFC 04998",
+      "ar": "QFC 04998"
+    },
+    "ltr": true
+  },
+  {
+    "id": "tax-id",
+    "order": 3,
+    "key": {
+      "en": "Tax ID",
+      "ar": "الرقم الضريبي"
+    },
+    "value": {
+      "en": "T04998",
+      "ar": "T04998"
+    },
+    "ltr": true
+  },
+  {
+    "id": "address",
+    "order": 4,
+    "key": {
+      "en": "Address",
+      "ar": "العنوان"
+    },
+    "value": {
+      "en": "[PLACEHOLDER: full address]",
+      "ar": "[PLACEHOLDER: full address]"
+    }
+  },
+  {
+    "id": "auditor",
+    "order": 5,
+    "key": {
+      "en": "Auditor",
+      "ar": "مدقق الحسابات"
+    },
+    "value": {
+      "en": "[PLACEHOLDER: auditor]",
+      "ar": "[PLACEHOLDER: auditor]"
+    }
+  },
+  {
+    "id": "data",
+    "order": 6,
+    "key": {
+      "en": "Data",
+      "ar": "البيانات"
+    },
+    "value": {
+      "en": "[PLACEHOLDER: data statement]",
+      "ar": "[PLACEHOLDER: data statement]"
+    }
+  },
+  {
+    "id": "languages",
+    "order": 7,
+    "key": {
+      "en": "Languages",
+      "ar": "اللغات"
+    },
+    "value": {
+      "en": "English, Arabic",
+      "ar": "العربية، الإنجليزية"
+    }
+  },
+  {
+    "id": "rights",
+    "order": 8,
+    "key": {
+      "en": "Rights",
+      "ar": "الحقوق"
+    },
+    "value": {
+      "en": "[PLACEHOLDER: rights terms]",
+      "ar": "[PLACEHOLDER: rights terms]"
+    }
+  }
+]

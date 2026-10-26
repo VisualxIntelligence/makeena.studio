@@ -1,4 +1,6 @@
 // @ts-check
+import { rename, rm } from "node:fs/promises";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 
@@ -8,9 +10,34 @@ import { defineConfig, fontProviders } from "astro/config";
 const fontsource = fontProviders.fontsource();
 const local = fontProviders.local();
 
+const site = "https://makeena.studio";
+
+// Cloudflare serves the nearest 404.html (wrangler.jsonc: not_found_handling "404-page"), so the
+// localised 404 pages must sit at /en/404.html and /ar/404.html rather than /{lang}/404/.
+/** @type {import("astro").AstroIntegration} */
+const localized404 = {
+  name: "mkn-localized-404",
+  hooks: {
+    "astro:build:done": async ({ dir }) => {
+      for (const lang of ["en", "ar"]) {
+        await rename(new URL(`${lang}/404/index.html`, dir), new URL(`${lang}/404.html`, dir));
+        await rm(new URL(`${lang}/404/`, dir), { recursive: true });
+      }
+    },
+  },
+};
+
 export default defineConfig({
-  site: "https://makeena.studio",
+  site,
   output: "static",
+  integrations: [
+    // Both locales with hreflang alternates (PRD §13). The root redirect and 404 pages are left out.
+    sitemap({
+      i18n: { defaultLocale: "en", locales: { en: "en", ar: "ar" } },
+      filter: (page) => page !== `${site}/` && !/\/404\/?$/.test(page),
+    }),
+    localized404,
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

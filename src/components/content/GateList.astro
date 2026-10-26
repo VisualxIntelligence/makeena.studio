@@ -1,0 +1,55 @@
+---
+// The four gates (PRD §5, /method/). Names and descriptions come from the brief (PRD §18).
+import type { Lang } from "../../i18n/config";
+import { getGates } from "../../lib/content";
+import Copy from "./Copy.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const gates = await getGates();
+const gate = lang === "ar" ? "البوابة" : "GATE";
+---
+
+<ol class="gate-list">
+  {gates.map((g) => (
+    <li>
+      <p class="label">
+        {gate} <span dir="ltr">{g.number}</span>
+      </p>
+      <h3>
+        <Copy text={g.name[lang]} lang={lang} />
+      </h3>
+      <p>
+        <Copy text={g.description[lang]} lang={lang} />
+      </p>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .gate-list {
+    display: grid;
+    gap: 24px;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    padding-block-start: 12px;
+    border-block-start: 2px solid var(--color-copper);
+  }
+
+  h3 {
+    margin-block: 4px 8px;
+    font-size: 1.25rem;
+  }
+
+  @media (width >= 64rem) {
+    .gate-list {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+</style>

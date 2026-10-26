@@ -1,0 +1,27 @@
+{
+  "route": "method",
+  "lang": "ar",
+  "title": "المنهجية · Makeena",
+  "description": "أربع بوابات، وبيانات المصدر المحفوظة لكل ملف مسلّم.",
+  "label": "00 · المنهجية",
+  "heading": "أربع بوابات.",
+  "lede": "لا يصل إلى العميل أي عمل لم يجتز البوابات الأربع كلها.",
+  "sections": [
+    {
+      "id": "gates",
+      "label": "01 · البوابات",
+      "body": ["[PLACEHOLDER: method intro copy from the brief]"]
+    },
+    {
+      "id": "provenance",
+      "label": "02 · المصدر",
+      "heading": "بيانات المصدر محفوظة في جميع الملفات المسلمة.",
+      "body": ["[PLACEHOLDER: what the provenance metadata contains]"]
+    },
+    {
+      "id": "verify",
+      "label": "03 · التحقق من ملف",
+      "body": ["[PLACEHOLDER: how to verify a file]"]
+    }
+  ]
+}

@@ -1,13 +1,25 @@
 ---
+// Fallback 404 for paths outside /en/ and /ar/ (those get their own localised 404.html).
+import Label from "../components/content/Label.astro";
+import { ui } from "../i18n/ui";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const t = ui.en.notFound;
 ---
 
-<BaseLayout title="Not found · Makeena" lang="en">
-  <div class="wrap">
-    <p class="label">404 · NOT FOUND</p>
-    <h1>This page does not exist.</h1>
+<BaseLayout title={`${t.heading} · Makeena`} lang="en" alternates={false}>
+  <div class="wrap not-found">
+    <Label text={t.label} lang="en" />
+    <h1 class="display">{t.heading}</h1>
+    <p>{t.body}</p>
     <p>
-      <a href="/en/">Return to the home page</a>
+      <a href="/en/">{t.home}</a>
     </p>
   </div>
 </BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: 64px;
+  }
+</style>

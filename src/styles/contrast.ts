@@ -22,6 +22,7 @@ export const pairs: Pair[] = [
   { fg: "copper", bg: "ivory", min: 3, use: "display accents ≥ 24px only" },
   { fg: "copper", bg: "sand", min: 3, use: "display accents ≥ 24px on panels" },
   { fg: "ivory", bg: "night", min: 4.5, use: "text on night blocks and after hours" },
+  { fg: "ivory", bg: "ink", min: 4.5, use: "skip link, solid buttons" },
   { fg: "copper-light", bg: "night", min: 4.5, use: "labels and focus ring on night" },
 ];
 

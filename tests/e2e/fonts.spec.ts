@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "@playwright/test";
+import { ARABIC_CLASS as ARABIC } from "../../src/i18n/text";
 import { routes } from "./routes";
 
 // PRD §13: critical (preloaded) fonts ≤ 120 KB per page, Arabic subsets included on /ar/.
@@ -44,19 +45,6 @@ test.describe("font budget", () => {
 const coverage: Record<string, string[]> = JSON.parse(
   readFileSync(new URL("../../src/assets/fonts/arabic/coverage.json", import.meta.url), "utf8"),
 );
-
-// Arabic script: base block, supplement, extended-A and both presentation-form blocks.
-const ARABIC = `[${(
-  [
-    [0x0600, 0x06ff],
-    [0x0750, 0x077f],
-    [0x08a0, 0x08ff],
-    [0xfb50, 0xfdff],
-    [0xfe70, 0xfeff],
-  ] as const
-)
-  .map(([a, b]) => `${String.fromCodePoint(a)}-${String.fromCodePoint(b)}`)
-  .join("")}]`;
 
 test.describe("Arabic glyph coverage", () => {
   test.skip(({ browserName, isMobile }) => browserName !== "chromium" || isMobile);
