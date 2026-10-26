@@ -18,6 +18,12 @@ interface Ui {
   entity: string;
   privacy: string;
   reduceMotion: string;
+  /** 13 after hours (PRD §8.4). */
+  afterHours: string;
+  shortcuts: string;
+  shortcutsHint: string;
+  afterHoursToast: string;
+  dismiss: string;
   rights: string;
   notFound: { label: string; heading: string; body: string; home: string };
   /** 08 spec sheet (PRD §8.3). */
@@ -65,6 +71,11 @@ export const ui: Record<Lang, Ui> = {
     entity: "Entity",
     privacy: "Privacy",
     reduceMotion: "Reduce motion",
+    afterHours: "After hours",
+    shortcuts: "Keyboard shortcuts",
+    shortcutsHint: "Press N, or type doha, to switch after hours on or off.",
+    afterHoursToast: "AFTER HOURS · THE CITY AT 21:40 AST",
+    dismiss: "Dismiss",
     rights: "All rights reserved.",
     notFound: {
       label: "404 · NOT FOUND",
@@ -115,6 +126,11 @@ export const ui: Record<Lang, Ui> = {
     entity: "الكيان",
     privacy: "الخصوصية",
     reduceMotion: "تقليل الحركة",
+    afterHours: "خارج الدوام",
+    shortcuts: "اختصارات لوحة المفاتيح",
+    shortcutsHint: "اضغط N أو اكتب doha لتشغيل وضع خارج الدوام أو إيقافه.",
+    afterHoursToast: "خارج الدوام · المدينة عند 21:40 بتوقيت الدوحة",
+    dismiss: "إغلاق",
     rights: "جميع الحقوق محفوظة.",
     notFound: {
       label: "404 · الصفحة غير موجودة",

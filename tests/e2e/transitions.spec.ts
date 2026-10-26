@@ -1,5 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
 
+/**
+ * Activates a link without scrolling to it first. Playwright's Windows WebKit crashes after a
+ * routed view transition from a scrolled phone page (decision 0011); that case has its own test.
+ */
+const clickInPlace = (page: Page, selector: string) =>
+  page.locator(selector).evaluate((el: HTMLElement) => el.click());
+
 // G2 on the ClientRouter (PRD §8.2): 11 section-cut and 12 mirror-line.
 
 type Recorded = { ran: boolean; types?: string[]; animations?: string[] };
@@ -47,7 +54,7 @@ for (const [lang, dir] of [
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.goto(`/${lang}/`);
     await record(page);
-    await page.locator(`footer a[href="/${lang}/privacy/"]`).click();
+    await clickInPlace(page, `footer a[href="/${lang}/privacy/"]`);
     await expect(page).toHaveURL(new RegExp(`/${lang}/privacy/$`));
     const vt = await recorded(page);
     expect(vt.ran).toBe(true);
@@ -83,7 +90,7 @@ for (const [from, to] of [
 test("the flag is cleared once the transition ends", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/en/");
-  await page.locator('footer a[href="/en/privacy/"]').click();
+  await clickInPlace(page, 'footer a[href="/en/privacy/"]');
   await expect(page).toHaveURL(/\/en\/privacy\/$/);
   await expect(page.locator("html")).not.toHaveAttribute("data-vt", /.+/);
 });
@@ -92,7 +99,7 @@ test("OS reduced motion navigates without a transition", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/en/");
   await record(page);
-  await page.locator('footer a[href="/en/privacy/"]').click();
+  await clickInPlace(page, 'footer a[href="/en/privacy/"]');
   await expect(page).toHaveURL(/\/en\/privacy\/$/);
   expect((await recorded(page)).ran).toBe(false);
 });
@@ -154,6 +161,7 @@ test("a navigation from a scrolled phone page completes and the page stays alive
   page.on("crash", () => (crashed = true));
   await page.goto("/en/");
   await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
+  // A real click: Playwright scrolls the link into view first, which is the case under test.
   await page.locator('footer a[href="/en/privacy/"]').click();
   await expect(page).toHaveURL(/\/en\/privacy\/$/);
   await page.waitForTimeout(2500);

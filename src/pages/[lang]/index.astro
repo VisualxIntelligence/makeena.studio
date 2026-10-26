@@ -9,5 +9,11 @@ const lang = Astro.params.lang as Lang;
 ---
 
 <Page route="home" lang={lang}>
-  <ProvenanceFigure slot="media" assetId="MKN-TWR-CAM01-DUSK" lang={lang} priority />
+  <ProvenanceFigure
+    slot="media"
+    assetId="MKN-TWR-CAM01-DUSK"
+    night="MKN-TWR-CAM01-NIGHT"
+    lang={lang}
+    priority
+  />
 </Page>

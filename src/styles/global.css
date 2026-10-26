@@ -190,6 +190,35 @@
     white-space: nowrap;
   }
 
+  /* Footer on/off controls (Reduce motion, After hours, Keyboard shortcuts): real buttons with
+     aria-pressed and a filled box when on. Hidden without JS, where they could not work. */
+  .toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-block-size: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-copper-deep);
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      inline-size: 10px;
+      block-size: 10px;
+      border: 1px solid currentcolor;
+      border-radius: var(--radius-xs);
+    }
+
+    &[aria-pressed="true"]::before {
+      background: currentcolor;
+    }
+  }
+
   /* Primary action: ink fill, ivory text (UX doc: "Send a brief"). */
   .button {
     display: inline-flex;

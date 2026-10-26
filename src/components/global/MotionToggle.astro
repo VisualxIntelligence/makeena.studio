@@ -11,7 +11,7 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<button class="motion-toggle" type="button" aria-pressed="false" data-motion-toggle hidden>
+<button class="toggle" type="button" aria-pressed="false" data-motion-toggle hidden>
   {ui[lang].reduceMotion}
 </button>
 
@@ -35,32 +35,3 @@ const { lang } = Astro.props;
     );
   });
 </script>
-
-<style>
-  .motion-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-block-size: 44px;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--color-copper-deep);
-    font: inherit;
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-    cursor: pointer;
-
-    &::before {
-      content: "";
-      inline-size: 10px;
-      block-size: 10px;
-      border: 1px solid currentcolor;
-      border-radius: var(--radius-xs);
-    }
-
-    &[aria-pressed="true"]::before {
-      background: currentcolor;
-    }
-  }
-</style>

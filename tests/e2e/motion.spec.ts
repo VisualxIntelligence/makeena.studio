@@ -1,5 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
 
+/**
+ * Activates a link without scrolling to it first. Playwright's Windows WebKit crashes after a
+ * routed view transition from a scrolled phone page (decision 0011); that case has its own test.
+ */
+const clickInPlace = (page: Page, selector: string) =>
+  page.locator(selector).evaluate((el: HTMLElement) => el.click());
+
 // G1 motion controller (PRD §8.1) and the ClientRouter lifecycle (decision 0002).
 
 type MotionHook = { allowed: boolean; activeTriggers: number };
@@ -18,7 +25,7 @@ test.describe("ClientRouter", () => {
   test("navigates without a full reload and focuses main", async ({ page }) => {
     await page.goto("/en/");
     await page.evaluate(() => ((window as unknown as { marker: number }).marker = 1));
-    await page.locator('footer a[href="/en/privacy/"]').click();
+    await clickInPlace(page, 'footer a[href="/en/privacy/"]');
     await expect(page).toHaveURL(/\/en\/privacy\/$/);
     await expect(page.locator("main h1")).toHaveText("Privacy and data.");
     expect(await page.evaluate(() => (window as unknown as { marker?: number }).marker)).toBe(1);

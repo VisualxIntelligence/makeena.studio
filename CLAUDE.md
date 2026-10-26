@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -89,6 +89,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/layouts/` | `BaseLayout` (html lang/dir, head, fonts, nav/footer), `Page` (route shell on the 12-column grid: header + sections from content) |
 | `src/pages/[lang]/` | One file per PRD §5 route; extras go into a section via a slot named after the section id |
 | `src/lib/transitions/` | G2: picks 11 (`nav`), 12 (`lang`) or `none` per routed navigation; animations in `src/styles/view-transitions.css` |
+| `src/lib/hours.ts` | 13 after hours: `data-hours`, footer toggles, N / doha shortcuts, crossfade, toast |
 | `docs/qa/` | Manual device checklists (iOS Safari) |
 | `src/components/media/` | `ProvenanceFigure` (08: every image goes through it, `priority` on a page's first in-view figure) and `FigureGrid` |
 | `src/lib/motion/`, `src/lib/lifecycle.ts` | G1 motion controller (`motion`, `registerEffect`, effects in `effects/`) and `onPage()` for the ClientRouter lifecycle |

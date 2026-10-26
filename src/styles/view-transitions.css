@@ -185,6 +185,33 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   }
 }
 
+/* ── 13 After hours (same-document swap, src/lib/hours.ts) ───────────────────────
+   A plain 300 ms crossfade of the page: no sweep, no line. */
+html[data-vt="hours"]::view-transition-old(root) {
+  animation: vt-fade-out 300ms ease both;
+}
+
+html[data-vt="hours"]::view-transition-new(root) {
+  animation: vt-fade-in 300ms ease both;
+}
+
+html[data-vt="hours"]::view-transition-group(cut-line),
+html[data-vt="hours"]::view-transition-group(cut-line-b) {
+  display: none;
+}
+
+@keyframes vt-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes vt-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
 /* No animation for reduced motion: the OS setting, or the footer control (G2 sets
    html[data-vt="none"] and skips the transition; this is the backstop). */
 html[data-vt="none"]::view-transition-group(*),
