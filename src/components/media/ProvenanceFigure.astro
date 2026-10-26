@@ -9,13 +9,16 @@
 // - The mono caption under the image states provenance.
 // Web derivatives lose XMP, so the sheet only ever speaks of the master file (CLAUDE.md). The
 // generator (service, job ID) is internal and never shown (decision 0010).
-import { Picture } from "astro:assets";
+// - `night`: a second asset shown under 13 after hours (html[data-hours="night"]). It is lazy and
+//   hidden until then, so browsers only fetch it once after hours is switched on.
 import type { Lang } from "../../i18n/config";
-import { ui } from "../../i18n/ui";
-import { getAsset, imageFor, nextSheetId } from "../../lib/assets";
+import { getAsset } from "../../lib/assets";
+import ProvenanceVariant from "./ProvenanceVariant.astro";
 
 interface Props {
   assetId: string;
+  /** Night variant for 13 after hours. */
+  night?: string;
   lang: Lang;
   /** `sizes` for the responsive image; defaults to the full content width. */
   sizes?: string;
@@ -31,6 +34,7 @@ interface Props {
 
 const {
   assetId,
+  night,
   lang,
   sizes = "(width >= 80rem) 1280px, calc(100vw - 32px)",
   widths = [480, 828, 1200, 1600],
@@ -39,152 +43,16 @@ const {
   class: className,
 } = Astro.props;
 
-const asset = await getAsset(assetId);
-const t = ui[lang].provenance;
-const sheetId = nextSheetId(asset.id);
-const sourceKey = asset.digitalSourceType.split("/").pop() as keyof typeof t.sources;
-const generated = sourceKey !== "digitalCapture";
-const camera = asset.virtualCamera;
-const cameraText =
-  camera &&
-  [
-    camera.lensMm && `${camera.lensMm} mm`,
-    camera.heightM && `${camera.heightM} m`,
-    camera.headingDeg !== undefined && `${camera.headingDeg}°`,
-    camera.lat !== undefined && camera.lon !== undefined && `${camera.lat}, ${camera.lon}`,
-  ]
-    .filter(Boolean)
-    .join(" · ");
-const retained = asset.metadataRetained.iptc || asset.metadataRetained.c2pa;
-const formats = [asset.metadataRetained.iptc && "IPTC", asset.metadataRetained.c2pa && "C2PA"]
-  .filter(Boolean)
-  .join(", ");
+const day = await getAsset(assetId);
+const nightAsset = night ? await getAsset(night) : undefined;
+const shared = { lang, sizes, widths, caption };
 ---
 
-<figure class:list={["pfig", className]} data-provenance={asset.id}>
-  <div class="pfig__media">
-    <Picture
-      src={imageFor(asset)}
-      alt={asset.alt[lang]}
-      widths={widths}
-      sizes={sizes}
-      formats={["avif", "webp"]}
-      loading={priority ? "eager" : "lazy"}
-      fetchpriority={priority ? "high" : "auto"}
-      decoding={priority ? "sync" : "async"}
-    />
-    <span class="pfig__corners" aria-hidden="true"></span>
-    <button
-      class="pfig__info"
-      type="button"
-      popovertarget={sheetId}
-      aria-label={`${t.open}: ${asset.id}`}
-    >
-      <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
-        <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
-        <rect x="9.25" y="8.5" width="1.5" height="6" fill="currentColor"></rect>
-        <rect x="9.25" y="5.25" width="1.5" height="1.5" fill="currentColor"></rect>
-      </svg>
-    </button>
-  </div>
-  {caption && (
-    <figcaption class="label pfig__caption" lang={lang} dir={lang === "ar" ? "rtl" : "ltr"}>
-      {asset.caption[lang]}
-    </figcaption>
+<figure class:list={["pfig", className]} data-provenance={day.id} data-night={nightAsset?.id}>
+  <ProvenanceVariant asset={day} variant="day" priority={priority} {...shared} />
+  {nightAsset && (
+    <ProvenanceVariant asset={nightAsset} variant="night" priority={false} {...shared} />
   )}
-  <div class="pfig__sheet" id={sheetId} popover>
-    <div class="pfig__sheet-head">
-      <p class="label">{t.heading}</p>
-      {generated && <p class="pfig__badge label">{t.generated}</p>}
-    </div>
-    <dl>
-      <div>
-        <dt>{t.id}</dt>
-        <dd dir="ltr" class="pfig__mono">
-          {asset.id}
-        </dd>
-      </div>
-      <div>
-        <dt>{t.type}</dt>
-        <dd>{t.types[asset.type]}</dd>
-      </div>
-      <div>
-        <dt>{t.source}</dt>
-        <dd>{t.sources[sourceKey]}</dd>
-      </div>
-      {cameraText && (
-        <div>
-          <dt>{t.camera}</dt>
-          <dd dir="ltr" class="pfig__mono">
-            {cameraText}
-          </dd>
-        </div>
-      )}
-      {asset.light && (
-        <div>
-          <dt>{t.light}</dt>
-          <dd>
-            {asset.light.label[lang]}
-            {asset.light.timeLocal && (
-              <>
-                {" · "}
-                <span dir="ltr" class="pfig__mono">
-                  {asset.light.timeLocal}
-                </span>
-              </>
-            )}
-          </dd>
-        </div>
-      )}
-      {asset.aircraft && (
-        <div>
-          <dt>{t.aircraft}</dt>
-          <dd>{t.noAircraft}</dd>
-        </div>
-      )}
-      <div>
-        <dt>{t.gates}</dt>
-        <dd>
-          {asset.gatesCleared.length > 0 ? (
-            <span dir="ltr" class="pfig__mono">
-              {asset.gatesCleared.join(" · ")}
-            </span>
-          ) : (
-            t.gatesPending
-          )}
-        </dd>
-      </div>
-      <div>
-        <dt>{t.metadata}</dt>
-        <dd>
-          {retained ? t.metadataOnMaster : t.metadataPending}
-          {formats && (
-            <>
-              {" · "}
-              <span dir="ltr" class="pfig__mono">
-                {formats}
-              </span>
-            </>
-          )}
-        </dd>
-      </div>
-      <div>
-        <dt>{t.rights}</dt>
-        <dd>
-          {asset.rights[lang].startsWith("[PLACEHOLDER") ? (
-            <span lang="en" dir="ltr">
-              {asset.rights[lang]}
-            </span>
-          ) : (
-            asset.rights[lang]
-          )}
-        </dd>
-      </div>
-    </dl>
-    <button class="pfig__close" type="button" popovertarget={sheetId} popovertargetaction="hide">
-      {t.close}
-    </button>
-  </div>
 </figure>
 
 <style>
@@ -192,173 +60,15 @@ const formats = [asset.metadataRetained.iptc && "IPTC", asset.metadataRetained.c
     margin: 0;
   }
 
-  .pfig__media {
-    position: relative;
+  .pfig > :global([data-variant="night"]) {
+    display: none;
+  }
+
+  :global(html[data-hours="night"]) .pfig[data-night] > :global([data-variant="day"]) {
+    display: none;
+  }
+
+  :global(html[data-hours="night"]) .pfig > :global([data-variant="night"]) {
     display: block;
-    background: var(--color-sand);
-  }
-
-  .pfig__media :global(img) {
-    display: block;
-    inline-size: 100%;
-    block-size: auto;
-  }
-
-  /* Copper corner brackets (PRD §8.3): the media's ::before/::after draw two corners, the
-     corners span the other two. Shown on hover and whenever focus is inside the figure. */
-  .pfig__media::before,
-  .pfig__media::after,
-  .pfig__corners::before,
-  .pfig__corners::after {
-    content: "";
-    position: absolute;
-    inline-size: 20px;
-    block-size: 20px;
-    border: 0 solid var(--color-copper);
-    opacity: 0;
-    transition: opacity var(--duration-micro);
-    pointer-events: none;
-  }
-
-  .pfig__media::before {
-    inset-block-start: 8px;
-    inset-inline-start: 8px;
-    border-block-start-width: 2px;
-    border-inline-start-width: 2px;
-  }
-
-  .pfig__media::after {
-    inset-block-end: 8px;
-    inset-inline-end: 8px;
-    border-block-end-width: 2px;
-    border-inline-end-width: 2px;
-  }
-
-  .pfig__corners::before {
-    inset-block-start: 8px;
-    inset-inline-end: 8px;
-    border-block-start-width: 2px;
-    border-inline-end-width: 2px;
-  }
-
-  .pfig__corners::after {
-    inset-block-end: 8px;
-    inset-inline-start: 8px;
-    border-block-end-width: 2px;
-    border-inline-start-width: 2px;
-  }
-
-  .pfig__media:hover::before,
-  .pfig__media:hover::after,
-  .pfig__media:hover .pfig__corners::before,
-  .pfig__media:hover .pfig__corners::after,
-  .pfig:focus-within .pfig__media::before,
-  .pfig:focus-within .pfig__media::after,
-  .pfig:focus-within .pfig__corners::before,
-  .pfig:focus-within .pfig__corners::after {
-    opacity: 1;
-  }
-
-  /* 44 × 44 px target around a 20 px mark. */
-  .pfig__info {
-    position: absolute;
-    inset-block-end: 4px;
-    inset-inline-end: 4px;
-    display: grid;
-    place-items: center;
-    inline-size: 44px;
-    block-size: 44px;
-    padding: 0;
-    border: 0;
-    background: none;
-    color: var(--color-ivory);
-    cursor: pointer;
-  }
-
-  .pfig__info svg {
-    padding: 2px;
-    border-radius: var(--radius-sm);
-    background: var(--color-ink);
-  }
-
-  .pfig__info:hover svg {
-    background: var(--color-copper-deep);
-  }
-
-  .pfig__caption {
-    margin-block: 12px 0;
-  }
-
-  /* The spec sheet: a native popover in the top layer, centred. No shadow (PRD §6.1). */
-  .pfig__sheet {
-    inline-size: min(28rem, calc(100vw - 32px));
-    max-block-size: calc(100dvh - 32px);
-    padding: 24px;
-    border: var(--rule);
-    border-radius: var(--radius-sm);
-    background: var(--color-ivory);
-    color: var(--color-ink);
-  }
-
-  .pfig__sheet::backdrop {
-    background: color-mix(in srgb, var(--color-night) 40%, transparent);
-  }
-
-  .pfig__sheet-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    margin-block-end: 16px;
-  }
-
-  .pfig__sheet-head .label {
-    margin: 0;
-  }
-
-  .pfig__badge {
-    padding: 2px 8px;
-    border: 1px solid var(--color-copper-deep);
-    border-radius: var(--radius-sm);
-  }
-
-  dl {
-    display: grid;
-    margin: 0;
-  }
-
-  dl > div {
-    display: grid;
-    grid-template-columns: minmax(7rem, 2fr) 3fr;
-    gap: 12px;
-    padding-block: 8px;
-    border-block-start: var(--rule-soft);
-  }
-
-  dt {
-    color: var(--color-muted);
-    font-size: 0.875rem;
-  }
-
-  dd {
-    margin: 0;
-    font-size: 0.875rem;
-  }
-
-  .pfig__mono {
-    font-family: var(--ff-mono);
-    font-size: 0.8125rem;
-  }
-
-  .pfig__close {
-    margin-block-start: 16px;
-    min-block-size: 44px;
-    padding-inline: 16px;
-    border: var(--rule);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--color-ink);
-    font: inherit;
-    cursor: pointer;
   }
 </style>

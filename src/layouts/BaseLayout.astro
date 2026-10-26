@@ -6,6 +6,7 @@ import "../styles/view-transitions.css";
 import CutLine from "../components/global/CutLine.astro";
 import Footer from "../components/global/Footer.astro";
 import Nav from "../components/global/Nav.astro";
+import Toast from "../components/global/Toast.astro";
 import { counterpartPath, dirOf, type Lang } from "../i18n/config";
 import { ui } from "../i18n/ui";
 
@@ -76,10 +77,14 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
           // Lets CSS tell JS-enhanced components (the menu) from their no-JS fallbacks.
           document.documentElement.classList.add("js");
           // PRD §5: remember the locale the visitor is reading, so `/` sends them back to it.
+          // 13: after hours is applied before first paint, so night pages never flash day.
           try {
             localStorage.setItem("mkn-lang", document.documentElement.lang);
+            if (localStorage.getItem("mkn-hours") === "night") {
+              document.documentElement.dataset.hours = "night";
+            }
           } catch {
-            // Storage blocked: `/` falls back to the browser's language preference.
+            // Storage blocked: `/` falls back to the browser's language preference; day hours.
           }
         };
         perPage();
@@ -164,10 +169,12 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
       <slot />
     </main>
     {chrome && <Footer lang={lang} />}
+    {chrome && <Toast lang={lang} />}
     {router && <script>
       import "../lib/motion";
       import "../lib/motion/effects/reveal";
       import "../lib/transitions";
+      import "../lib/hours";
     </script>}
     <CutLine />
   </body>

@@ -1,0 +1,30 @@
+---
+// 13 footer controls (PRD §8.4): After hours, the primary trigger, and Keyboard shortcuts on/off
+// (WCAG 2.1.4). Hidden without JS. Wired by src/lib/hours.ts.
+import type { Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<button class="toggle" type="button" aria-pressed="false" data-hours-toggle hidden>
+  {t.afterHours}
+</button>
+<button
+  class="toggle"
+  type="button"
+  aria-pressed="true"
+  aria-describedby="shortcuts-hint"
+  data-shortcuts-toggle
+  hidden
+>
+  {t.shortcuts}
+</button>
+<span id="shortcuts-hint" class="visually-hidden">
+  {t.shortcutsHint}
+</span>

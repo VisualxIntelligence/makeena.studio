@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is in progress: #14 `phase-2/provenance-figure` (08) and #15 `phase-2/transitions` (11/12, stacked on #14) are in review. #15 merges only after the iPhone check.
+**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is built: #14 (08) is merged; #15 `phase-2/transitions` (11/12) and #16 `phase-2/after-hours` (13, stacked on #15) are in review. #15 merges only after the iPhone check.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -46,6 +46,8 @@ Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spik
 
 ## Carry-over findings
 
+- **Playwright's Windows WebKit crashes** after a routed view transition from a scrolled phone page (any CSS). Linux WebKit in CI is fine (decision 0011). Real iOS is on the checklist. Footer navigations in e2e use an in-place click.
+- **WebKit never fetches a lazy image that was `display:none` at load** once shown: night variants switch to `loading="eager"` on activation (decision 0012).
 - **iOS Safari has not been tested (no iPhone).** It must happen before the Phase 2 transitions merge (borrowed phone or BrowserStack/LambdaTest).
 - **Fonts:** Arabic critical fonts are 118.5 KB, only 1.5 KB under budget. Amiri keeps only shadda, sukun and fathatan; a test fails if a headline uses another mark (decision 0006).
 - **Lighthouse (lab, mobile):** LCP is 1.50 s on English pages and 2.55–2.70 s on Arabic ones, which are font-bound; Arabic is asserted at ≤ 2.8 s. The field target stays 2.5 s (decisions 0007, 0008).
@@ -78,10 +80,10 @@ Founder decisions (26 Oct, decision 0010): generator hidden in the spec sheet; "
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-2/provenance-figure` | **In review (#14).** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
-| 2 | `phase-2/transitions` | **In review (#15), stacked on #14.** 11 + 12 on the ClientRouter (decision 0011); Firefox project added. **Merge only after the iPhone checklist** (`docs/qa/ios-safari-checklist.md`) |
-| 3 | `phase-2/after-hours` | 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / "doha", night `<picture>` swap, toast |
+| 1 | `phase-2/provenance-figure` | **Merged (#14).** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
+| 2 | `phase-2/transitions` | **In review (#15).** 11 + 12 on the ClientRouter (decision 0011); Firefox project added. **Merge only after the iPhone checklist** (`docs/qa/ios-safari-checklist.md`) |
+| 3 | `phase-2/after-hours` | **In review (#16), stacked on #15.** 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / doha, night variant in `ProvenanceFigure`, crossfade, toast (decision 0012) |
 
 Exit (PRD §17): the acceptance criteria in §8 are met.
 
-**To resume:** merge #14, run the iPhone checklist on #15's preview, merge #15, then start `phase-2/after-hours` (13).
+**To resume:** run the iPhone checklist on #15's preview, merge #15, then #16. That completes Phase 2; then brief Phase 3 (section components 03, 04, 06, 07).

@@ -23,7 +23,8 @@ test.describe("no unlabelled media", () => {
           .map((el) => el.outerHTML.slice(0, 80)),
       );
       expect(orphans).toEqual([]);
-      const ids = await page.$$eval("figure[data-provenance]", (fs) =>
+      // Figures and their day/night variants each name an asset.
+      const ids = await page.$$eval("[data-provenance]", (fs) =>
         fs.map((f) => f.getAttribute("data-provenance")!),
       );
       for (const id of ids) expect(records[id], id).toBeTruthy();
@@ -99,7 +100,9 @@ test("at most one image per page is high priority", async ({ page }) => {
 
 test("the home hero still is the eager, high-priority LCP image", async ({ page }) => {
   await page.goto("/en/");
-  const hero = page.locator('figure[data-provenance="MKN-TWR-CAM01-DUSK"] img');
+  const hero = page.locator(
+    'figure[data-provenance="MKN-TWR-CAM01-DUSK"] [data-variant="day"] img',
+  );
   await expect(hero).toHaveAttribute("fetchpriority", "high");
   await expect(hero).toHaveAttribute("loading", "eager");
   const others = await page.$$eval('img:not([fetchpriority="high"])', (imgs) =>

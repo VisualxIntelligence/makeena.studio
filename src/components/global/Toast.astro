@@ -1,0 +1,66 @@
+---
+// Status toast (PRD §8.4): role="status" so screen readers announce it; auto-dismisses after
+// 4 s and has a Dismiss button. Filled by src/lib/hours.ts.
+import type { Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+---
+
+<div class="toast" role="status" data-toast data-after-hours={ui[lang].afterHoursToast}>
+  <p class="label toast__text" data-toast-text></p>
+  <button class="toast__close" type="button" data-toast-close hidden>
+    {ui[lang].dismiss}
+  </button>
+</div>
+
+<style>
+  .toast {
+    position: fixed;
+    inset-block-end: 16px;
+    inset-inline: 16px;
+    z-index: var(--z-toast);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    max-inline-size: 36rem;
+    margin-inline: auto;
+    padding-inline: 16px 8px;
+    border-radius: var(--radius-sm);
+    background: var(--color-night);
+    color: var(--color-copper-light);
+  }
+
+  /* Empty = invisible but still in the accessibility tree, so the first message is announced. */
+  .toast:has(.toast__text:empty) {
+    padding: 0;
+    background: none;
+    pointer-events: none;
+  }
+
+  .toast__text:empty {
+    padding: 0;
+  }
+
+  .toast__text {
+    margin: 0;
+    padding-block: 12px;
+    color: var(--color-copper-light);
+  }
+
+  .toast__close {
+    min-block-size: 44px;
+    padding-inline: 12px;
+    border: 0;
+    background: none;
+    color: var(--color-ivory);
+    font: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+</style>
