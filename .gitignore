@@ -4,6 +4,7 @@ dist/
 .wrangler/
 .dev.vars*
 .env*
+*.env
 !.env.example
 test-results/
 playwright-report/
@@ -12,3 +13,4 @@ playwright-report/
 Thumbs.db
 .cache/
 __pycache__/
+.lighthouseci/

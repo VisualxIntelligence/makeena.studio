@@ -67,6 +67,21 @@
     --z-popover: 45;
     --z-toast: 50;
 
+    /* Layout (PRD §6.3). */
+    --header-height: 64px;
+    --gutter: 16px;
+    --section-space: 64px;
+    --rule: 1px solid var(--color-ink);
+    --rule-soft: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
+
+    @media (width >= 48rem) {
+      --gutter: 24px;
+    }
+
+    @media (width >= 64rem) {
+      --section-space: 112px;
+    }
+
     /* Motion (PRD §6.4). G1 reads these; reduced motion is handled there. */
     --duration-micro: 200ms;
     --duration-reveal: 300ms;
@@ -121,6 +136,11 @@
     transition: color var(--duration-micro);
   }
 
+  /* Anchored sections clear the sticky header. */
+  [id] {
+    scroll-margin-block-start: calc(var(--header-height) + 16px);
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-copper-deep);
     outline-offset: 2px;
@@ -155,12 +175,54 @@
   }
 
   .wrap {
-    max-inline-size: var(--container-content);
+    max-inline-size: calc(var(--container-content) + 2 * var(--gutter));
     margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Read by screen readers, not shown. */
+  .visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Primary action: ink fill, ivory text (UX doc: "Send a brief"). */
+  .button {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
     padding-inline: 16px;
+    border-radius: var(--radius-sm);
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--duration-micro);
+
+    &:hover {
+      background: var(--color-copper-deep);
+      color: var(--color-ivory);
+    }
+  }
+
+  /* 12-column grid (PRD §6.3). Stacks on phones; columns follow `dir`, so spans mirror in RTL. */
+  .grid-12 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: var(--gutter);
 
     @media (width >= 48rem) {
-      padding-inline: 24px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
     }
+  }
+
+  /* Section rhythm: 64px on phones, 112px on desktop (PRD §6.3: 96–128), hairline on top. */
+  .section {
+    padding-block: var(--section-space);
+    border-block-start: var(--rule-soft);
   }
 }

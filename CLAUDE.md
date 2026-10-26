@@ -80,13 +80,13 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
 | `src/i18n/` | Locales, route table and path helpers (`config.ts`), UI strings (`ui.ts`), bidi helpers (`text.ts`) |
 | `src/content/`, `src/content.config.ts` | Content collections: `pages/{lang}/{route}.json`, `services`, `gates`, `register`, `site` (PRD §10.1) |
-| `src/layouts/` | `BaseLayout` (html lang/dir, head, fonts, nav/footer), `Page` (route shell: header + sections from content) |
+| `src/layouts/` | `BaseLayout` (html lang/dir, head, fonts, nav/footer), `Page` (route shell on the 12-column grid: header + sections from content) |
 | `src/pages/[lang]/` | One file per PRD §5 route; extras go into a section via a slot named after the section id |
 | `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
@@ -106,8 +106,10 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run typecheck` | `astro check` |
 | `npm run test:unit` | Vitest: token values and contrast pairs, class-lint rules |
 | `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, two phones, reduced motion (run `npm run build` first; `npx playwright install chromium webkit` once) |
+| `npm run budget` | Page-weight budgets on `dist/` (PRD §13): gzip HTML+CSS ≤ 45 KB, JS ≤ 70/85 KB |
+| `npm run lighthouse` | Lighthouse CI on `dist/` (locally set `CHROME_PATH`, e.g. Playwright's Chromium) |
 | `npm run test:spikes` | Builds with the spike pages (`MKN_SPIKES=1`) and runs the Phase 0 measurements in `tests/spikes/` (local only; timing-sensitive). Run `npm run build` afterwards before `test:e2e` |
 | `npm run fonts:arabic` | Rebuild the Arabic font subsets (needs Python + `pip install -r scripts/fonts/requirements.txt`) |
 | `npm run sequences:placeholder` | Regenerate the Phase 0 placeholder aerial sequence (needs ffmpeg) |
 
-CI (`.github/workflows/ci.yml`) runs lint, typecheck, unit and e2e on every PR and on `main`. Keep it green before asking for review.
+CI (`.github/workflows/ci.yml`) runs lint, typecheck, unit, budget, e2e and Lighthouse on every PR and on `main`. Keep it green before asking for review.
