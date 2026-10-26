@@ -256,17 +256,17 @@
       "id": "MKN-SUN-SKY01-MORNING",
       "file": "MKN-SUN-SKY01-MORNING.jpg",
       "width": 1800,
-      "height": 1018,
+      "height": 771,
       "concepts": [
         "04"
       ],
-      "description": "Fixed skyline camera at about 08:30, low warm sun. Generated 26 Oct 2026 as an edit of MIDDAY; its framing matches GOLD more closely than MIDDAY (the MIDDAY base itself drifts from the rest of the set).",
+      "description": "Fixed skyline camera at about 08:30, low warm sun. Generated 26 Oct 2026 as an edit of MIDDAY at the set's 21:9 aspect; edge correlation with its neighbours DAWN 0.86 and MIDDAY 0.84, within the existing set's 0.79-0.88.",
       "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
       "generator": {
         "service": "Higgsfield",
         "model": "gpt_image_2_5",
         "quality": "high",
-        "jobId": "1bd24115-9648-4393-8cd7-d0db5b60451c",
+        "jobId": "d5a444fa-1ed6-4a0d-8c07-8f7e2aec583d",
         "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
       },
       "status": "concept"

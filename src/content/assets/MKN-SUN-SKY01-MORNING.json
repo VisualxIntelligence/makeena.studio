@@ -35,12 +35,12 @@
   "generator": {
     "service": "Higgsfield",
     "model": "gpt_image_2_5",
-    "jobId": "1bd24115-9648-4393-8cd7-d0db5b60451c",
+    "jobId": "d5a444fa-1ed6-4a0d-8c07-8f7e2aec583d",
     "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
   },
   "source": {
     "file": "design/renders/MKN-SUN-SKY01-MORNING.jpg",
     "width": 1800,
-    "height": 1018
+    "height": 771
   }
 }
