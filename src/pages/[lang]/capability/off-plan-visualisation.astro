@@ -1,5 +1,5 @@
 ---
-import FigureGrid from "../../../components/media/FigureGrid.astro";
+import SunStudy from "../../../components/concepts/SunStudy.astro";
 import ProvenanceFigure from "../../../components/media/ProvenanceFigure.astro";
 import type { Lang } from "../../../i18n/config";
 import Page from "../../../layouts/Page.astro";
@@ -10,28 +10,6 @@ const lang = Astro.params.lang as Lang;
 ---
 
 <Page route="offPlan" lang={lang}>
-  <FigureGrid slot="sun-study" cols={4}>
-    <ProvenanceFigure
-      assetId="MKN-SUN-SKY01-DAWN"
-      lang={lang}
-      priority
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-SUN-SKY01-MIDDAY"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-SUN-SKY01-GOLD"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-SUN-SKY01-NIGHT"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-  </FigureGrid>
+  <SunStudy slot="sun-study" lang={lang} priority />
   <ProvenanceFigure slot="axonometric" assetId="MKN-AXO-CAM01-EXPLODED" lang={lang} />
 </Page>

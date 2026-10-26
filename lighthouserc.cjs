@@ -8,6 +8,7 @@ const pages = [
   "/ar/capability/aerial-perspective/",
   "/en/studio/",
   "/ar/method/",
+  "/en/capability/off-plan-visualisation/",
 ];
 
 const shared = {

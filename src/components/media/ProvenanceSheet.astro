@@ -1,0 +1,127 @@
+---
+// 08 spec sheet: a native popover listing an asset's provenance in the page's language. Opened by
+// an InfoButton with the same id. The generator is internal and never shown (decision 0010).
+import type { CollectionEntry } from "astro:content";
+import type { Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  asset: CollectionEntry<"assets">["data"];
+  lang: Lang;
+  id: string;
+}
+
+const { asset, lang, id } = Astro.props;
+const t = ui[lang].provenance;
+const sourceKey = asset.digitalSourceType.split("/").pop() as keyof typeof t.sources;
+const generated = sourceKey !== "digitalCapture";
+const camera = asset.virtualCamera;
+const cameraText =
+  camera &&
+  [
+    camera.lensMm && `${camera.lensMm} mm`,
+    camera.heightM && `${camera.heightM} m`,
+    camera.headingDeg !== undefined && `${camera.headingDeg}°`,
+    camera.lat !== undefined && camera.lon !== undefined && `${camera.lat}, ${camera.lon}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+const retained = asset.metadataRetained.iptc || asset.metadataRetained.c2pa;
+const formats = [asset.metadataRetained.iptc && "IPTC", asset.metadataRetained.c2pa && "C2PA"]
+  .filter(Boolean)
+  .join(", ");
+---
+
+<div class="pfig__sheet" id={id} popover>
+  <div class="pfig__sheet-head">
+    <p class="label">{t.heading}</p>
+    {generated && <p class="pfig__badge label">{t.generated}</p>}
+  </div>
+  <dl>
+    <div>
+      <dt>{t.id}</dt>
+      <dd dir="ltr" class="pfig__mono">
+        {asset.id}
+      </dd>
+    </div>
+    <div>
+      <dt>{t.type}</dt>
+      <dd>{t.types[asset.type]}</dd>
+    </div>
+    <div>
+      <dt>{t.source}</dt>
+      <dd>{t.sources[sourceKey]}</dd>
+    </div>
+    {cameraText && (
+      <div>
+        <dt>{t.camera}</dt>
+        <dd dir="ltr" class="pfig__mono">
+          {cameraText}
+        </dd>
+      </div>
+    )}
+    {asset.light && (
+      <div>
+        <dt>{t.light}</dt>
+        <dd>
+          {asset.light.label[lang]}
+          {asset.light.timeLocal && (
+            <>
+              {" · "}
+              <span dir="ltr" class="pfig__mono">
+                {asset.light.timeLocal}
+              </span>
+            </>
+          )}
+        </dd>
+      </div>
+    )}
+    {asset.aircraft && (
+      <div>
+        <dt>{t.aircraft}</dt>
+        <dd>{t.noAircraft}</dd>
+      </div>
+    )}
+    <div>
+      <dt>{t.gates}</dt>
+      <dd>
+        {asset.gatesCleared.length > 0 ? (
+          <span dir="ltr" class="pfig__mono">
+            {asset.gatesCleared.join(" · ")}
+          </span>
+        ) : (
+          t.gatesPending
+        )}
+      </dd>
+    </div>
+    <div>
+      <dt>{t.metadata}</dt>
+      <dd>
+        {retained ? t.metadataOnMaster : t.metadataPending}
+        {formats && (
+          <>
+            {" · "}
+            <span dir="ltr" class="pfig__mono">
+              {formats}
+            </span>
+          </>
+        )}
+      </dd>
+    </div>
+    <div>
+      <dt>{t.rights}</dt>
+      <dd>
+        {asset.rights[lang].startsWith("[PLACEHOLDER") ? (
+          <span lang="en" dir="ltr">
+            {asset.rights[lang]}
+          </span>
+        ) : (
+          asset.rights[lang]
+        )}
+      </dd>
+    </div>
+  </dl>
+  <button class="pfig__close" type="button" popovertarget={id} popovertargetaction="hide">
+    {t.close}
+  </button>
+</div>

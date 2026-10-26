@@ -1,0 +1,95 @@
+---
+// 04 · sun study (PRD §9.3): one skyline camera through the day. A MatchedFrameScrubber in
+// continuous mode over 05:30–20:30 (15-minute steps); the readout gives the time, the light and
+// the sun's position for Doha on 21 June 2026 (decision 0013), computed at build time.
+import type { Lang } from "../../i18n/config";
+import { sunSteps } from "../../lib/sun";
+import MatchedFrameScrubber, { type ScrubberFrame } from "../scrubber/MatchedFrameScrubber.astro";
+
+interface Props {
+  lang: Lang;
+  priority?: boolean;
+}
+
+const { lang, priority = false } = Astro.props;
+
+const frames: ScrubberFrame[] = [
+  { assetId: "MKN-SUN-SKY01-DAWN", value: 330, label: { en: "05:30 · Dawn", ar: "05:30 · الفجر" } },
+  {
+    assetId: "MKN-SUN-SKY01-MORNING",
+    value: 510,
+    label: { en: "08:30 · Morning", ar: "08:30 · الصباح" },
+  },
+  {
+    assetId: "MKN-SUN-SKY01-MIDDAY",
+    value: 720,
+    label: { en: "12:00 · Midday", ar: "12:00 · الظهيرة" },
+  },
+  {
+    assetId: "MKN-SUN-SKY01-GOLD",
+    value: 1050,
+    label: { en: "17:30 · Golden hour", ar: "17:30 · الساعة الذهبية" },
+  },
+  {
+    assetId: "MKN-SUN-SKY01-NIGHT",
+    value: 1230,
+    label: { en: "20:30 · Night", ar: "20:30 · الليل" },
+  },
+];
+const light = {
+  en: ["Dawn", "Morning", "Midday", "Golden hour", "Night"],
+  ar: ["الفجر", "الصباح", "الظهيرة", "الساعة الذهبية", "الليل"],
+};
+
+const lightAt = (minute: number) => {
+  let best = 0;
+  // Ties go to the later frame, as the scrubber's crossfade does at its midpoint.
+  frames.forEach((f, i) => {
+    if (Math.abs(f.value - minute) <= Math.abs(frames[best].value - minute)) best = i;
+  });
+  return light[lang][best];
+};
+
+const readout: Record<number, string> = {};
+for (const s of sunSteps(330, 1230, 15)) {
+  const where =
+    s.altitude < 0
+      ? lang === "ar"
+        ? "الشمس تحت الأفق"
+        : "sun below the horizon"
+      : lang === "ar"
+        ? `سمت الشمس ${s.azimuth}°، الارتفاع ${s.altitude}°`
+        : `sun azimuth ${s.azimuth}°, altitude ${s.altitude}°`;
+  readout[s.minute] = `${s.time} · ${lightAt(s.minute)} · ${where}`;
+}
+
+// Coordinates stay left-to-right inside Arabic text (Unicode isolates, PRD §7.1).
+const ltr = (text: string) => String.fromCodePoint(0x2066) + text + String.fromCodePoint(0x2069);
+const coords = ltr("25.29° N, 51.53° E");
+
+const t = {
+  en: {
+    label: "Time of day in Doha",
+    note: `Sun position computed for Doha (${coords}) on 21 June 2026`,
+  },
+  ar: {
+    label: "وقت اليوم في الدوحة",
+    note: `موقع الشمس محسوب للدوحة (${coords}) في 21 يونيو 2026`,
+  },
+}[lang];
+---
+
+<MatchedFrameScrubber
+  mode="continuous"
+  lang={lang}
+  frames={frames}
+  min={330}
+  max={1230}
+  step={15}
+  value={1050}
+  label={t.label}
+  readout={readout}
+  note={t.note}
+  directionLock="ltr"
+  priority={priority}
+/>
