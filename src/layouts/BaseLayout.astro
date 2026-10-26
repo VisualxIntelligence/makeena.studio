@@ -31,36 +31,40 @@ const isAr = lang === "ar";
       // G2 (PRD §8.2). Inline and synchronous so the pagereveal listener exists
       // before the first render of the incoming page.
       (function () {
-        var KEY = "mkn-vt";
-        var locale = function (path) {
+        const KEY = "mkn-vt";
+        const locale = function (path) {
           return (path.match(/^\/(en|ar)\//) || [])[1];
         };
 
         // 12: the language switch keeps the current section and flags the
         // navigation, because Safari 18 has no navigation.activation to compare URLs.
         document.addEventListener("click", function (e) {
-          var a = e.target.closest && e.target.closest("a[data-lang-switch]");
+          const a = e.target.closest && e.target.closest("a[data-lang-switch]");
           if (!a) return;
           a.hash = location.hash;
           try {
             sessionStorage.setItem(KEY, "lang");
-          } catch (_) {}
+          } catch {
+            // Storage blocked (private mode, policy): fall back to navigation.activation.
+          }
         });
 
         addEventListener("pagereveal", function (e) {
-          var flagged = false;
+          let flagged = false;
           try {
             flagged = sessionStorage.getItem(KEY) === "lang";
             sessionStorage.removeItem(KEY);
-          } catch (_) {}
+          } catch {
+            // Storage blocked (private mode, policy): fall back to navigation.activation.
+          }
           if (!e.viewTransition) return;
-          var act = window.navigation && navigation.activation;
-          var from = act && act.from && act.from.url;
-          var isLang = from
+          const act = window.navigation && navigation.activation;
+          const from = act && act.from && act.from.url;
+          const isLang = from
             ? locale(new URL(from).pathname) !== locale(location.pathname)
             : flagged;
-          var root = document.documentElement;
-          var type = isLang ? "lang" : "nav";
+          const root = document.documentElement;
+          const type = isLang ? "lang" : "nav";
           root.dataset.vt = type;
           if (e.viewTransition.types) e.viewTransition.types.add(type);
           e.viewTransition.finished.finally(function () {
@@ -71,9 +75,9 @@ const isAr = lang === "ar";
         // After an internal navigation, move focus to <main> so keyboard and
         // screen-reader users start at the new page's content.
         document.addEventListener("DOMContentLoaded", function () {
-          var ref = document.referrer && new URL(document.referrer);
+          const ref = document.referrer && new URL(document.referrer);
           if (ref && ref.origin === location.origin && !location.hash) {
-            var main = document.getElementById("main");
+            const main = document.getElementById("main");
             if (main) main.focus({ preventScroll: true });
           }
         });

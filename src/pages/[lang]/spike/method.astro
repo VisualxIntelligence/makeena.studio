@@ -16,20 +16,28 @@ const gates = ["01", "02", "03", "04"];
 
 <BaseLayout title="Spike · Method" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
-  {t.draftNote && <p class="wrap label draft" lang="en" dir="ltr">{t.draftNote}</p>}
+  {t.draftNote && (
+    <p class="wrap label draft" lang="en" dir="ltr">
+      {t.draftNote}
+    </p>
+  )}
   <div class="wrap page">
-    <p class="label"><span dir="ltr">02</span> · {t.methodLabel}</p>
+    <p class="label">
+      <span dir="ltr">02</span> · {t.methodLabel}
+    </p>
     <h1 class="display">{t.methodTitle}</h1>
     <p>{t.methodLede}</p>
     <ol class="gates">
-      {
-        gates.map((g) => (
-          <li id={`gate-${g}`}>
-            <span class="label" dir="ltr">{g}</span>
-            <span lang="en" dir="ltr">[PLACEHOLDER: gate {g} name and description from the brief]</span>
-          </li>
-        ))
-      }
+      {gates.map((g) => (
+        <li id={`gate-${g}`}>
+          <span class="label" dir="ltr">
+            {g}
+          </span>
+          <span lang="en" dir="ltr">
+            [PLACEHOLDER: gate {g} name and description from the brief]
+          </span>
+        </li>
+      ))}
     </ol>
   </div>
 </BaseLayout>
@@ -39,17 +47,21 @@ const gates = ["01", "02", "03", "04"];
     padding-block: 8px;
     color: var(--muted);
   }
+
   .page {
     padding-block: 64px 128px;
   }
+
   .display {
     margin-block: 16px;
   }
+
   .gates {
     list-style: none;
     padding: 0;
     margin-block: 48px 0;
   }
+
   .gates li {
     display: flex;
     gap: 24px;

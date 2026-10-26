@@ -13,23 +13,31 @@ const recordReveal = () => {
     vt.ready.then(() => {
       w.__vt = {
         ran: true,
-        types: [...(vt as ViewTransition & { types?: Set<string> }).types ?? []],
+        types: [...((vt as ViewTransition & { types?: Set<string> }).types ?? [])],
         animations: document
           .getAnimations()
-          .map((a) => `${(a.effect as KeyframeEffect).pseudoElement}:${(a as CSSAnimation).animationName}`)
+          .map(
+            (a) =>
+              `${(a.effect as KeyframeEffect).pseudoElement}:${(a as CSSAnimation).animationName}`,
+          )
           .sort(),
       };
     });
   });
 };
 
-for (const [lang, dir] of [["en", "ltr"], ["ar", "rtl"]] as const) {
+for (const [lang, dir] of [
+  ["en", "ltr"],
+  ["ar", "rtl"],
+] as const) {
   test(`${lang}: Home → Method sweeps ${dir}`, async ({ page, browserName }) => {
     await page.addInitScript(recordReveal);
     await page.goto(`/${lang}/spike/home/`);
     await page.locator(`nav a[href="/${lang}/spike/method/"]`).click();
     await page.waitForURL(`**/${lang}/spike/method/`);
-    const vt = await page.waitForFunction(() => (window as Window & { __vt?: unknown }).__vt).then((h) => h.jsonValue());
+    const vt = await page
+      .waitForFunction(() => (window as Window & { __vt?: unknown }).__vt)
+      .then((h) => h.jsonValue());
     console.log(`[${browserName} ${lang}]`, JSON.stringify(vt));
     expect(vt).toMatchObject({ ran: true });
     const names = (vt as { animations: string[] }).animations.join(" ");
@@ -47,19 +55,26 @@ test("reduced motion navigates without a transition", async ({ browser }) => {
   await page.goto("/en/spike/home/");
   await page.getByRole("link", { name: "Method" }).click();
   await page.waitForURL("**/en/spike/method/");
-  const vt = await page.waitForFunction(() => (window as Window & { __vt?: unknown }).__vt).then((h) => h.jsonValue());
+  const vt = await page
+    .waitForFunction(() => (window as Window & { __vt?: unknown }).__vt)
+    .then((h) => h.jsonValue());
   expect(vt).toEqual({ ran: false });
   await context.close();
 });
 
 for (const from of ["en", "ar"] as const) {
   const to = from === "en" ? "ar" : "en";
-  test(`${from} → ${to}: language switch uses the mirror-line and keeps the section`, async ({ page, browserName }) => {
+  test(`${from} → ${to}: language switch uses the mirror-line and keeps the section`, async ({
+    page,
+    browserName,
+  }) => {
     await page.addInitScript(recordReveal);
     await page.goto(`/${from}/spike/method/#gate-03`);
     await page.locator("a[data-lang-switch]").click();
     await page.waitForURL(`**/${to}/spike/method/#gate-03`);
-    const vt = await page.waitForFunction(() => (window as Window & { __vt?: unknown }).__vt).then((h) => h.jsonValue());
+    const vt = await page
+      .waitForFunction(() => (window as Window & { __vt?: unknown }).__vt)
+      .then((h) => h.jsonValue());
     console.log(`[${browserName} ${from}→${to}]`, JSON.stringify(vt));
     const names = (vt as { animations: string[] }).animations.join(" ");
     expect(names).toContain("::view-transition-new(root):vt-reveal-centre");

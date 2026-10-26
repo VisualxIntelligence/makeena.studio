@@ -45,19 +45,28 @@ try {
   execFileSync(
     "ffmpeg",
     [
-      "-v", "error",
-      "-i", join(RENDERS, "MKN-AER-FLT01-A.jpg"),
-      "-i", join(RENDERS, "MKN-AER-FLT01-B.jpg"),
-      "-i", join(RENDERS, "MKN-AER-FLT01-C.jpg"),
-      "-filter_complex", filter,
-      "-map", "[out]",
-      "-frames:v", "150",
+      "-v",
+      "error",
+      "-i",
+      join(RENDERS, "MKN-AER-FLT01-A.jpg"),
+      "-i",
+      join(RENDERS, "MKN-AER-FLT01-B.jpg"),
+      "-i",
+      join(RENDERS, "MKN-AER-FLT01-C.jpg"),
+      "-filter_complex",
+      filter,
+      "-map",
+      "[out]",
+      "-frames:v",
+      "150",
       join(tmp, "f_%04d.png"),
     ],
     { stdio: "inherit" },
   );
 
-  const pngs = readdirSync(tmp).filter((f) => f.endsWith(".png")).sort();
+  const pngs = readdirSync(tmp)
+    .filter((f) => f.endsWith(".png"))
+    .sort();
   console.log(`ffmpeg wrote ${pngs.length} frames`);
 
   const manifest = { id: ID, placeholder: true, fps: FPS, virtualFrames: 960, variants: {} };

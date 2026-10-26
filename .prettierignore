@@ -1,0 +1,10 @@
+dist/
+.astro/
+.wrangler/
+public/
+design/
+test-results/
+playwright-report/
+package-lock.json
+# Prose and tables are hand-formatted; Prettier would re-wrap them.
+*.md

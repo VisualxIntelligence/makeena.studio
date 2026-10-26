@@ -1,10 +1,10 @@
 # Progress: makeena.studio
 
-_Last updated: 25 October 2026_
+_Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is briefed but **not started**: it is waiting on the founder's answers to the seven decisions below.
+**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) has started: PR 1 `phase-1/tooling` is open for review. PRs 2–7 still wait on the founder's answers to the seven decisions below (PR 1 doesn't depend on them).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (scaffold + spike pages, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`, e.g. `phase-1-tooling-makeena-website…`. Cloudflare also posts a per-commit URL on each PR.
@@ -44,6 +44,9 @@ Write-ups: `docs/decisions/0001`–`0004`. 47 Playwright tests (`npm run build &
 - Playwright's Windows WebKit can't decode AVIF, so those tests skip there and the stills-fallback test covers it.
 - Cloudflare build logs are only in the dashboard. Wrangler isn't logged in on this machine, and Docker needs admin rights.
 - Merge stacked PRs with **"Create a merge commit"** (not squash) and delete the branch, so the next PR retargets to `main`.
+- Tooling version pins (26 Oct 2026): **TypeScript 6.0** (7.0 is `latest`, but typescript-eslint and @astrojs/check don't support it yet); **eslint-plugin-jsx-a11y-x** instead of eslint-plugin-jsx-a11y (no ESLint 10 support). Revisit both when upstream catches up.
+- Stylelint 17.16 crashes on `[attr] :global(x)` in `selector-pseudo-class-no-unknown`; the config ignores `:global` to avoid it.
+- `npm audit` reports undici advisories inside wrangler's bundled miniflare (dev-only, local). The suggested fix downgrades wrangler; wait for an upstream wrangler release.
 
 ## Next: Phase 1 (foundation), pending approval
 
@@ -51,7 +54,7 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-1/tooling` | ESLint, Prettier, Stylelint (no gradients / backdrop-filter / physical left-right), Vitest, Playwright matrix, axe, GitHub Actions CI |
+| 1 | `phase-1/tooling` | **In review.** ESLint, Prettier, Stylelint (no gradients / backdrop-filter / physical left-right), Vitest, Playwright matrix, axe, GitHub Actions CI |
 | 2 | `phase-1/tokens-type` | Tailwind v4 `@theme` tokens, both-script typography, contrast test, Arabic font subsetting |
 | 3 | `phase-1/routes-i18n` | All §5 routes × 2 locales, content collections, i18n helpers, Arabic-preference root redirect, hreflang/canonical, sitemap, localised 404, spike pages removed from production |
 | 4 | `phase-1/layout-nav-footer` | BaseLayout, 12-col grid, section labels, Nav + mobile menu, skip link, Footer (toggles inert until Phase 2) |
@@ -69,4 +72,4 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 6. **Domain:** confirm `makeena.studio`; keep it unattached until launch.
 7. **exiftool:** OK to install locally (`winget install OliverBetz.ExifTool`); its output is committed, so CI doesn't need it.
 
-**To resume:** answer the seven decisions (e.g. "all recommended"), then start with `phase-1/tooling`.
+**To resume:** review and merge PR 1 (`phase-1/tooling`), answer the seven decisions (e.g. "all recommended"), then continue with `phase-1/tokens-type`.

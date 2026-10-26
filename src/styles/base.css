@@ -63,7 +63,7 @@ a {
   padding-inline: 24px;
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   .wrap {
     padding-inline: 16px;
   }
