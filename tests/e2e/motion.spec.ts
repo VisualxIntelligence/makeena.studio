@@ -26,26 +26,6 @@ test.describe("ClientRouter", () => {
     await expect(page.locator("html")).toHaveClass(/\bjs\b/);
   });
 
-  test("routed navigations are instant (11 and 12 arrive in Phase 2)", async ({ page }) => {
-    await page.goto("/en/");
-    await page.evaluate(() => {
-      const w = window as unknown as { vtAnimations: number };
-      w.vtAnimations = 0;
-      document.addEventListener("astro:after-swap", () => {
-        w.vtAnimations = document
-          .getAnimations()
-          .filter((a) =>
-            (a.effect as KeyframeEffect | null)?.pseudoElement?.startsWith("::view-transition"),
-          ).length;
-      });
-    });
-    await page.locator('footer a[href="/en/privacy/"]').click();
-    await expect(page).toHaveURL(/\/en\/privacy\/$/);
-    expect(
-      await page.evaluate(() => (window as unknown as { vtAnimations: number }).vtAnimations),
-    ).toBe(0);
-  });
-
   test("effects are torn down on every navigation (no leaked ScrollTriggers)", async ({ page }) => {
     await page.goto("/en/method/");
     await interact(page);

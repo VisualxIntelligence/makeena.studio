@@ -22,6 +22,13 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
     { name: "mobile-chromium", use: { ...devices["Pixel 7"] } },
     { name: "mobile-webkit", use: { ...devices["iPhone 15"] } },
+    // Firefox is why the site uses the ClientRouter (decision 0002): it runs the G2 tests.
+    {
+      name: "firefox",
+      testDir: "tests/e2e",
+      testMatch: /transitions\.spec\.ts/,
+      use: { ...devices["Desktop Firefox"] },
+    },
     {
       name: "reduced-motion",
       testDir: "tests/e2e",

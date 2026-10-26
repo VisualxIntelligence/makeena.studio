@@ -56,8 +56,8 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
     {isAr && <Font cssVariable="--ff-ar-display" preload />}
     {isAr && <Font cssVariable="--ff-ar-body" preload={[{ weight: 400 }]} />}
     {
-      /* Navigations are instant until Phase 2 moves 11 and 12 onto the router; browsers without
-       view transitions swap the page without a fallback animation. */
+      /* 11 and 12 run on the router (src/lib/transitions); browsers without view transitions
+       swap the page without a simulated animation (decision 0010). */
       router && <ClientRouter fallback="swap" />
     }
     <script is:inline>
@@ -167,6 +167,7 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
     {router && <script>
       import "../lib/motion";
       import "../lib/motion/effects/reveal";
+      import "../lib/transitions";
     </script>}
     <CutLine />
   </body>

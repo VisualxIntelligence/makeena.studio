@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is in progress: PR 1 `phase-2/provenance-figure` (08) is in review.
+**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is in progress: #14 `phase-2/provenance-figure` (08) and #15 `phase-2/transitions` (11/12, stacked on #14) are in review. #15 merges only after the iPhone check.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -78,10 +78,10 @@ Founder decisions (26 Oct, decision 0010): generator hidden in the spec sheet; "
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-2/provenance-figure` | **In review.** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
-| 2 | `phase-2/transitions` | 11 section-cut + 12 mirror-line on the ClientRouter; iPhone check required before merge |
+| 1 | `phase-2/provenance-figure` | **In review (#14).** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
+| 2 | `phase-2/transitions` | **In review (#15), stacked on #14.** 11 + 12 on the ClientRouter (decision 0011); Firefox project added. **Merge only after the iPhone checklist** (`docs/qa/ios-safari-checklist.md`) |
 | 3 | `phase-2/after-hours` | 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / "doha", night `<picture>` swap, toast |
 
 Exit (PRD §17): the acceptance criteria in §8 are met.
 
-**To resume:** merge `phase-2/provenance-figure`, then start `phase-2/transitions`.
+**To resume:** merge #14, run the iPhone checklist on #15's preview, merge #15, then start `phase-2/after-hours` (13).
