@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is built: #14 (08) is merged; #15 `phase-2/transitions` (11/12) and #16 `phase-2/after-hours` (13, stacked on #15) are ready to merge; the real-iPhone check passed on 26 Oct.
+**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: `phase-3/sun-study` (04) is in review.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -74,16 +74,29 @@ Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spik
 - `*.env` files are gitignored. A `makeena.env` appeared in the project folder on 26 Oct; it was never committed or pushed.
 - `npm audit` reports undici advisories inside wrangler's bundled miniflare (dev only); wait for an upstream wrangler release.
 
-## Phase 2 (global systems), in progress
+## Phase 2 (global systems), complete
 
 Founder decisions (26 Oct, decision 0010): generator hidden in the spec sheet; "Concept render · not yet through the gates" until gates exist; 13's toast at a fixed 21:40 AST; iPhone check before the transitions PR merges (borrowed phone or cloud device service); router fallback `swap`.
 
 | # | Branch | Scope |
 |---|---|---|
 | 1 | `phase-2/provenance-figure` | **Merged (#14).** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
-| 2 | `phase-2/transitions` | **In review (#15).** 11 + 12 on the ClientRouter (decision 0011); Firefox project added. iPhone checklist passed 26 Oct (`docs/qa/ios-safari-checklist.md`) |
-| 3 | `phase-2/after-hours` | **In review (#16), stacked on #15.** 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / doha, night variant in `ProvenanceFigure`, crossfade, toast (decision 0012) |
+| 2 | `phase-2/transitions` | **Merged (#15).** 11 + 12 on the ClientRouter (decision 0011); Firefox project added. iPhone checklist passed 26 Oct (`docs/qa/ios-safari-checklist.md`) |
+| 3 | `phase-2/after-hours` | **Merged (#16).** 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / doha, night variant in `ProvenanceFigure`, crossfade, toast (decision 0012) |
 
 Exit (PRD §17): the acceptance criteria in §8 are met, including real iOS Safari for G2.
 
-**To resume:** merge #15, then #16. That completes Phase 2; then brief Phase 3 (section components 03, 04, 06, 07).
+## Phase 3 (section components), in progress
+
+Founder decisions (26 Oct, decision 0013): generate missing frames in Higgsfield; 03 ships the Phase 0 placeholder sequence; 06 ships static until six layers exist; sun positions for 21 June 2026; hero video later.
+
+| # | Branch | Scope |
+|---|---|---|
+| 1 | `phase-3/sun-study` | **In review.** `MatchedFrameScrubber` (continuous) + 04 on off-plan; generated MORNING and M00 frames |
+| 2 | `phase-3/time-lapse` | 07: discrete mode (radio-group thumbnails, optional wipe, live region), months 00/06/14/24 |
+| 3 | `phase-3/aerial` | 03: scroll mode (pinned canvas sequence, placeholder frames), home three-still teaser; aerial night variants for 13 |
+| 4 | `phase-3/axonometric` | 06: static exploded image + numbered layer list until layers exist |
+
+Asset notes: the SUN-SKY01 set is 1800 × 771 (21:9), not 1800 × 1018 like the tower sets. Check a generated frame against its set (edge correlation, decision 0013) before using it. The Higgsfield CLI isn't signed in on this machine; the connected Higgsfield account works through the chat tools.
+
+**To resume:** merge `phase-3/sun-study`, then start `phase-3/time-lapse` (07).

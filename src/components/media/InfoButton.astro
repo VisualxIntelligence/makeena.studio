@@ -1,0 +1,26 @@
+---
+// 08 ⓘ button (44 × 44 px target) that opens the spec sheet with id `sheet`.
+import type { Lang } from "../../i18n/config";
+import { ui } from "../../i18n/ui";
+
+interface Props {
+  sheet: string;
+  assetId: string;
+  lang: Lang;
+}
+
+const { sheet, assetId, lang } = Astro.props;
+---
+
+<button
+  class="pfig__info"
+  type="button"
+  popovertarget={sheet}
+  aria-label={`${ui[lang].provenance.open}: ${assetId}`}
+>
+  <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" focusable="false">
+    <circle cx="10" cy="10" r="9" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+    <rect x="9.25" y="8.5" width="1.5" height="6" fill="currentColor"></rect>
+    <rect x="9.25" y="5.25" width="1.5" height="1.5" fill="currentColor"></rect>
+  </svg>
+</button>

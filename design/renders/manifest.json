@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25",
+  "generated": "2026-10-26",
   "note": "Concept-stage renders. Web-sized JPEG derivatives (max 1800 px); full-resolution PNG masters remain in the Higgsfield account under the listed job IDs. Not yet camera-locked from a 3D blockout, so matches are close but not pixel-exact.",
   "assets": [
     {
@@ -119,6 +119,25 @@
       "status": "concept"
     },
     {
+      "id": "MKN-PRG-CAM01-M00",
+      "file": "MKN-PRG-CAM01-M00.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "07"
+      ],
+      "description": "Same camera as the PRG-CAM01 progress frames, daylight: empty sandy plot behind site hoarding. Month 00. Generated 26 Oct 2026 from M06 (camera, light) and TWR-CAM01-PLOT (empty plot). The hoarding is white here, blue at month 06.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "3fe6b03b-13ce-4ba5-af4a-ef15d379d7c5",
+        "derivedFrom": "MKN-PRG-CAM01-M06"
+      },
+      "status": "concept"
+    },
+    {
       "id": "MKN-PRG-CAM01-M06",
       "file": "MKN-PRG-CAM01-M06.jpg",
       "width": 1800,
@@ -229,6 +248,25 @@
         "model": "gpt_image_2_5",
         "quality": "high",
         "jobId": "8c28516c-3381-43cd-987a-b68ebcd11688",
+        "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-SUN-SKY01-MORNING",
+      "file": "MKN-SUN-SKY01-MORNING.jpg",
+      "width": 1800,
+      "height": 771,
+      "concepts": [
+        "04"
+      ],
+      "description": "Fixed skyline camera at about 08:30, low warm sun. Generated 26 Oct 2026 as an edit of MIDDAY at the set's 21:9 aspect; edge correlation with its neighbours DAWN 0.86 and MIDDAY 0.84, within the existing set's 0.79-0.88.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "d5a444fa-1ed6-4a0d-8c07-8f7e2aec583d",
         "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
       },
       "status": "concept"
