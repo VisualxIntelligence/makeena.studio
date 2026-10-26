@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) has started: PR 1 `phase-1/tooling` is open for review. The seven Phase 1 decisions are made (decision 0005).
+**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is in progress: tooling, decisions and tokens-type are merged (PRs #6–#8); `phase-1/arabic-fonts` is in review. The seven Phase 1 decisions are made (decision 0005).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (scaffold + spike pages, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`, e.g. `phase-1-tooling-makeena-website…`. Cloudflare also posts a per-commit URL on each PR.
@@ -31,7 +31,7 @@ Write-ups: `docs/decisions/0001`–`0004`. 47 Playwright tests (`npm run build &
 
 ### Carry-over findings for later phases
 
-- **Arabic fonts are over budget:** ~290 KB on `/ar/` vs 120 KB (Amiri's Arabic subset alone is 108 KB). They need glyph-level subsetting (Phase 1).
+- ~~Arabic fonts over budget~~ Fixed in `phase-1/arabic-fonts` (decision 0006): critical 118.5 KB, only 1.5 KB headroom. Amiri keeps only shadda, sukun and fathatan; a test fails if a headline uses another mark.
 - Aerial frames: budget about **≤ 60 KB/frame desktop, ≤ 25 KB mobile** (AVIF q≈34, 4:2:0). The PRD's q50 gave 20 MB.
 - **WebKit doesn't paint off-viewport elements into view-transition snapshots.** Draw the cut line on `::view-transition-group(cut-line)` itself. Re-verify under ClientRouter.
 - Astro's automatic font fallbacks are tuned to Latin metrics; they're off for the Arabic faces.
@@ -46,6 +46,7 @@ Write-ups: `docs/decisions/0001`–`0004`. 47 Playwright tests (`npm run build &
 - Merge stacked PRs with **"Create a merge commit"** (not squash) and delete the branch, so the next PR retargets to `main`.
 - Tooling version pins (26 Oct 2026): **TypeScript 6.0** (7.0 is `latest`, but typescript-eslint and @astrojs/check don't support it yet); **eslint-plugin-jsx-a11y-x** instead of eslint-plugin-jsx-a11y (no ESLint 10 support). Revisit both when upstream catches up.
 - Stylelint 17.16 crashes on `[attr] :global(x)` in `selector-pseudo-class-no-unknown`; the config ignores `:global` to avoid it.
+- Python 3.14 with `fonttools[woff]` 4.62.1 is installed for `npm run fonts:arabic`.
 - exiftool 13.59 is installed at `%LOCALAPPDATA%\Programs\ExifTool` (on the user PATH; open a new terminal to pick it up).
 - Font faces are exposed as `--ff-*` by Astro's Fonts API and mapped to Tailwind's `--font-*` roles in `global.css`; `:lang(ar)` swaps the roles to the Arabic faces.
 - `npm audit` reports undici advisories inside wrangler's bundled miniflare (dev-only, local). The suggested fix downgrades wrangler; wait for an upstream wrangler release.
@@ -56,9 +57,9 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-1/tooling` | **In review.** ESLint, Prettier, Stylelint (no gradients / backdrop-filter / physical left-right), Vitest, Playwright matrix, axe, GitHub Actions CI |
-| 2 | `phase-1/tokens-type` | **In review.** Tailwind v4 `@theme` tokens, both-script typography, contrast test, Tailwind class linter |
-| 2b | `phase-1/arabic-fonts` | Arabic font subsetting to meet the 120 KB critical-font budget on `/ar/` (split out of PR 2) |
+| 1 | `phase-1/tooling` | **Merged (#6).** ESLint, Prettier, Stylelint (no gradients / backdrop-filter / physical left-right), Vitest, Playwright matrix, axe, GitHub Actions CI |
+| 2 | `phase-1/tokens-type` | **Merged (#8).** Tailwind v4 `@theme` tokens, both-script typography, contrast test, Tailwind class linter |
+| 2b | `phase-1/arabic-fonts` | **In review.** Arabic subsets: critical fonts on `/ar/` 147.8 → 118.5 KB (decision 0006) |
 | 3 | `phase-1/routes-i18n` | All §5 routes × 2 locales, content collections, i18n helpers, Arabic-preference root redirect, hreflang/canonical, sitemap, localised 404, spike pages removed from production |
 | 4 | `phase-1/layout-nav-footer` | BaseLayout, 12-col grid, section labels, Nav + mobile menu, skip link, Footer (toggles inert until Phase 2) |
 | 5 | `phase-1/motion-controller` | G1 `src/lib/motion/`, built around the ClientRouter lifecycle |
@@ -75,4 +76,4 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 6. Domain `makeena.studio`, attached at launch.
 7. exiftool installed locally; its JSON output is committed.
 
-**To resume:** merge the open stack in order (#6 tooling → #7 decisions → tokens-type), then continue with `phase-1/arabic-fonts`.
+**To resume:** merge `phase-1/arabic-fonts`, then continue with `phase-1/routes-i18n` (PR 3).
