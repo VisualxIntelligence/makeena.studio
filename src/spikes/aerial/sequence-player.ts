@@ -173,7 +173,8 @@ export class SequencePlayer {
             this.bitmaps.set(i, bmp);
             this.stats.decoded = this.bitmaps.size;
             this.stats.decodedPeak = Math.max(this.stats.decodedPeak, this.bitmaps.size);
-            this.stats.decodedMB = (this.bitmaps.size * this.frameWidth * this.frameHeight * 4) / 1e6;
+            this.stats.decodedMB =
+              (this.bitmaps.size * this.frameWidth * this.frameHeight * 4) / 1e6;
             this.schedule();
           })
           .catch(() => this.decoding.delete(i));

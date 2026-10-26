@@ -17,7 +17,9 @@ const observeShifts = () => {
         t: Math.round(e.startTime),
         nodes: (e.sources ?? []).map((s) => {
           const el = s.node as Element | undefined;
-          return el?.nodeName ? `${el.nodeName.toLowerCase()}${el.className ? "." + String(el.className).split(" ")[0] : ""}` : "?";
+          return el?.nodeName
+            ? `${el.nodeName.toLowerCase()}${el.className ? "." + String(el.className).split(" ")[0] : ""}`
+            : "?";
         }),
       });
     }
@@ -37,7 +39,10 @@ async function throttle(page: Page) {
   await cdp.send("Network.setCacheDisabled", { cacheDisabled: false });
 }
 
-for (const [from, to] of [["en", "ar"], ["ar", "en"]] as const) {
+for (const [from, to] of [
+  ["en", "ar"],
+  ["ar", "en"],
+] as const) {
   for (const page_ of ["home", "method"]) {
     test(`CLS ${from} → ${to} on /${page_}/`, async ({ page, browserName }, info) => {
       test.skip(browserName !== "chromium");
@@ -53,7 +58,9 @@ for (const [from, to] of [["en", "ar"], ["ar", "en"]] as const) {
       await page.waitForTimeout(1500);
       const r = await page.evaluate(() => {
         const w = window as Window & { __shifts?: { value: number; t: number; nodes: string[] }[] };
-        const fonts = [...document.fonts].filter((f) => f.status === "loaded").map((f) => `${f.family.split("-")[0]} ${f.weight}`);
+        const fonts = [...document.fonts]
+          .filter((f) => f.status === "loaded")
+          .map((f) => `${f.family.split("-")[0]} ${f.weight}`);
         return { shifts: w.__shifts!, fonts: [...new Set(fonts)] };
       });
       const cls = r.shifts.reduce((a, s) => a + s.value, 0);
@@ -82,8 +89,13 @@ test("CLS worst case: cold direct load of /ar/ on Slow 3G", async ({ page, brows
   await page.evaluate(() => document.fonts.ready);
   const loadedAt = Date.now() - t0;
   await page.waitForTimeout(1500);
-  const shifts = await page.evaluate(() => (window as Window & { __shifts?: { value: number; t: number; nodes: string[] }[] }).__shifts!);
+  const shifts = await page.evaluate(
+    () =>
+      (window as Window & { __shifts?: { value: number; t: number; nodes: string[] }[] }).__shifts!,
+  );
   const cls = shifts.reduce((a, s) => a + s.value, 0);
-  console.log(`[${info.project.name}] cold /ar/ slow-3G CLS=${cls.toFixed(4)} fontsReady≈${loadedAt}ms shifts=${JSON.stringify(shifts)}`);
+  console.log(
+    `[${info.project.name}] cold /ar/ slow-3G CLS=${cls.toFixed(4)} fontsReady≈${loadedAt}ms shifts=${JSON.stringify(shifts)}`,
+  );
   expect(cls).toBeLessThanOrEqual(0.1);
 });

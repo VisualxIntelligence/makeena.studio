@@ -23,9 +23,24 @@ const preloadSrcset = `${frameUrl("mobile", 1)} 828w, ${frameUrl("desktop", 1)} 
 
 // Spike copy is English in both locales; Arabic copy is drafted in Phase 5 for native review.
 const chapters = [
-  { id: "MKN-AER-FLT01-A", src: keyA, title: "High approach", alt: "Generated aerial: high oblique approach over a fictional waterfront development at golden hour." },
-  { id: "MKN-AER-FLT01-B", src: keyB, title: "Descent over the marina", alt: "Generated aerial: the camera has descended over the marina of the same fictional development." },
-  { id: "MKN-AER-FLT01-C", src: keyC, title: "Low pass along the promenade", alt: "Generated aerial: low pass along the promenade of the same fictional development." },
+  {
+    id: "MKN-AER-FLT01-A",
+    src: keyA,
+    title: "High approach",
+    alt: "Generated aerial: high oblique approach over a fictional waterfront development at golden hour.",
+  },
+  {
+    id: "MKN-AER-FLT01-B",
+    src: keyB,
+    title: "Descent over the marina",
+    alt: "Generated aerial: the camera has descended over the marina of the same fictional development.",
+  },
+  {
+    id: "MKN-AER-FLT01-C",
+    src: keyC,
+    title: "Low pass along the promenade",
+    alt: "Generated aerial: low pass along the promenade of the same fictional development.",
+  },
 ];
 ---
 
@@ -36,9 +51,9 @@ const chapters = [
       // Before first paint: decide sequence vs stills so the reserved height never shifts.
       // Only the sequence path preloads its poster frame; stills mode fetches nothing from it.
       (function () {
-        var q = new URLSearchParams(location.search);
-        var c = navigator.connection;
-        var ok =
+        const q = new URLSearchParams(location.search);
+        const c = navigator.connection;
+        let ok =
           !matchMedia("(prefers-reduced-motion: reduce)").matches &&
           !(c && c.saveData) &&
           !((navigator.deviceMemory || 8) < 4);
@@ -46,7 +61,7 @@ const chapters = [
         if (q.has("force")) ok = true;
         if (!ok) return;
         document.documentElement.classList.add("seq-ok");
-        var l = document.createElement("link");
+        const l = document.createElement("link");
         l.rel = "preload";
         l.as = "image";
         l.type = "image/avif";
@@ -59,14 +74,18 @@ const chapters = [
   </Fragment>
 
   <div class="wrap intro">
-    <p class="label">03 · SPIKE · <span lang="en">PLACEHOLDER SEQUENCE</span></p>
+    <p class="label">
+      03 · SPIKE · <span lang="en">PLACEHOLDER SEQUENCE</span>
+    </p>
     <h1>Scroll-flown aerial.</h1>
     <p>
-      150 placeholder frames faked from three keyframes. Add <code>?debug</code> for the
-      performance readout, <code>?stills</code> to force the fallback, <code>?force</code> to
-      skip the device-memory check.
+      150 placeholder frames faked from three keyframes. Add <code>?debug</code> for the performance
+      readout, <code>?stills</code> to force the fallback, <code>?force</code> to skip the
+      device-memory check.
     </p>
-    <a class="skip" href="#after-flight">Skip the flight</a>
+    <a class="skip" href="#after-flight">
+      Skip the flight
+    </a>
   </div>
 
   <section
@@ -76,7 +95,9 @@ const chapters = [
     data-mobile={JSON.stringify(seq.variants.mobile)}
   >
     <div class="aerial__stage wrap">
-      <h2 id="aerial-h" class="label">03 · GENERATED AERIAL</h2>
+      <h2 id="aerial-h" class="label">
+        03 · GENERATED AERIAL
+      </h2>
       <figure class="aerial__frame">
         <img
           class="aerial__poster"
@@ -92,21 +113,32 @@ const chapters = [
         <canvas class="aerial__canvas" role="img" aria-label={chapters[0].alt}></canvas>
         <figcaption class="aerial__caption">
           <span class="label">GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW</span>
-          <span class="label aerial__timecode" dir="ltr">FRAME <span data-tc>0000</span> / 0960</span>
+          <span class="label aerial__timecode" dir="ltr">
+            FRAME <span data-tc>0000</span> / 0960
+          </span>
         </figcaption>
       </figure>
       <div class="aerial__side">
-        <div class="aerial__rail" aria-hidden="true"><span></span></div>
+        <div class="aerial__rail" aria-hidden="true">
+          <span></span>
+        </div>
         <ol class="aerial__filmstrip">
-          {
-            chapters.map((c, i) => (
-              <li aria-current={i === 0 ? "step" : undefined}>
-                <Picture src={c.src} widths={[240, 480]} sizes="240px" formats={["avif", "webp"]} alt="" loading="lazy" />
-                <span class="label" dir="ltr">0{i + 1}</span>
-                <span>{c.title}</span>
-              </li>
-            ))
-          }
+          {chapters.map((c, i) => (
+            <li aria-current={i === 0 ? "step" : undefined}>
+              <Picture
+                src={c.src}
+                widths={[240, 480]}
+                sizes="240px"
+                formats={["avif", "webp"]}
+                alt=""
+                loading="lazy"
+              />
+              <span class="label" dir="ltr">
+                0{i + 1}
+              </span>
+              <span>{c.title}</span>
+            </li>
+          ))}
         </ol>
       </div>
     </div>
@@ -114,19 +146,27 @@ const chapters = [
 
   <!-- Fallback and no-JS: three chapter stills as a stepped figure. -->
   <ol class="aerial-stills wrap" aria-label="The flight in three stills">
-    {
-      chapters.map((c, i) => (
-        <li>
-          <figure>
-            <Picture src={c.src} widths={[828, 1600]} sizes="(min-width: 1024px) 66vw, 100vw" formats={["avif", "webp"]} alt={c.alt} loading="lazy" />
-            <figcaption>
-              <span class="label" dir="ltr">0{i + 1}</span> {c.title}
-              <span class="label"> · GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW</span>
-            </figcaption>
-          </figure>
-        </li>
-      ))
-    }
+    {chapters.map((c, i) => (
+      <li>
+        <figure>
+          <Picture
+            src={c.src}
+            widths={[828, 1600]}
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            formats={["avif", "webp"]}
+            alt={c.alt}
+            loading="lazy"
+          />
+          <figcaption>
+            <span class="label" dir="ltr">
+              0{i + 1}
+            </span>{" "}
+            {c.title}
+            <span class="label"> · GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW</span>
+          </figcaption>
+        </figure>
+      </li>
+    ))}
   </ol>
 
   <div id="after-flight" class="wrap after" tabindex="-1">
@@ -141,6 +181,7 @@ const chapters = [
   .intro {
     padding-block: 64px 32px;
   }
+
   .skip {
     display: inline-block;
     min-block-size: 44px;
@@ -151,9 +192,11 @@ const chapters = [
   .aerial {
     display: none;
   }
+
   :global(.seq-ok) .aerial {
     display: block;
   }
+
   :global(.seq-ok) .aerial-stills {
     display: none;
   }
@@ -166,11 +209,13 @@ const chapters = [
     align-content: center;
     gap: 16px;
   }
-  @media (min-width: 1024px) {
+
+  @media (width >= 1024px) {
     .aerial__stage {
       grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
       column-gap: 24px;
     }
+
     .aerial__stage h2 {
       grid-column: 1 / -1;
     }
@@ -182,6 +227,7 @@ const chapters = [
     inline-size: 100%;
     max-inline-size: calc(70svh * 16 / 9);
   }
+
   .aerial__poster,
   .aerial__canvas {
     display: block;
@@ -189,15 +235,18 @@ const chapters = [
     block-size: auto;
     aspect-ratio: 16 / 9;
   }
+
   .aerial__canvas {
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
     opacity: 0;
   }
+
   .aerial__canvas[data-ready] {
     opacity: 1;
   }
+
   .aerial__caption {
     display: flex;
     flex-wrap: wrap;
@@ -211,12 +260,14 @@ const chapters = [
     background: color-mix(in srgb, var(--ink) 15%, transparent);
     margin-block-end: 16px;
   }
+
   .aerial__rail span {
     display: block;
     block-size: 100%;
     inline-size: calc(var(--p, 0) * 100%);
     background: var(--copper);
   }
+
   .aerial__filmstrip {
     list-style: none;
     margin: 0;
@@ -225,42 +276,53 @@ const chapters = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 8px;
   }
+
   .aerial__filmstrip li {
     display: grid;
     align-content: start;
     gap: 4px;
     font-size: 0.875rem;
-    opacity: 0.55;
-    transition: opacity 200ms;
+    color: var(--muted);
   }
-  @media (min-width: 1024px) {
+
+  @media (width >= 1024px) {
     /* Compact rows (thumb + label) so the sticky block fits a 720 px-tall viewport. */
     .aerial__filmstrip {
       grid-template-columns: minmax(0, 1fr);
     }
+
     .aerial__filmstrip li {
       grid-template-columns: 120px minmax(0, 1fr);
       column-gap: 12px;
     }
+
     .aerial__filmstrip li :global(picture),
     .aerial__filmstrip li > :global(img) {
       grid-row: span 2;
     }
   }
+
+  /* Only the thumbnails dim: text keeps WCAG AA contrast in every state. */
   .aerial__filmstrip li[aria-current] {
-    opacity: 1;
+    color: var(--ink);
   }
+
   .aerial__filmstrip :global(img) {
     inline-size: 100%;
     block-size: auto;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-block-start: 2px solid transparent;
+    opacity: 0.55;
+    transition: opacity 200ms;
   }
+
   .aerial__filmstrip li[aria-current] :global(img) {
     border-block-start-color: var(--copper);
+    opacity: 1;
   }
-  @media (max-width: 1023px) and (max-height: 700px) {
+
+  @media (width <= 1023px) and (height <= 700px) {
     .aerial__filmstrip :global(img) {
       display: none;
     }
@@ -272,9 +334,11 @@ const chapters = [
     gap: 48px;
     padding-block: 32px;
   }
+
   .aerial-stills figure {
     margin: 0;
   }
+
   .aerial-stills :global(img) {
     inline-size: 100%;
     block-size: auto;
@@ -294,7 +358,9 @@ const chapters = [
     padding: 8px;
     background: var(--night);
     color: var(--copper-light);
-    font: 11px/1.4 ui-monospace, monospace;
+    font:
+      11px/1.4 ui-monospace,
+      monospace;
     direction: ltr;
     pointer-events: none;
   }
@@ -334,7 +400,9 @@ const chapters = [
       const tc = section.querySelector<HTMLElement>("[data-tc]")!;
       const rail = section.querySelector<HTMLElement>(".aerial__rail span")!;
       const items = [...section.querySelectorAll<HTMLLIElement>(".aerial__filmstrip li")];
-      const alts = [...document.querySelectorAll<HTMLImageElement>(".aerial-stills img")].map((img) => img.alt);
+      const alts = [...document.querySelectorAll<HTMLImageElement>(".aerial-stills img")].map(
+        (img) => img.alt,
+      );
 
       const player = new SequencePlayer(canvas, urls, variant.width, variant.height);
       new ResizeObserver(() => player.resize()).observe(canvas);

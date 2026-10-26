@@ -18,18 +18,18 @@ const links = [
 
 <header class="nav">
   <div class="wrap nav__inner">
-    <a class="nav__mark" href={`/${lang}/spike/home/`} lang="en" dir="ltr">Makeena</a>
+    <a class="nav__mark" href={`/${lang}/spike/home/`} lang="en" dir="ltr">
+      Makeena
+    </a>
     <nav aria-label="Primary">
       <ul>
-        {
-          links.map((l) => (
-            <li>
-              <a href={l.href} aria-current={Astro.url.pathname === l.href ? "page" : undefined}>
-                {l.label}
-              </a>
-            </li>
-          ))
-        }
+        {links.map((l) => (
+          <li>
+            <a href={l.href} aria-current={Astro.url.pathname === l.href ? "page" : undefined}>
+              {l.label}
+            </a>
+          </li>
+        ))}
         <li>
           <a href={counterpart} lang={other} hreflang={other} data-lang-switch>
             {other === "ar" ? "عربي" : "English"}
@@ -44,6 +44,7 @@ const links = [
   .nav {
     border-block-end: 1px solid var(--ink);
   }
+
   .nav__inner {
     display: flex;
     flex-wrap: wrap;
@@ -52,11 +53,13 @@ const links = [
     gap: 8px 24px;
     min-block-size: 64px;
   }
+
   .nav__mark {
     color: var(--ink);
     text-decoration: none;
     font-size: 1.25rem;
   }
+
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -65,11 +68,13 @@ const links = [
     padding: 0;
     list-style: none;
   }
+
   a {
     display: inline-flex;
     align-items: center;
     min-block-size: 44px;
   }
+
   a[aria-current="page"] {
     color: var(--ink);
   }

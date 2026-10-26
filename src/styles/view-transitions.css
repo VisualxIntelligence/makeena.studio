@@ -28,7 +28,7 @@
   --vt-rule: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='8'%3E%3Crect width='2' height='8' fill='%23B4653A'/%3E%3C/svg%3E");
 }
 
-@media (max-width: 767px) {
+@media (width <= 767px) {
   :root {
     --vt-duration: 350ms;
   }
@@ -60,7 +60,9 @@ html[dir="rtl"]::view-transition-new(root) {
 ::view-transition-group(cut-line) {
   inline-size: var(--vt-cut-width);
   block-size: 100vh;
+
   --vt-marker: var(--vt-marker-right);
+
   background:
     var(--vt-marker) no-repeat center 24px / 24px 42px,
     var(--vt-marker) no-repeat center calc(100% - 24px) / 24px 42px,
@@ -70,6 +72,7 @@ html[dir="rtl"]::view-transition-new(root) {
 
 html[dir="rtl"]::view-transition-group(cut-line) {
   --vt-marker: var(--vt-marker-left);
+
   animation-name: vt-line-rtl;
 }
 
@@ -79,6 +82,7 @@ html[dir="rtl"]::view-transition-group(cut-line) {
   from {
     transform: translateX(calc(var(--vt-cut-width) / -2));
   }
+
   to {
     transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
   }
@@ -88,6 +92,7 @@ html[dir="rtl"]::view-transition-group(cut-line) {
   from {
     transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
   }
+
   to {
     transform: translateX(calc(var(--vt-cut-width) / -2));
   }
@@ -98,6 +103,7 @@ html[dir="rtl"]::view-transition-group(cut-line) {
   from {
     clip-path: inset(0 100% 0 0);
   }
+
   to {
     clip-path: inset(0 0 0 0);
   }
@@ -107,6 +113,7 @@ html[dir="rtl"]::view-transition-group(cut-line) {
   from {
     clip-path: inset(0 0 0 100%);
   }
+
   to {
     clip-path: inset(0 0 0 0);
   }
@@ -124,6 +131,7 @@ html[data-vt="lang"]::view-transition-new(root) {
 
 html[data-vt="lang"]::view-transition-group(cut-line) {
   --vt-marker: var(--vt-marker-left);
+
   animation-name: vt-split-left;
 }
 
@@ -135,7 +143,9 @@ html[data-vt="lang"]::view-transition-group(cut-line) {
 html[data-vt="lang"]::view-transition-group(cut-line-b) {
   inline-size: var(--vt-cut-width);
   block-size: 100vh;
+
   --vt-marker: var(--vt-marker-right);
+
   background:
     var(--vt-marker) no-repeat center 24px / 24px 42px,
     var(--vt-marker) no-repeat center calc(100% - 24px) / 24px 42px,
@@ -147,6 +157,7 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   from {
     clip-path: inset(0 50% 0 50%);
   }
+
   to {
     clip-path: inset(0 0 0 0);
   }
@@ -156,6 +167,7 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   from {
     transform: translateX(calc(50vw - var(--vt-cut-width) / 2));
   }
+
   to {
     transform: translateX(calc(var(--vt-cut-width) / -2));
   }
@@ -165,6 +177,7 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   from {
     transform: translateX(calc(50vw - var(--vt-cut-width) / 2));
   }
+
   to {
     transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
   }

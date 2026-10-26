@@ -1,5 +1,10 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "exclude": ["dist"],
+  "compilerOptions": {
+    // TypeScript 6 no longer loads every @types package by default. Node types cover build-time
+    // frontmatter (node:fs), scripts/ and tests/.
+    "types": ["node"]
+  }
 }

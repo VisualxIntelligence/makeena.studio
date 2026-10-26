@@ -4,7 +4,7 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 ## Current state
 
-**Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is planned but not started; it is waiting on seven founder decisions. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
+**Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is in progress: tooling and CI first; the remaining PRs wait on seven founder decisions. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
 
 What exists today: an Astro 7 static site with `/en/` and `/ar/`, Phase 0 spike pages under `/{lang}/spike/` (to be removed from production in Phase 1), self-hosted fonts, and Playwright spike tests. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
@@ -93,7 +93,12 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run dev` | Astro dev server on localhost |
 | `npm run build` | Static build into `dist/` (what Workers Builds runs) |
 | `npm run preview` | Build, then serve `dist/` through `wrangler dev` (closest to production) |
-| `npm run test:e2e` | Playwright against `astro preview` (run `npm run build` first; `npx playwright install chromium webkit` once) |
+| `npm run lint` | ESLint, Stylelint (design bans: gradients, `backdrop-filter`, shadows, physical left/right, radius > 2 px) and Prettier check |
+| `npm run format` | Prettier write |
+| `npm run typecheck` | `astro check` |
+| `npm run test:unit` | Vitest |
+| `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, two phones, reduced motion (run `npm run build` first; `npx playwright install chromium webkit` once) |
+| `npm run test:spikes` | Phase 0 measurements in `tests/spikes/` (local only; timing-sensitive) |
 | `npm run sequences:placeholder` | Regenerate the Phase 0 placeholder aerial sequence (needs ffmpeg) |
 
-Phase 1 adds lint and test commands.
+CI (`.github/workflows/ci.yml`) runs lint, typecheck, unit and e2e on every PR and on `main`. Keep it green before asking for review.
