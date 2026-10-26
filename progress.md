@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: `phase-3/sun-study` (04) is in review.
+**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: 04 is merged (#17); `phase-3/time-lapse` (07) is in review.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -92,11 +92,11 @@ Founder decisions (26 Oct, decision 0013): generate missing frames in Higgsfield
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-3/sun-study` | **In review.** `MatchedFrameScrubber` (continuous) + 04 on off-plan; generated MORNING and M00 frames |
-| 2 | `phase-3/time-lapse` | 07: discrete mode (radio-group thumbnails, optional wipe, live region), months 00/06/14/24 |
+| 1 | `phase-3/sun-study` | **Merged (#17).** `MatchedFrameScrubber` (continuous) + 04 on off-plan; generated MORNING and M00 frames |
+| 2 | `phase-3/time-lapse` | **In review.** 07: discrete mode (radio-group thumbnails, wipe, live region), months 00/06/14/24; shared crossfade (decision 0014). Founder kept M00's white hoarding |
 | 3 | `phase-3/aerial` | 03: scroll mode (pinned canvas sequence, placeholder frames), home three-still teaser; aerial night variants for 13 |
 | 4 | `phase-3/axonometric` | 06: static exploded image + numbered layer list until layers exist |
 
 Asset notes: the SUN-SKY01 set is 1800 × 771 (21:9), not 1800 × 1018 like the tower sets. Check a generated frame against its set (edge correlation, decision 0013) before using it. The Higgsfield CLI isn't signed in on this machine; the connected Higgsfield account works through the chat tools.
 
-**To resume:** merge `phase-3/sun-study`, then start `phase-3/time-lapse` (07).
+**To resume:** merge `phase-3/time-lapse`, then start `phase-3/aerial` (03).

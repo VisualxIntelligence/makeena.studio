@@ -3,8 +3,8 @@
 // "doha". The swap is a same-document view-transition crossfade (instant under reduced motion)
 // and never runs during a page transition. The state is set before first paint by the inline
 // script in BaseLayout and survives navigation and the language switch.
+import { crossfade } from "./crossfade";
 import { onPage } from "./lifecycle";
-import { motion } from "./motion";
 
 const HOURS = "mkn-hours";
 const SHORTCUTS = "mkn-shortcuts";
@@ -65,19 +65,12 @@ export async function setNight(night: boolean): Promise<void> {
   if (night === isNight()) return;
   write(HOURS, night ? "night" : null);
   if (night) wakeNightImages();
-  await motion.idle();
   const apply = () => {
     if (night) root.dataset.hours = "night";
     else delete root.dataset.hours;
     sync();
   };
-  if (motion.allowed && document.startViewTransition) {
-    root.dataset.vt = "hours";
-    const transition = document.startViewTransition(apply);
-    transition.finished.finally(() => delete root.dataset.vt);
-  } else {
-    apply();
-  }
+  await crossfade(apply);
   toast(night);
 }
 

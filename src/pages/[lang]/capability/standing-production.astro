@@ -1,6 +1,5 @@
 ---
-import FigureGrid from "../../../components/media/FigureGrid.astro";
-import ProvenanceFigure from "../../../components/media/ProvenanceFigure.astro";
+import TimeLapse from "../../../components/concepts/TimeLapse.astro";
 import type { Lang } from "../../../i18n/config";
 import Page from "../../../layouts/Page.astro";
 import { langPaths } from "../../../lib/content";
@@ -10,27 +9,5 @@ const lang = Astro.params.lang as Lang;
 ---
 
 <Page route="standing" lang={lang}>
-  <FigureGrid slot="time-lapse" cols={4}>
-    <ProvenanceFigure
-      assetId="MKN-TWR-CAM01-PLOT"
-      lang={lang}
-      priority
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-PRG-CAM01-M06"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-PRG-CAM01-M14"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-TWR-CAM01-OVERCAST"
-      lang={lang}
-      sizes="(width >= 80rem) 300px, (width >= 64rem) 23vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-  </FigureGrid>
+  <TimeLapse slot="time-lapse" lang={lang} priority />
 </Page>

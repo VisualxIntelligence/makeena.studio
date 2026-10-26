@@ -1,0 +1,55 @@
+---
+// 07 · construction time-lapse (PRD §9.5): one fixed camera on one site at months 00, 06, 14 and
+// 24. A MatchedFrameScrubber in discrete mode; what standing capacity delivers at each phase is
+// still to come from the founder ([PLACEHOLDER]).
+import type { Lang } from "../../i18n/config";
+import MatchedFrameScrubber from "../scrubber/MatchedFrameScrubber.astro";
+import type { ScrubberFrame } from "../scrubber/types";
+
+interface Props {
+  lang: Lang;
+  priority?: boolean;
+}
+
+const { lang, priority = false } = Astro.props;
+
+const months = [
+  { m: 0, assetId: "MKN-PRG-CAM01-M00", en: "Empty plot", ar: "أرض خالية" },
+  { m: 6, assetId: "MKN-PRG-CAM01-M06", en: "Piling and core", ar: "الأساسات والنواة" },
+  { m: 14, assetId: "MKN-PRG-CAM01-M14", en: "Frame at level 20", ar: "الهيكل عند الطابق 20" },
+  { m: 24, assetId: "MKN-TWR-CAM01-OVERCAST", en: "Handover", ar: "التسليم" },
+];
+const mm = (m: number) => String(m).padStart(2, "0");
+
+const frames: ScrubberFrame[] = months.map(({ m, assetId, en, ar }) => ({
+  assetId,
+  value: m,
+  label: { en: `Month ${mm(m)} · ${en}`, ar: `الشهر ${mm(m)} · ${ar}` },
+}));
+
+const announce: Record<number, string> = {};
+const notes: Record<number, string> = {};
+const compare: Record<number, string> = {};
+months.forEach(({ m }, i) => {
+  announce[m] = lang === "ar" ? `الشهر ${mm(m)} من 24` : `Month ${mm(m)} of 24`;
+  notes[m] = `[PLACEHOLDER: month ${mm(m)} deliverables of standing capacity]`;
+  if (i > 0) {
+    const prev = mm(months[i - 1].m);
+    compare[m] = lang === "ar" ? `قارن بالشهر ${prev}` : `Compare with month ${prev}`;
+  }
+});
+
+const label = lang === "ar" ? "مراحل البناء" : "Construction stage";
+---
+
+<MatchedFrameScrubber
+  mode="discrete"
+  lang={lang}
+  frames={frames}
+  value={0}
+  label={label}
+  announce={announce}
+  notes={notes}
+  compare={compare}
+  priority={priority}
+/>

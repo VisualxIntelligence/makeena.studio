@@ -9,6 +9,7 @@ const pages = [
   "/en/studio/",
   "/ar/method/",
   "/en/capability/off-plan-visualisation/",
+  "/ar/capability/standing-production/",
 ];
 
 const shared = {
