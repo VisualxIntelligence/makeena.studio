@@ -21,7 +21,8 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test tests/e2e",
     "test:spikes": "playwright test tests/spikes",
-    "sequences:placeholder": "node scripts/sequences/placeholder-aerial.mjs"
+    "sequences:placeholder": "node scripts/sequences/placeholder-aerial.mjs",
+    "fonts:arabic": "python -I scripts/fonts/subset_arabic.py"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

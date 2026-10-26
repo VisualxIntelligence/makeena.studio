@@ -41,7 +41,7 @@ test("Arabic: Arabic faces first, larger body, no uppercase or letter-spacing", 
   await page.goto("/ar/");
 
   const body = await style(page, "body");
-  expect(body.family).toMatch(/^"?IBM Plex Sans Arabic/);
+  expect(body.family).toMatch(/^"?MKN Sans Arabic/);
   expect(body.size / latinBody).toBeCloseTo(1.08, 2);
 
   const display = await style(page, "h1.display");
@@ -51,7 +51,7 @@ test("Arabic: Arabic faces first, larger body, no uppercase or letter-spacing", 
   expect(["0px", "normal"]).toContain(display.letterSpacing);
 
   const label = await style(page, ".label");
-  expect(label.family).toMatch(/^"?IBM Plex Sans Arabic/);
+  expect(label.family).toMatch(/^"?MKN Sans Arabic/);
   expect(label.transform).toBe("none");
   expect(["0px", "normal"]).toContain(label.letterSpacing);
 });
