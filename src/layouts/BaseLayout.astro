@@ -1,5 +1,6 @@
 ---
 import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import "../styles/view-transitions.css";
 import CutLine from "../components/global/CutLine.astro";
@@ -16,9 +17,14 @@ interface Props {
   alternates?: boolean;
   /** Site nav and footer. The Phase 0 spike pages bring their own header. */
   chrome?: boolean;
+  /**
+   * Astro <ClientRouter /> (decision 0002). Off only for the Phase 0 spike pages, which measure
+   * native cross-document view transitions.
+   */
+  router?: boolean;
 }
 
-const { title, lang, description, alternates = true, chrome = true } = Astro.props;
+const { title, lang, description, alternates = true, chrome = true, router = true } = Astro.props;
 const isAr = lang === "ar";
 const t = ui[lang];
 const path = Astro.url.pathname;
@@ -49,6 +55,11 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
     <Font cssVariable="--ff-mono" />
     {isAr && <Font cssVariable="--ff-ar-display" preload />}
     {isAr && <Font cssVariable="--ff-ar-body" preload={[{ weight: 400 }]} />}
+    {
+      /* Navigations are instant until Phase 2 moves 11 and 12 onto the router; browsers without
+       view transitions swap the page without a fallback animation. */
+      router && <ClientRouter fallback="swap" />
+    }
     <script is:inline>
       // G2 (PRD §8.2). Inline and synchronous so the pagereveal listener exists
       // before the first render of the incoming page.
@@ -58,15 +69,38 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
           return (path.match(/^\/(en|ar)\//) || [])[1];
         };
 
-        // Lets CSS tell JS-enhanced components (the menu) from their no-JS fallbacks.
-        document.documentElement.classList.add("js");
+        // This script runs once per visit: the ClientRouter does not re-run identical inline
+        // scripts, and it replaces <html> attributes on every swap. Per-page work is therefore
+        // repeated on astro:after-swap.
+        const perPage = function () {
+          // Lets CSS tell JS-enhanced components (the menu) from their no-JS fallbacks.
+          document.documentElement.classList.add("js");
+          // PRD §5: remember the locale the visitor is reading, so `/` sends them back to it.
+          try {
+            localStorage.setItem("mkn-lang", document.documentElement.lang);
+          } catch {
+            // Storage blocked: `/` falls back to the browser's language preference.
+          }
+        };
+        perPage();
 
-        // PRD §5: remember the locale the visitor is reading, so `/` sends them back to it.
-        try {
-          localStorage.setItem("mkn-lang", document.documentElement.lang);
-        } catch {
-          // Storage blocked: `/` falls back to the browser's language preference.
-        }
+        // After a routed navigation, move focus to <main> (unless a #section was requested) so
+        // keyboard and screen-reader users start at the new page's content.
+        let routed = false;
+        document.addEventListener("astro:after-swap", function () {
+          perPage();
+          routed = true;
+          try {
+            sessionStorage.removeItem(KEY);
+          } catch {
+            // Storage blocked: nothing to clear.
+          }
+        });
+        document.addEventListener("astro:page-load", function () {
+          if (!routed || location.hash) return;
+          const main = document.getElementById("main");
+          if (main) main.focus({ preventScroll: true });
+        });
 
         // 12: the language switch keeps the current section and flags the
         // navigation, because Safari 18 has no navigation.activation to compare URLs.
@@ -104,8 +138,7 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
           });
         });
 
-        // After an internal navigation, move focus to <main> so keyboard and
-        // screen-reader users start at the new page's content.
+        // Full page loads from another page on the site (no router: spike pages, reloads).
         document.addEventListener("DOMContentLoaded", function () {
           const ref = document.referrer && new URL(document.referrer);
           if (ref && ref.origin === location.origin && !location.hash) {
@@ -131,6 +164,10 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
       <slot />
     </main>
     {chrome && <Footer lang={lang} />}
+    {router && <script>
+      import "../lib/motion";
+      import "../lib/motion/effects/reveal";
+    </script>}
     <CutLine />
   </body>
 </html>

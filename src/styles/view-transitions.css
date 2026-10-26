@@ -182,3 +182,12 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
     transform: translateX(calc(100vw - var(--vt-cut-width) / 2));
   }
 }
+
+/* Phase 1: navigations through Astro's ClientRouter (html[data-astro-transition]) are instant.
+   Phase 2 moves 11 and 12 onto the router (decision 0002); until then the rules above only
+   play for native cross-document navigations (the Phase 0 spike pages). */
+html[data-astro-transition]::view-transition-group(*),
+html[data-astro-transition]::view-transition-old(*),
+html[data-astro-transition]::view-transition-new(*) {
+  animation: none !important;
+}

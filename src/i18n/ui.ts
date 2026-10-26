@@ -17,6 +17,7 @@ interface Ui {
   footerNav: string;
   entity: string;
   privacy: string;
+  reduceMotion: string;
   rights: string;
   notFound: { label: string; heading: string; body: string; home: string };
 }
@@ -38,6 +39,7 @@ export const ui: Record<Lang, Ui> = {
     footerNav: "Footer",
     entity: "Entity",
     privacy: "Privacy",
+    reduceMotion: "Reduce motion",
     rights: "All rights reserved.",
     notFound: {
       label: "404 · NOT FOUND",
@@ -62,6 +64,7 @@ export const ui: Record<Lang, Ui> = {
     footerNav: "تذييل الصفحة",
     entity: "الكيان",
     privacy: "الخصوصية",
+    reduceMotion: "تقليل الحركة",
     rights: "جميع الحقوق محفوظة.",
     notFound: {
       label: "404 · الصفحة غير موجودة",

@@ -1,11 +1,12 @@
 ---
 // Footer on every page (PRD §5, UX doc §3.8): the mono legal line at the start; Entity, Privacy,
-// language switch and © at the end; ivory with a top rule. The keyboard-shortcut and after-hours
-// toggles arrive with 13 in Phase 2.
+// language switch, the motion control (G1) and © at the end; ivory with a top rule. The
+// keyboard-shortcut and after-hours toggles arrive with 13 in Phase 2.
 import { getEntry } from "astro:content";
 import { pathTo, type Lang } from "../../i18n/config";
 import { ui } from "../../i18n/ui";
 import LanguageSwitch from "./LanguageSwitch.astro";
+import MotionToggle from "./MotionToggle.astro";
 
 interface Props {
   lang: Lang;
@@ -32,6 +33,9 @@ const year = new Date().getFullYear();
         </li>
         <li>
           <LanguageSwitch lang={lang} />
+        </li>
+        <li>
+          <MotionToggle lang={lang} />
         </li>
         <li class="site-footer__rights">
           <span dir="ltr">
