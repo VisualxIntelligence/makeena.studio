@@ -1,5 +1,7 @@
-/* G2 — navigation transitions (PRD §8.2). Phase 0 spike (a): concept 11 section-cut.
-   Native cross-document View Transitions, no client router.
+/* G2 — navigation transitions (PRD §8.2): 11 section-cut and 12 mirror-line.
+   The site runs them through Astro's ClientRouter (same-document view transitions; type set by
+   src/lib/transitions). The `@view-transition` rule below only serves the Phase 0 spike pages,
+   which still use native cross-document transitions.
 
    - The whole page is the `root` snapshot. The incoming page is revealed behind a
      copper line; the outgoing page stays put underneath (no crossfade).
@@ -120,9 +122,9 @@ html[dir="rtl"]::view-transition-group(cut-line) {
 }
 
 /* ── 12 Mirror-line (language switch) ─────────────────────────────────────────
-   Set by the pagereveal handler in BaseLayout as html[data-vt="lang"] (a data
-   attribute rather than :active-view-transition-type() so it holds wherever
-   pagereveal exists). The line starts at the centre and splits to both edges
+   html[data-vt="lang"] is set by src/lib/transitions (ClientRouter) or, on the
+   Phase 0 spike pages, by the pagereveal handler in BaseLayout. A data attribute
+   rather than :active-view-transition-type() so it works in every engine. The line starts at the centre and splits to both edges
    while the counterpart page opens from the middle. Symmetric, so identical in
    both directions. */
 html[data-vt="lang"]::view-transition-new(root) {
@@ -183,11 +185,18 @@ html[data-vt="lang"]::view-transition-group(cut-line-b) {
   }
 }
 
-/* Phase 1: navigations through Astro's ClientRouter (html[data-astro-transition]) are instant.
-   Phase 2 moves 11 and 12 onto the router (decision 0002); until then the rules above only
-   play for native cross-document navigations (the Phase 0 spike pages). */
-html[data-astro-transition]::view-transition-group(*),
-html[data-astro-transition]::view-transition-old(*),
-html[data-astro-transition]::view-transition-new(*) {
+/* No animation for reduced motion: the OS setting, or the footer control (G2 sets
+   html[data-vt="none"] and skips the transition; this is the backstop). */
+html[data-vt="none"]::view-transition-group(*),
+html[data-vt="none"]::view-transition-old(*),
+html[data-vt="none"]::view-transition-new(*) {
   animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

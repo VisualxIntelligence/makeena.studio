@@ -50,11 +50,12 @@ jobs:
         id: browsers
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}
+          # The browser list is part of the key: adding a browser must miss the old cache.
+          key: playwright-${{ runner.os }}-${{ steps.playwright.outputs.version }}-chromium-webkit-firefox
       - if: steps.browsers.outputs.cache-hit != 'true'
-        run: npx playwright install --with-deps chromium webkit
+        run: npx playwright install --with-deps chromium webkit firefox
       - if: steps.browsers.outputs.cache-hit == 'true'
-        run: npx playwright install-deps chromium webkit
+        run: npx playwright install-deps chromium webkit firefox
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v7
         if: failure()
