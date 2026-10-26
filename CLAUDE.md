@@ -4,7 +4,7 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 ## Current state
 
-**Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is in progress: tooling and CI first; the remaining PRs wait on seven founder decisions. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
+**Phase 0 (de-risk spikes) is complete and merged.** Phase 1 (foundation) is in progress; its seven founder decisions are recorded in `docs/decisions/0005`. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
 
 What exists today: an Astro 7 static site with `/en/` and `/ar/`, Phase 0 spike pages under `/{lang}/spike/` (to be removed from production in Phase 1), self-hosted fonts, and Playwright spike tests. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
@@ -79,7 +79,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions |
 | `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences |

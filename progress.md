@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) has started: PR 1 `phase-1/tooling` is open for review. PRs 2–7 still wait on the founder's answers to the seven decisions below (PR 1 doesn't depend on them).
+**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) has started: PR 1 `phase-1/tooling` is open for review. The seven Phase 1 decisions are made (decision 0005).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (scaffold + spike pages, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`, e.g. `phase-1-tooling-makeena-website…`. Cloudflare also posts a per-commit URL on each PR.
@@ -60,16 +60,16 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 | 4 | `phase-1/layout-nav-footer` | BaseLayout, 12-col grid, section labels, Nav + mobile menu, skip link, Footer (toggles inert until Phase 2) |
 | 5 | `phase-1/motion-controller` | G1 `src/lib/motion/`, built around the ClientRouter lifecycle |
 | 6 | `phase-1/provenance` | §10.2 schema + `scripts/provenance/` (exiftool → JSON), seeded from `design/renders/manifest.json` |
-| 7 | decision record | `/api/brief`: Astro Cloudflare adapter vs a small Worker entry |
+| 7 | decision record | Done: `docs/decisions/0005` (Worker entry for `/api/brief`) |
 
-### Open decisions (recommendation first)
+### Phase 1 decisions (founder, 26 Oct 2026: all recommended, decision 0005)
 
-1. **ClientRouter timing:** add it in Phase 1 so all scripts use its lifecycle from day one (Phase 2 adds only the animations).
-2. **Spike pages:** remove from production in PR 3; keep `src/spikes/` code and placeholder frames for Phase 3.
-3. **Arabic placeholder copy:** marked drafts ("AR DRAFT · NOT REVIEWED"), not `[PLACEHOLDER]` markers.
-4. **Form back end:** small Worker entry (site stays fully static).
-5. **Hero video:** Cloudflare Stream rather than Mux (needed in Phase 3).
-6. **Domain:** confirm `makeena.studio`; keep it unattached until launch.
-7. **exiftool:** OK to install locally (`winget install OliverBetz.ExifTool`); its output is committed, so CI doesn't need it.
+1. ClientRouter added in Phase 1 (G1 built on its lifecycle).
+2. Spike pages removed from production in PR 3; spike code kept for Phase 3.
+3. Arabic placeholder copy as marked drafts ("AR DRAFT · NOT REVIEWED").
+4. `/api/brief` as a small Worker entry; the site stays fully static.
+5. Cloudflare Stream for the hero video (Phase 3).
+6. Domain `makeena.studio`, attached at launch.
+7. exiftool installed locally; its JSON output is committed.
 
-**To resume:** review and merge PR 1 (`phase-1/tooling`), answer the seven decisions (e.g. "all recommended"), then continue with `phase-1/tokens-type`.
+**To resume:** merge PR 1 (`phase-1/tooling`) and the decisions PR, then continue with `phase-1/tokens-type`.

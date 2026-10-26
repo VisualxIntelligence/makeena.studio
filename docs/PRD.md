@@ -443,9 +443,9 @@ Studio photography, if real, uses `digitalCapture`.
 | Motion | GSAP 3.13+ with ScrollTrigger (free for commercial use, all plugins) | `gsap.matchMedia()` for breakpoints and reduced motion. CSS scroll-driven animations only for trivial reveals behind `@supports`. |
 | Transitions | Astro `<ClientRouter />` (same-document View Transitions) | Decided after Phase 0 so Firefox animates too (decision 0002) |
 | Images | Astro `<Picture>` (Sharp) → AVIF + WebP + JPEG fallback with `srcset`/`sizes` and explicit dimensions | Frame sequences pre-encoded by script and served as static files (or R2) |
-| Video | Mux or Cloudflare Stream for the hero loop (adaptive HLS). Never stream anything that is scrubbed. | **[DECISION: Mux vs Stream]** |
+| Video | Cloudflare Stream for the hero loop (adaptive HLS). Never stream anything that is scrubbed. | Decided: Stream (decision 0005) |
 | Hosting | **Cloudflare Workers with static assets**, deployed by Workers Builds (GitHub-connected project `makeena-website`) | Preview build per branch and pull request; production from `main`. See §11.3 |
-| Forms | Astro endpoint / Worker → Turnstile Siteverify → Resend (+ optional D1) | Secrets as Cloudflare environment variables |
+| Forms | Worker entry (`/api/brief`, decision 0005) → Turnstile Siteverify → Resend (+ optional D1) | Secrets as Cloudflare environment variables |
 | Testing | Vitest (units), Playwright (e2e in Chromium + WebKit, both locales, reduced-motion project), axe-core, Lighthouse CI | |
 | Lint | ESLint, Prettier, Stylelint (bans gradients, `backdrop-filter`, physical `left/right` in components) | |
 
@@ -487,7 +487,7 @@ Not used: Next.js, Webflow, Lenis, Three.js (at launch), any UI kit with its own
 
 | Environment | Source | URL |
 |---|---|---|
-| Production | `main` | makeena.studio **[DECISION: confirm domain]** |
+| Production | `main` | makeena.studio (decision 0005; attached at launch, `makeena-website.makeena.workers.dev` until then) |
 | Preview | every branch and pull request | Workers preview URL, posted as a comment on the PR (may be behind Cloudflare Access) |
 | Local | `npm run dev` | localhost |
 
@@ -496,7 +496,7 @@ Not used: Next.js, Webflow, Lenis, Three.js (at launch), any UI kit with its own
 What the repo must provide (Phase 0's first PR):
 - `package.json` with a `build` script that produces `dist/`, and `wrangler` as a dev dependency.
 - `wrangler.jsonc` at the root: `name: "makeena-website"`, a current `compatibility_date`, and `assets: { directory: "./dist" }` (plus `not_found_handling` for the 404 page). Check the current Cloudflare docs for the exact keys.
-- For the `/api/brief` endpoint (Phase 4), either the Astro Cloudflare adapter or a small Worker entry (`main`) that handles `/api/*` and serves everything else from the assets binding. Decide in Phase 1 and record it in `docs/decisions/`.
+- For the `/api/brief` endpoint (Phase 4), a small Worker entry (`main`) that handles `/api/*` and serves everything else from the assets binding. The Astro build stays static (decision 0005).
 
 Environment variables (never committed; set in the Worker's Settings > Variables and Secrets, separately for production and preview): `TURNSTILE_SECRET_KEY`, `PUBLIC_TURNSTILE_SITE_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL`, video provider keys.
 
@@ -607,9 +607,9 @@ Build order: spikes → foundation → 11/12 → 08 → scrubber (04, then 07) �
 | Full address, auditor, data statement, rights terms, phone, email | Founder | Phase 4 |
 | Per-phase deliverables copy for 07 | Founder | Phase 3 |
 | ~~Animate Firefox (ClientRouter) or accept plain navigation~~ Decided: ClientRouter (decision 0002) | Founder | Done |
-| Mux vs Cloudflare Stream for the hero loop | Founder | Phase 1 |
+| ~~Mux vs Cloudflare Stream for the hero loop~~ Decided: Stream (decision 0005) | Founder | Done |
 | Analytics tool (privacy-friendly) | Founder | Phase 4 |
-| Production domain | Founder | Phase 1 |
+| ~~Production domain~~ Decided: makeena.studio, attached at launch (decision 0005) | Founder | Done |
 | C2PA signing certificate | Founder | Post-launch |
 | Headless CMS | Founder | Post-launch |
 
