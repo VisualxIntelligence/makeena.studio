@@ -14,6 +14,7 @@ Tick each box, and note anything odd: a screenshot or screen recording is ideal.
 - [ ] Do the same on `/ar/` (Privacy is الخصوصية). The line sweeps **right to left**.
 - [ ] Open the **Menu**, tap **Method**. The sweep runs and the menu is closed on the new page.
 - [ ] Tap the browser's **Back** button. The previous page comes back (any sweep direction is fine).
+- [ ] On `/en/`, scroll all the way down and tap **Privacy** in the footer. The sweep runs and the Privacy page stays up: no "A problem repeatedly occurred" message, no reload. (Playwright's Windows WebKit crashes on exactly this; we need to know whether real Safari does.)
 
 ## Language switch (12 mirror-line)
 

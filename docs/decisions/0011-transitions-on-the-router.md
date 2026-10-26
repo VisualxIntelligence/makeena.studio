@@ -28,6 +28,16 @@
   - focus on `<main>`
 - Language-switch CLS 0.0000 (Chromium).
 
+## Known issue: Playwright's Windows WebKit crashes
+
+In Playwright's WebKit build for Windows (WinCairo, not Apple's Safari), the page **crashes** about a second after a routed view transition that starts from a **scrolled page at phone width**. Bisected on 26 Oct:
+
+- Chromium never crashes, and neither does WebKit at desktop width or at the top of the page.
+- WebKit doesn't crash under reduced motion (no transition), or with a JS `.click()` that doesn't scroll.
+- It still crashes with every part of our transition CSS disabled (no cut line, no animations, no sticky header, no clip-path).
+
+So it's in WebKit's same-document view transition (or the router's scroll-to-top inside it), not our CSS, and it predates this PR: routed navigations have used view transitions since #12, with animations silenced. A regression test runs on Linux WebKit in CI and is skipped only on Windows WebKit. The real-iPhone checklist has the same step.
+
 ## Still to verify
 
 **Real iOS Safari** (PRD §8.2 acceptance), using the checklist. This PR merges only after it passes.

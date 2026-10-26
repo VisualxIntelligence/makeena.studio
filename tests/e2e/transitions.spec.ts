@@ -133,3 +133,31 @@ test("12: the language switch causes no layout shift (CLS ≤ 0.1)", async ({
   console.log(`[${browserName}] language switch CLS=${cls!.toFixed(4)}`);
   expect(cls).toBeLessThanOrEqual(0.1);
 });
+
+// Playwright's Windows WebKit (WinCairo) crashes after a routed view transition started from a
+// scrolled page at phone width, whatever the CSS does (decision 0011). This runs on Linux WebKit in
+// CI; real iOS Safari is covered by docs/qa/ios-safari-checklist.md.
+test("a navigation from a scrolled phone page completes and the page stays alive", async ({
+  browser,
+  browserName,
+}) => {
+  test.skip(
+    browserName === "webkit" && process.platform === "win32",
+    "Playwright's Windows WebKit build crashes here (WinCairo); checked on Linux CI and real iOS",
+  );
+  const context = await browser.newContext({
+    viewport: { width: 393, height: 659 },
+    reducedMotion: "no-preference",
+  });
+  const page = await context.newPage();
+  let crashed = false;
+  page.on("crash", () => (crashed = true));
+  await page.goto("/en/");
+  await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
+  await page.locator('footer a[href="/en/privacy/"]').click();
+  await expect(page).toHaveURL(/\/en\/privacy\/$/);
+  await page.waitForTimeout(2500);
+  expect(crashed).toBe(false);
+  await expect(page.locator("main h1")).toHaveText("Privacy and data.");
+  await context.close();
+});
