@@ -1,4 +1,5 @@
 ---
+import ProvenanceFigure from "../../components/media/ProvenanceFigure.astro";
 import type { Lang } from "../../i18n/config";
 import Page from "../../layouts/Page.astro";
 import { langPaths } from "../../lib/content";
@@ -7,4 +8,6 @@ export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
 ---
 
-<Page route="home" lang={lang} />
+<Page route="home" lang={lang}>
+  <ProvenanceFigure slot="media" assetId="MKN-TWR-CAM01-DUSK" lang={lang} priority />
+</Page>

@@ -50,6 +50,8 @@ const services = defineCollection({
     kind: z.enum(["lead", "register"]),
     order: z.number().int(),
     route: z.enum(routeKeys).optional(),
+    /** Provenance asset shown with a lead service. */
+    asset: z.string().regex(ID_PATTERN).optional(),
     name: localized,
     summary: localized,
   }),

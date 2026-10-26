@@ -37,15 +37,16 @@ module.exports = {
           },
         },
         {
-          // Lighthouse's simulated throttling treats text as painted only once its web font has
-          // arrived, so Arabic LCP is bound by the 118.5 KB of Arabic fonts (decision 0006) versus
-          // ~45 KB of Latin. Measured lab LCP: ~2.25–2.55 s. Browsers paint the fallback straight
-          // away (font-display: swap); the field target stays LCP ≤ 2.5 s at p75 (Phase 5).
+          // Lighthouse's simulated throttling counts every font requested before LCP, so Arabic
+          // LCP is bound by ~200 KB of fonts (Amiri 82, MKN Sans 400 + 500 74, Latin 45) versus
+          // ~68 KB in English, even when the LCP image itself arrives early. Measured lab LCP:
+          // ~2.55–2.85 s (decisions 0007, 0010). Browsers paint fallback text straight away
+          // (font-display: swap); the field target stays LCP ≤ 2.5 s at p75 (Phase 5).
           matchingUrlPattern: "/ar/",
           aggregationMethod: "median-run",
           assertions: {
             ...shared,
-            "largest-contentful-paint": ["error", { maxNumericValue: 2800 }],
+            "largest-contentful-paint": ["error", { maxNumericValue: 3000 }],
           },
         },
       ],

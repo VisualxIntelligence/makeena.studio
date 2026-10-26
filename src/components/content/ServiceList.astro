@@ -1,7 +1,9 @@
 ---
-// Lead services (with links to their pages) or the register of eight (PRD §5, UX doc §3).
+// Lead services as a numbered three-up grid with their images (UX doc §3), or the register of
+// eight as a definition list.
 import { pathTo, type Lang } from "../../i18n/config";
 import { getServices } from "../../lib/content";
+import ProvenanceFigure from "../media/ProvenanceFigure.astro";
 import Copy from "./Copy.astro";
 
 interface Props {
@@ -11,44 +13,111 @@ interface Props {
 
 const { kind, lang } = Astro.props;
 const services = await getServices(kind);
+const number = (i: number) => String(i + 1).padStart(2, "0");
 ---
 
-<dl class="service-list">
-  {services.map((s, i) => (
-    <div class="service-list__row">
-      <dt>
-        <span class="label" dir="ltr">
-          {String(i + 1).padStart(2, "0")}
-        </span>
-        {s.route ? (
-          <a href={pathTo(lang, s.route)}>
-            <Copy text={s.name[lang]} lang={lang} />
-          </a>
-        ) : (
-          <Copy text={s.name[lang]} lang={lang} />
+{kind === "lead" ? (
+  <ol class="lead-services">
+    {services.map((s, i) => (
+      <li>
+        {s.asset && (
+          <ProvenanceFigure
+            assetId={s.asset}
+            lang={lang}
+            sizes="(width >= 80rem) 410px, (width >= 64rem) 31vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
+            widths={[480, 828]}
+            priority={i === 0}
+          />
         )}
-      </dt>
-      <dd>
-        <Copy text={s.summary[lang]} lang={lang} />
-      </dd>
-    </div>
-  ))}
-</dl>
+        <p class="label lead-services__number" dir="ltr">
+          {number(i)}
+        </p>
+        <h3>
+          {s.route ? (
+            <a href={pathTo(lang, s.route)}>
+              <Copy text={s.name[lang]} lang={lang} />
+            </a>
+          ) : (
+            <Copy text={s.name[lang]} lang={lang} />
+          )}
+        </h3>
+        <p class="lead-services__summary">
+          <Copy text={s.summary[lang]} lang={lang} />
+        </p>
+      </li>
+    ))}
+  </ol>
+) : (
+  <dl class="service-list">
+    {services.map((s, i) => (
+      <div class="service-list__row">
+        <dt>
+          <span class="label" dir="ltr">
+            {number(i)}
+          </span>
+          <Copy text={s.name[lang]} lang={lang} />
+        </dt>
+        <dd>
+          <Copy text={s.summary[lang]} lang={lang} />
+        </dd>
+      </div>
+    ))}
+  </dl>
+)}
 
 <style>
+  .lead-services {
+    display: grid;
+    gap: 48px var(--gutter);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width >= 64rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .lead-services__number {
+    margin-block: 16px 4px;
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  :lang(ar) h3 {
+    line-height: 1.4;
+  }
+
+  h3 a {
+    color: var(--color-ink);
+  }
+
+  .lead-services__summary {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
   .service-list {
     display: grid;
     gap: 16px;
     margin: 0;
   }
 
-  dt {
+  .service-list dt {
     display: flex;
     gap: 12px;
     align-items: baseline;
   }
 
-  dd {
+  .service-list dd {
     margin: 4px 0 0;
     color: var(--color-muted);
   }
