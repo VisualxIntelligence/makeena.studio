@@ -1,13 +1,18 @@
 // @ts-check
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 
 // Fonts (PRD §6.2): self-hosted WOFF2 subsets via the Fonts API, downloaded at build time.
+// Exposed as --ff-* and mapped to Tailwind's --font-* roles in src/styles/global.css.
 // Arabic faces are only referenced from /ar/ pages (see BaseLayout).
 const fontsource = fontProviders.fontsource();
 
 export default defineConfig({
   site: "https://makeena.studio",
   output: "static",
+  vite: {
+    plugins: [tailwindcss()],
+  },
   trailingSlash: "always",
   i18n: {
     locales: ["en", "ar"],
@@ -21,7 +26,7 @@ export default defineConfig({
     {
       provider: fontsource,
       name: "Cormorant Garamond",
-      cssVariable: "--font-display",
+      cssVariable: "--ff-display",
       weights: [400, 500],
       styles: ["normal"],
       subsets: ["latin"],
@@ -30,7 +35,7 @@ export default defineConfig({
     {
       provider: fontsource,
       name: "Inter",
-      cssVariable: "--font-body",
+      cssVariable: "--ff-body",
       weights: [400, 500],
       styles: ["normal"],
       subsets: ["latin"],
@@ -39,7 +44,7 @@ export default defineConfig({
     {
       provider: fontsource,
       name: "JetBrains Mono",
-      cssVariable: "--font-mono",
+      cssVariable: "--ff-mono",
       weights: [500],
       styles: ["normal"],
       subsets: ["latin"],
@@ -48,7 +53,7 @@ export default defineConfig({
     {
       provider: fontsource,
       name: "Amiri",
-      cssVariable: "--font-ar-display",
+      cssVariable: "--ff-ar-display",
       weights: [400],
       styles: ["normal"],
       subsets: ["arabic"],
@@ -60,7 +65,7 @@ export default defineConfig({
     {
       provider: fontsource,
       name: "IBM Plex Sans Arabic",
-      cssVariable: "--font-ar-body",
+      cssVariable: "--ff-ar-body",
       weights: [400, 500],
       styles: ["normal"],
       subsets: ["arabic"],

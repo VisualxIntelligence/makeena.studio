@@ -1,0 +1,166 @@
+/* Design tokens and type roles (PRD §6). Tokens in @theme become Tailwind utilities:
+   bg-ivory, text-copper-deep, font-display, text-label, max-w-content, rounded-sm …
+   Text/background pairs are checked by src/styles/contrast.test.ts. */
+@import "tailwindcss";
+
+/* `static`: emit every token even when no utility uses it, so component CSS can use var(). */
+@theme static {
+  /* The brand palette only: no default Tailwind colours. Copper is the only chromatic colour. */
+  --color-*: initial;
+  --color-ivory: #f6f2ea;
+  --color-sand: #efeae1;
+  --color-ink: #1a1a1a;
+  --color-copper: #b4653a; /* rules, display accents, text ≥ 24px only */
+  --color-copper-deep: #9a522c; /* small text, labels, links, focus */
+  --color-muted: #5c5650;
+  --color-night: #141414;
+  --color-copper-light: #c8a27a; /* on night only */
+
+  /* No shadows, no blur, radius ≤ 2px (PRD §6.1). */
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --blur-*: initial;
+  --radius-*: initial;
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+
+  /* Font stacks. The --ff-* faces come from Astro's Fonts API (astro.config.mjs);
+     :lang(ar) below puts the Arabic faces in front. */
+  --font-*: initial;
+  --font-display: var(--ff-display);
+  --font-body: var(--ff-body);
+  --font-label: var(--ff-mono);
+  --font-mono: var(--ff-mono);
+  --default-font-family: var(--font-body);
+  --default-mono-font-family: var(--font-mono);
+
+  /* Type roles (PRD §6.2). Body: 16px on phones, 17–18px on desktop; Arabic ~8% larger. */
+  --text-*: initial;
+  --text-display: clamp(2.5rem, 6vw, 5.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.01em;
+  --text-body: calc(clamp(1rem, 0.9rem + 0.3vw, 1.125rem) * var(--script-scale, 1));
+  --text-body--line-height: 1.6;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.14em;
+
+  /* Layout (PRD §6.3): 1280px content, 60–70ch measure. */
+  --container-content: 80rem;
+  --container-measure: 65ch;
+}
+
+/* Never letter-space or uppercase Arabic (CLAUDE.md). Unlayered, so no utility or component
+   class can override it. Latin identifiers marked dir="ltr" (and lang="en" islands) are exempt. */
+:lang(ar):not([dir="ltr"], [dir="ltr"] *) {
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@layer base {
+  :root {
+    /* Z-index scale (PRD §6.3). */
+    --z-nav: 30;
+    --z-menu: 40;
+    --z-popover: 45;
+    --z-toast: 50;
+
+    /* Motion (PRD §6.4). G1 reads these; reduced motion is handled there. */
+    --duration-micro: 200ms;
+    --duration-reveal: 300ms;
+    --reveal-shift: 12px;
+    --reveal-stagger: 60ms;
+  }
+
+  /* Arabic: Arabic faces first, Latin faces behind them for identifiers and digits (PRD §6.2). */
+  :lang(ar) {
+    --script-scale: 1.08;
+    --font-display: var(--ff-ar-display), var(--ff-display);
+    --font-body: var(--ff-ar-body), var(--ff-body);
+    --font-label: var(--ff-ar-body), var(--ff-mono);
+    --text-display--line-height: 1.35;
+    --text-display--letter-spacing: 0;
+    --text-label--letter-spacing: 0;
+  }
+
+  /* English islands inside Arabic pages (e.g. a draft banner) get the Latin roles back. */
+  :lang(ar) [lang="en"] {
+    --font-display: var(--ff-display);
+    --font-body: var(--ff-body);
+    --font-label: var(--ff-mono);
+    --text-display--line-height: 1.05;
+    --text-display--letter-spacing: -0.01em;
+    --text-label--letter-spacing: 0.14em;
+  }
+
+  html {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  a {
+    color: var(--color-copper-deep);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    transition: color var(--duration-micro);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper-deep);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Display statements: sentence case with full stops. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    letter-spacing: var(--text-display--letter-spacing);
+  }
+
+  /* Section labels and metadata, e.g. `03 · CAPABILITY`. Numbers stay Western digits. */
+  .label {
+    font-family: var(--font-label);
+    font-weight: 500;
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--color-copper-deep);
+  }
+
+  /* Latin identifiers inside Arabic labels keep the mono label style. */
+  :lang(ar) .label [dir="ltr"] {
+    font-family: var(--ff-mono);
+    letter-spacing: 0.14em;
+  }
+
+  .wrap {
+    max-inline-size: var(--container-content);
+    margin-inline: auto;
+    padding-inline: 16px;
+
+    @media (width >= 48rem) {
+      padding-inline: 24px;
+    }
+  }
+}

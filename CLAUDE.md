@@ -41,6 +41,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 - Tokens: ivory `#F6F2EA`, sand `#EFEAE1`, ink `#1A1A1A`, copper `#B4653A` (≥ 24 px text only), copper-deep `#9A522C` (small text, links, focus), muted `#5C5650`, night `#141414`, copper-light `#C8A27A` (on night only).
 - Fonts: Cormorant Garamond (display), Inter (body), JetBrains Mono (labels); Amiri + IBM Plex Sans Arabic for Arabic. Self-hosted WOFF2 subsets.
 - No gradients, no `backdrop-filter`/glass, no card shadows, radius ≤ 2 px, no emoji, no icon fonts.
+- Tokens and type roles live in `src/styles/global.css` (Tailwind `@theme`). Every text/background pair must be listed in `src/styles/contrast.ts` (checked by `npm run test:unit`). `npm run lint` rejects forbidden CSS and Tailwind classes (physical left/right, shadows, gradients, backdrop, radius > 2 px).
 - **No photograph or likeness of the founder anywhere.**
 
 **Bilingual / RTL**
@@ -80,6 +81,8 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
 | `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions |
+| `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
+| `scripts/lint/` | Tailwind class linter for the design rules |
 | `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences |
@@ -93,10 +96,10 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run dev` | Astro dev server on localhost |
 | `npm run build` | Static build into `dist/` (what Workers Builds runs) |
 | `npm run preview` | Build, then serve `dist/` through `wrangler dev` (closest to production) |
-| `npm run lint` | ESLint, Stylelint (design bans: gradients, `backdrop-filter`, shadows, physical left/right, radius > 2 px) and Prettier check |
+| `npm run lint` | ESLint, Stylelint and the Tailwind class check (design bans: gradients, `backdrop-filter`, shadows, physical left/right, radius > 2 px), Prettier check |
 | `npm run format` | Prettier write |
 | `npm run typecheck` | `astro check` |
-| `npm run test:unit` | Vitest |
+| `npm run test:unit` | Vitest: token values and contrast pairs, class-lint rules |
 | `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, two phones, reduced motion (run `npm run build` first; `npx playwright install chromium webkit` once) |
 | `npm run test:spikes` | Phase 0 measurements in `tests/spikes/` (local only; timing-sensitive) |
 | `npm run sequences:placeholder` | Regenerate the Phase 0 placeholder aerial sequence (needs ffmpeg) |

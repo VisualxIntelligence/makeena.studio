@@ -257,7 +257,7 @@ const chapters = [
 
   .aerial__rail {
     block-size: 2px;
-    background: color-mix(in srgb, var(--ink) 15%, transparent);
+    background: color-mix(in srgb, var(--color-ink) 15%, transparent);
     margin-block-end: 16px;
   }
 
@@ -265,7 +265,7 @@ const chapters = [
     display: block;
     block-size: 100%;
     inline-size: calc(var(--p, 0) * 100%);
-    background: var(--copper);
+    background: var(--color-copper);
   }
 
   .aerial__filmstrip {
@@ -282,7 +282,7 @@ const chapters = [
     align-content: start;
     gap: 4px;
     font-size: 0.875rem;
-    color: var(--muted);
+    color: var(--color-muted);
   }
 
   @media (width >= 1024px) {
@@ -304,7 +304,7 @@ const chapters = [
 
   /* Only the thumbnails dim: text keeps WCAG AA contrast in every state. */
   .aerial__filmstrip li[aria-current] {
-    color: var(--ink);
+    color: var(--color-ink);
   }
 
   .aerial__filmstrip :global(img) {
@@ -318,7 +318,7 @@ const chapters = [
   }
 
   .aerial__filmstrip li[aria-current] :global(img) {
-    border-block-start-color: var(--copper);
+    border-block-start-color: var(--color-copper);
     opacity: 1;
   }
 
@@ -346,7 +346,7 @@ const chapters = [
 
   .after {
     padding-block: 96px 50svh;
-    border-block-start: 1px solid var(--ink);
+    border-block-start: 1px solid var(--color-ink);
   }
 
   .hud {
@@ -356,8 +356,8 @@ const chapters = [
     z-index: 50;
     margin: 0;
     padding: 8px;
-    background: var(--night);
-    color: var(--copper-light);
+    background: var(--color-night);
+    color: var(--color-copper-light);
     font:
       11px/1.4 ui-monospace,
       monospace;
