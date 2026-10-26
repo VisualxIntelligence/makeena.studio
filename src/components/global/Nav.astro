@@ -51,7 +51,6 @@ const current = Astro.url.pathname;
         type="button"
         aria-controls="site-nav"
         aria-expanded="false"
-        hidden
       >
         {t.menu}
       </button>
@@ -60,28 +59,40 @@ const current = Astro.url.pathname;
 </header>
 
 <script>
-  // Menu toggle for narrow screens. The button stays hidden without JS, where the links show
-  // inline instead. Esc and a link click close the menu; focus returns to the button on Esc.
-  const button = document.querySelector<HTMLButtonElement>(".site-header__menu");
-  const nav = document.getElementById("site-nav");
-  if (button && nav) {
+  // Menu toggle for narrow screens. CSS shows the button only under html.js (set before first
+  // paint, so the bar never shifts); without JS the links show inline instead. Esc and a link click close the menu; focus returns to the button on Esc.
+  // Set up per page (ClientRouter), so listeners never pile up across navigations.
+  import { onPage } from "../../lib/lifecycle";
+
+  onPage((signal) => {
+    const button = document.querySelector<HTMLButtonElement>(".site-header__menu");
+    const nav = document.getElementById("site-nav");
+    if (!button || !nav) return;
     const set = (open: boolean) => {
       button.setAttribute("aria-expanded", String(open));
       nav.dataset.open = String(open);
     };
-    button.hidden = false;
-    button.addEventListener("click", () => set(button.getAttribute("aria-expanded") !== "true"));
-    nav.addEventListener("click", (e) => {
-      if ((e.target as Element).closest("a")) set(false);
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && button.getAttribute("aria-expanded") === "true") {
-        set(false);
-        button.focus();
-      }
-    });
-    matchMedia("(width >= 64rem)").addEventListener("change", () => set(false));
-  }
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+    button.addEventListener("click", () => set(!isOpen()), { signal });
+    nav.addEventListener(
+      "click",
+      (e) => {
+        if ((e.target as Element).closest("a")) set(false);
+      },
+      { signal },
+    );
+    document.addEventListener(
+      "keydown",
+      (e) => {
+        if (e.key === "Escape" && isOpen()) {
+          set(false);
+          button.focus();
+        }
+      },
+      { signal },
+    );
+    matchMedia("(width >= 64rem)").addEventListener("change", () => set(false), { signal });
+  });
 </script>
 
 <style>
@@ -153,6 +164,7 @@ const current = Astro.url.pathname;
   }
 
   .site-header__menu {
+    display: none;
     min-block-size: 44px;
     padding-inline: 12px;
     border: var(--rule);
@@ -192,6 +204,11 @@ const current = Astro.url.pathname;
       padding: 8px var(--gutter) 16px;
       background: var(--color-ivory);
       border-block-end: var(--rule);
+    }
+
+    :global(html.js) .site-header__menu {
+      display: inline-flex;
+      align-items: center;
     }
 
     :global(html.js) .site-nav[data-open="false"] {

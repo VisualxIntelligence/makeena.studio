@@ -34,7 +34,7 @@ const extras = Object.fromEntries(
   </header>
   {page.sections.map((s) => (
     <section class="section" id={s.id} aria-labelledby={`${s.id}-label`}>
-      <div class="wrap grid-12">
+      <div class="wrap grid-12" data-reveal>
         <Label text={s.label} lang={lang} id={`${s.id}-label`} as={s.heading ? "p" : "h2"} />
         {s.heading && <h2>{s.heading}</h2>}
         {s.body.map((text) => (

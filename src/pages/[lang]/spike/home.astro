@@ -12,7 +12,7 @@ const lang = Astro.params.lang as "en" | "ar";
 const t = spikeCopy[lang];
 ---
 
-<BaseLayout chrome={false} title="Spike · Home" lang={lang}>
+<BaseLayout chrome={false} router={false} title="Spike · Home" lang={lang}>
   <SpikeNav slot="header" lang={lang} />
   {t.draftNote && (
     <p class="wrap label draft" lang="en" dir="ltr">

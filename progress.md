@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is in progress: tooling, decisions, tokens-type, arabic-fonts and routes-i18n are merged (PRs #6–#10); `phase-1/layout-nav-footer` is in review. The seven Phase 1 decisions are made (decision 0005).
+**Phase 0 (de-risk spikes) is complete and merged to `main`.** Phase 1 (foundation) is in progress: PRs #6–#11 are merged; `phase-1/motion-controller` is in review. The seven Phase 1 decisions are made (decision 0005).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (scaffold + spike pages, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`, e.g. `phase-1-tooling-makeena-website…`. Cloudflare also posts a per-commit URL on each PR.
@@ -39,6 +39,7 @@ Write-ups: `docs/decisions/0001`–`0004`. 47 Playwright tests (`npm run build &
 
 - Placeholder copy: every `[PLACEHOLDER: …]` lives in `src/content/` (`grep -rn PLACEHOLDER src/content`). Arabic page copy, nav strings and register keys are unreviewed drafts; the draft banner shows on every `/ar/` page until Phase 5. Register service names (The Twin … The Host) are English in both locales pending Arabic names.
 - Lighthouse asserts Arabic LCP at ≤ 2.8 s in the lab (font-bound under simulated throttling), English at ≤ 2.5 s; see decision 0007. Field target stays 2.5 s.
+- Under the ClientRouter, scripts run once per visit: use `onPage()`; `<html>` attributes are replaced on every swap (re-apply classes on `astro:after-swap`). Don't put `transition:animate` on `<html>` (renames the root transition). `npm run test:spikes` and `npm run build` both write `dist/`: never run them at the same time.
 - Localised 404s: Cloudflare serves the nearest `404.html`; an Astro build hook moves `/{lang}/404/index.html` to `/{lang}/404.html`. `astro preview` always serves the root 404, so check `/ar/404.html` directly locally.
 
 ### Environment gotchas
@@ -65,8 +66,8 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 | 2 | `phase-1/tokens-type` | **Merged (#8).** Tailwind v4 `@theme` tokens, both-script typography, contrast test, Tailwind class linter |
 | 2b | `phase-1/arabic-fonts` | **Merged (#9).** Arabic subsets: critical fonts on `/ar/` 147.8 → 118.5 KB (decision 0006) |
 | 3 | `phase-1/routes-i18n` | **Merged (#10).** All §5 routes × 2 locales, content collections, i18n helpers, Arabic-preference root redirect, hreflang/canonical, sitemap, localised 404, spike pages removed from production |
-| 4 | `phase-1/layout-nav-footer` | **In review.** 12-column grid, sticky nav + mobile menu, footer, page-weight budget, Lighthouse CI (decision 0007). Footer toggles come with 13 in Phase 2 |
-| 5 | `phase-1/motion-controller` | G1 `src/lib/motion/`, built around the ClientRouter lifecycle |
+| 4 | `phase-1/layout-nav-footer` | **Merged (#11).** 12-column grid, sticky nav + mobile menu, footer, page-weight budget, Lighthouse CI (decision 0007). Footer toggles come with 13 in Phase 2 |
+| 5 | `phase-1/motion-controller` | **In review.** ClientRouter on every page (instant until Phase 2), G1 `src/lib/motion/`, footer Reduce motion control, base reveal; GSAP loads on first interaction (decision 0008) |
 | 6 | `phase-1/provenance` | §10.2 schema + `scripts/provenance/` (exiftool → JSON), seeded from `design/renders/manifest.json` |
 | 7 | decision record | Done: `docs/decisions/0005` (Worker entry for `/api/brief`) |
 
@@ -80,4 +81,4 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 6. Domain `makeena.studio`, attached at launch.
 7. exiftool installed locally; its JSON output is committed.
 
-**To resume:** merge `phase-1/layout-nav-footer`, then continue with `phase-1/motion-controller` (PR 5: G1 + ClientRouter lifecycle; the nav menu script moves onto `astro:page-load`).
+**To resume:** merge `phase-1/motion-controller`, then continue with `phase-1/provenance` (PR 6: §10.2 schema + `scripts/provenance/` exiftool → JSON, seeded from `design/renders/manifest.json`). That is the last Phase 1 PR.

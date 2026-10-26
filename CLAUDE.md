@@ -52,7 +52,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 - Don't invent or "improve" Arabic copy. Mark drafts clearly for native review.
 
 **Motion and accessibility**
-- Every effect has a reduced-motion fallback and a no-JS state where content is visible. Gate all motion through the G1 motion controller (`src/lib/motion/`).
+- Every effect has a reduced-motion fallback and a no-JS state where content is visible. Gate all motion through the G1 motion controller (`src/lib/motion/`): `registerEffect()` with `conditions.reduced`; never import GSAP directly in a page script except for effects that must exist before the first interaction (decision 0008). DOM scripts set up with `onPage()` from `src/lib/lifecycle.ts`.
 - Native `<input type="range">` for sliders, native `popover` for the provenance sheet, real buttons and links. 44 × 44 px targets. Visible focus.
 - Keyboard shortcuts for 13 (N, "doha") are ignored in form fields and with modifiers, and can be turned off in the footer (WCAG 2.1.4).
 
@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -88,6 +88,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/content/`, `src/content.config.ts` | Content collections: `pages/{lang}/{route}.json`, `services`, `gates`, `register`, `site` (PRD §10.1) |
 | `src/layouts/` | `BaseLayout` (html lang/dir, head, fonts, nav/footer), `Page` (route shell on the 12-column grid: header + sections from content) |
 | `src/pages/[lang]/` | One file per PRD §5 route; extras go into a section via a slot named after the section id |
+| `src/lib/motion/`, `src/lib/lifecycle.ts` | G1 motion controller (`motion`, `registerEffect`, effects in `effects/`) and `onPage()` for the ClientRouter lifecycle |
 | `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences |
