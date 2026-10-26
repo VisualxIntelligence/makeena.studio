@@ -1,4 +1,6 @@
 ---
+import FigureGrid from "../../components/media/FigureGrid.astro";
+import ProvenanceFigure from "../../components/media/ProvenanceFigure.astro";
 import GateList from "../../components/content/GateList.astro";
 import type { Lang } from "../../i18n/config";
 import Page from "../../layouts/Page.astro";
@@ -10,4 +12,16 @@ const lang = Astro.params.lang as Lang;
 
 <Page route="method" lang={lang}>
   <GateList slot="gates" lang={lang} />
+  <FigureGrid slot="provenance" cols={2}>
+    <ProvenanceFigure
+      assetId="MKN-TWR-CAM01-WIRE"
+      lang={lang}
+      sizes="(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)"
+    />
+    <ProvenanceFigure
+      assetId="MKN-TWR-CAM01-CLAY"
+      lang={lang}
+      sizes="(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)"
+    />
+  </FigureGrid>
 </Page>

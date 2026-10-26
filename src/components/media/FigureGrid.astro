@@ -1,0 +1,34 @@
+---
+// 2-, 3- or 4-up grid of ProvenanceFigures. Columns follow `dir`, so sets read in order in both
+// locales; the images themselves are never mirrored (PRD §7.2).
+interface Props {
+  cols: 2 | 3 | 4;
+}
+
+const { cols } = Astro.props;
+---
+
+<div class="figure-grid" data-cols={cols}>
+  <slot />
+</div>
+
+<style>
+  .figure-grid {
+    display: grid;
+    gap: 32px var(--gutter);
+
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (width >= 64rem) {
+      &[data-cols="3"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      &[data-cols="4"] {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  }
+</style>

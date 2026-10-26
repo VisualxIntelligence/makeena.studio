@@ -4,6 +4,7 @@
     "kind": "lead",
     "order": 1,
     "route": "aerial",
+    "asset": "MKN-AER-FLT01-A",
     "name": {
       "en": "Aerial perspective",
       "ar": "المنظور الجوي"
@@ -18,6 +19,7 @@
     "kind": "lead",
     "order": 2,
     "route": "standing",
+    "asset": "MKN-PRG-CAM01-M14",
     "name": {
       "en": "Standing production",
       "ar": "الإنتاج المستمر"
@@ -32,6 +34,7 @@
     "kind": "lead",
     "order": 3,
     "route": "offPlan",
+    "asset": "MKN-AXO-CAM01-EXPLODED",
     "name": {
       "en": "Off-plan visualisation",
       "ar": "تصوير المشاريع على الخارطة"

@@ -4,7 +4,7 @@ _Last updated: 26 October 2026_
 
 ## Where we are
 
-**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete.** Phase 1's last PR, `phase-1/provenance`, is in review. Phase 2 (global systems) is next and has not been briefed yet.
+**Phase 0 (de-risk spikes) and Phase 1 (foundation) are complete and merged.** Phase 2 (global systems) is in progress: PR 1 `phase-2/provenance-figure` (08) is in review.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -22,7 +22,7 @@ Write-ups: `docs/decisions/0001`–`0004`. Founder decisions after Phase 0 (25 O
 
 ## Phase 1 summary
 
-Exit criteria (PRD §17): both locales build and deploy; every §5 route exists with placeholder content; CI green. Met once #13 merges.
+Exit criteria (PRD §17): both locales build and deploy; every §5 route exists with placeholder content; CI green. Met.
 
 | PR | Branch | Result |
 |---|---|---|
@@ -33,7 +33,7 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 | #10 | `phase-1/routes-i18n` | All §5 routes × 2 locales, content collections, root language redirect, hreflang, sitemap, localised 404s; spike pages off production |
 | #11 | `phase-1/layout-nav-footer` | 12-column grid, sticky nav + mobile menu, footer, page-weight budget, Lighthouse CI (decision 0007) |
 | #12 | `phase-1/motion-controller` | ClientRouter (instant until Phase 2), G1 motion controller, footer Reduce motion control, base reveal; GSAP on first interaction (decision 0008) |
-| #13 | `phase-1/provenance` | **In review.** `assets` collection (§10.2), `npm run provenance` (exiftool check → records), `provenance:tag` for masters (decision 0009) |
+| #13 | `phase-1/provenance` | `assets` collection (§10.2), `npm run provenance` (exiftool check → records), `provenance:tag` for masters (decision 0009) |
 
 Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spike pages off production; Arabic as marked drafts; `/api/brief` as a small Worker entry; Cloudflare Stream; `makeena.studio` at launch; exiftool local.
 
@@ -42,7 +42,7 @@ Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spik
 - Arabic names for the eight register services (The Twin … The Host), or keep the English brand names?
 - Home `<title>`: "Makeena · Production studio and AI content consultancy, Doha". OK?
 - Rights terms, the four gates (names, descriptions, and how they map to asset QA), and the copy marked `[PLACEHOLDER]` (`grep -rn PLACEHOLDER src/content design/renders/provenance.json`).
-- Router fallback for browsers without view transitions: "swap" for now; revisit in Phase 2.
+- Arabic labels in MKN Sans 500 (PRD §6.2) cost 37 KB per Arabic page; switching them to 400 is a lever if Arabic LCP matters more (decision 0010).
 
 ## Carry-over findings
 
@@ -72,8 +72,16 @@ Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spik
 - `*.env` files are gitignored. A `makeena.env` appeared in the project folder on 26 Oct; it was never committed or pushed.
 - `npm audit` reports undici advisories inside wrangler's bundled miniflare (dev only); wait for an upstream wrangler release.
 
-## Next: Phase 2 (global systems)
+## Phase 2 (global systems), in progress
 
-PRD §8 and §17: G2 (11 section-cut and 12 mirror-line on the ClientRouter), G3 `ProvenanceFigure` (08), G4 after hours (13), plus the footer's keyboard-shortcut and after-hours toggles. Exit: the acceptance criteria in §8 are met. Estimate 6–8 days. The iOS Safari check is a merge condition for G2.
+Founder decisions (26 Oct, decision 0010): generator hidden in the spec sheet; "Concept render · not yet through the gates" until gates exist; 13's toast at a fixed 21:40 AST; iPhone check before the transitions PR merges (borrowed phone or cloud device service); router fallback `swap`.
 
-**To resume:** merge `phase-1/provenance` (#13), then brief Phase 2 to the founder before starting.
+| # | Branch | Scope |
+|---|---|---|
+| 1 | `phase-2/provenance-figure` | **In review.** 08 `ProvenanceFigure`: popover spec sheet, corner brackets, captions, first images on pages, no-unlabelled-media test |
+| 2 | `phase-2/transitions` | 11 section-cut + 12 mirror-line on the ClientRouter; iPhone check required before merge |
+| 3 | `phase-2/after-hours` | 13: `data-hours`, footer After hours + Keyboard shortcuts toggles, N / "doha", night `<picture>` swap, toast |
+
+Exit (PRD §17): the acceptance criteria in §8 are met.
+
+**To resume:** merge `phase-2/provenance-figure`, then start `phase-2/transitions`.

@@ -2,7 +2,8 @@
 // Page shell for the PRD §5 routes: header (label, display heading, lede) and the page's
 // sections from src/content/pages, on the 12-column grid. Every section starts with its mono
 // label top-start (PRD §6.3). A page adds components to a section through a slot named after the
-// section id, e.g. <GateList slot="gates" />; they span the full grid. A section without a
+// section id, e.g. <GateList slot="gates" />; they span the full grid. A `media` slot sits under
+// the header (the home hero still). A section without a
 // heading uses its label as the h2, so the outline never skips a level.
 import Copy from "../components/content/Copy.astro";
 import Label from "../components/content/Label.astro";
@@ -31,6 +32,11 @@ const extras = Object.fromEntries(
     <Label text={page.label} lang={lang} />
     <h1 class="display">{page.heading}</h1>
     {page.lede && <p class="page-header__lede">{page.lede}</p>}
+    {Astro.slots.has("media") && (
+      <div class="page-header__media">
+        <slot name="media" />
+      </div>
+    )}
   </header>
   {page.sections.map((s) => (
     <section class="section" id={s.id} aria-labelledby={`${s.id}-label`}>
@@ -90,6 +96,10 @@ const extras = Object.fromEntries(
     .page-section__body {
       grid-column: 1 / span 7;
     }
+  }
+
+  .page-header__media {
+    margin-block-start: 48px;
   }
 
   .page-header__lede {
