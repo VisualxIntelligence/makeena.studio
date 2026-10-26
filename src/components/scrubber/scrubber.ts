@@ -91,8 +91,8 @@ function setup(root: HTMLElement, signal: AbortSignal): void {
 
 /**
  * Discrete mode (07): the checked radio picks the frame, through crossfade() (a short fade, or
- * instant without motion). The
- * wipe shows the stop before on the inline-start side of a divider, clip-path on the inline end.
+ * instant without motion). The wipe shows the stop before on the inline-start side of a divider,
+ * clip-path on the inline end.
  */
 function setupDiscrete(root: HTMLElement, signal: AbortSignal): void {
   const radios = [...root.querySelectorAll<HTMLInputElement>('input[type="radio"]')];
