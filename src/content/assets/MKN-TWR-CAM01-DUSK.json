@@ -1,0 +1,45 @@
+{
+  "id": "MKN-TWR-CAM01-DUSK",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "home-hero-poster",
+    "11"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Blue hour",
+      "ar": "الساعة الزرقاء"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · BLUE HOUR",
+    "ar": "صورة مولّدة · الساعة الزرقاء"
+  },
+  "alt": {
+    "en": "Generated image: a fictional slender residential tower on a waterfront at blue hour, seen across calm water.",
+    "ar": "صورة مولّدة: برج سكني نحيف متخيَّل على واجهة بحرية في الساعة الزرقاء، يُرى عبر مياه هادئة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "92a5c631-6e55-4e57-b1aa-b64892651617"
+  },
+  "source": {
+    "file": "design/renders/MKN-TWR-CAM01-DUSK.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

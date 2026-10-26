@@ -1,0 +1,46 @@
+{
+  "id": "MKN-SUN-SKY01-GOLD",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "04"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Golden hour",
+      "ar": "الساعة الذهبية"
+    },
+    "timeLocal": "17:30"
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · GOLDEN HOUR 17:30",
+    "ar": "صورة مولّدة · الساعة الذهبية 17:30"
+  },
+  "alt": {
+    "en": "Generated image: a fictional skyline from a fixed camera at golden hour.",
+    "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الساعة الذهبية."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "a03c630a-02f6-4d22-b877-a9cda11c352b",
+    "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+  },
+  "source": {
+    "file": "design/renders/MKN-SUN-SKY01-GOLD.jpg",
+    "width": 1800,
+    "height": 771
+  }
+}

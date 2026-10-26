@@ -1,0 +1,39 @@
+{
+  "id": "MKN-TWR-CAM01-CLAY",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "method"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · CLAY MASSING",
+    "ar": "صورة مولّدة · مجسم كتلي"
+  },
+  "alt": {
+    "en": "Generated image: the same waterfront view rendered as a white clay massing model.",
+    "ar": "صورة مولّدة: المشهد نفسه على هيئة مجسم كتلي من الطين الأبيض."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "3d4a9470-42c9-4129-8263-762e9a9c1321",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-TWR-CAM01-CLAY.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

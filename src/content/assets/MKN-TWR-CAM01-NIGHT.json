@@ -1,0 +1,46 @@
+{
+  "id": "MKN-TWR-CAM01-NIGHT",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "13",
+    "11"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Night",
+      "ar": "الليل"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · NIGHT",
+    "ar": "صورة مولّدة · الليل"
+  },
+  "alt": {
+    "en": "Generated image: the fictional tower at night with its interiors lit.",
+    "ar": "صورة مولّدة: البرج المتخيَّل ليلاً وقد أُضيئت مساحاته الداخلية."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "ea2cc619-e24c-455f-9980-6bd117b32e41",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-TWR-CAM01-NIGHT.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

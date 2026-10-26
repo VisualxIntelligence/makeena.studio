@@ -1,0 +1,39 @@
+{
+  "id": "MKN-TWR-CAM01-WIRE",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "method"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · LINE DRAWING",
+    "ar": "صورة مولّدة · رسم خطي"
+  },
+  "alt": {
+    "en": "Generated image: the same waterfront view with the tower drawn as an ink and copper line drawing on ivory.",
+    "ar": "صورة مولّدة: المشهد نفسه والبرج مرسوم بخطوط من الحبر والنحاس على خلفية عاجية."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "e2e31056-11dd-44c7-bc85-2ceb0c945bf0",
+    "derivedFrom": "MKN-TWR-CAM01-DUSK"
+  },
+  "source": {
+    "file": "design/renders/MKN-TWR-CAM01-WIRE.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

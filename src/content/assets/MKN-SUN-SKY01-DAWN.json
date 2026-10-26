@@ -1,0 +1,46 @@
+{
+  "id": "MKN-SUN-SKY01-DAWN",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "04"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Dawn",
+      "ar": "الفجر"
+    },
+    "timeLocal": "05:30"
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · DAWN 05:30",
+    "ar": "صورة مولّدة · الفجر 05:30"
+  },
+  "alt": {
+    "en": "Generated image: a fictional skyline from a fixed camera at dawn.",
+    "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة عند الفجر."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "8c28516c-3381-43cd-987a-b68ebcd11688",
+    "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+  },
+  "source": {
+    "file": "design/renders/MKN-SUN-SKY01-DAWN.jpg",
+    "width": 1800,
+    "height": 771
+  }
+}

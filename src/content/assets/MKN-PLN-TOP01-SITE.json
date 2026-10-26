@@ -1,0 +1,38 @@
+{
+  "id": "MKN-PLN-TOP01-SITE",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "reference"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · MASTERPLAN · REFERENCE",
+    "ar": "صورة مولّدة · مخطط عام · مرجع"
+  },
+  "alt": {
+    "en": "Generated image: a top-down masterplan of a fictional coastal district.",
+    "ar": "صورة مولّدة: مخطط عام من الأعلى لحي ساحلي متخيَّل."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "8e1d6ebb-de68-4f02-9627-27aa23bf4318"
+  },
+  "source": {
+    "file": "design/renders/MKN-PLN-TOP01-SITE.jpg",
+    "width": 1800,
+    "height": 1344
+  }
+}

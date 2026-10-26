@@ -24,7 +24,9 @@
     "budget": "node scripts/budget/check.mjs",
     "lighthouse": "npx --yes @lhci/cli@0.15.1 autorun",
     "sequences:placeholder": "node scripts/sequences/placeholder-aerial.mjs",
-    "fonts:arabic": "python -I scripts/fonts/subset_arabic.py"
+    "fonts:arabic": "python -I scripts/fonts/subset_arabic.py",
+    "provenance": "node scripts/provenance/build.mjs",
+    "provenance:tag": "node scripts/provenance/build.mjs --tag"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

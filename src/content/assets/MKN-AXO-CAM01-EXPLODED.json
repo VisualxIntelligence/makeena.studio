@@ -1,0 +1,38 @@
+{
+  "id": "MKN-AXO-CAM01-EXPLODED",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "06"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · EXPLODED AXONOMETRIC",
+    "ar": "صورة مولّدة · منظور محوري مفكك"
+  },
+  "alt": {
+    "en": "Generated image: an exploded axonometric drawing of a mid-rise building on ivory.",
+    "ar": "صورة مولّدة: رسم منظور محوري مفكك لمبنى متوسط الارتفاع على خلفية عاجية."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "51eef1a8-5b4e-42dc-93e3-4a4032cbde80"
+  },
+  "source": {
+    "file": "design/renders/MKN-AXO-CAM01-EXPLODED.jpg",
+    "width": 1440,
+    "height": 1800
+  }
+}

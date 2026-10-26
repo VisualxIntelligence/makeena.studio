@@ -1,0 +1,44 @@
+{
+  "id": "MKN-SUN-SKY01-MIDDAY",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "04"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Midday",
+      "ar": "الظهيرة"
+    }
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · MIDDAY",
+    "ar": "صورة مولّدة · الظهيرة"
+  },
+  "alt": {
+    "en": "Generated image: a fictional skyline from a fixed camera at midday.",
+    "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة في الظهيرة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "00a09f33-b4cb-43d0-9b50-d7a2d9993a2e"
+  },
+  "source": {
+    "file": "design/renders/MKN-SUN-SKY01-MIDDAY.jpg",
+    "width": 1800,
+    "height": 771
+  }
+}

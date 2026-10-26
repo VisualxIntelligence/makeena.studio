@@ -1,0 +1,48 @@
+{
+  "id": "MKN-SUN-SKY01-NIGHT",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "04",
+    "12",
+    "13"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Night",
+      "ar": "الليل"
+    },
+    "timeLocal": "20:30"
+  },
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED RENDER · NIGHT 20:30",
+    "ar": "صورة مولّدة · الليل 20:30"
+  },
+  "alt": {
+    "en": "Generated image: a fictional skyline from a fixed camera at night.",
+    "ar": "صورة مولّدة: أفق مدينة متخيَّل من كاميرا ثابتة ليلاً."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "d1fefb09-75d6-4585-8a3b-35abffba89e9",
+    "derivedFrom": "MKN-SUN-SKY01-MIDDAY"
+  },
+  "source": {
+    "file": "design/renders/MKN-SUN-SKY01-NIGHT.jpg",
+    "width": 1800,
+    "height": 771
+  }
+}
