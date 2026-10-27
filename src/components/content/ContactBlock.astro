@@ -1,0 +1,110 @@
+---
+// Contact block (PRD §9.6; UX doc §7): a night panel, under its section's CONTACT label, with the
+// founder's name and title in text (never a photo) and the direct routes as selectable text, phone
+// and email as tel:/mailto: links with 44 px targets. Placeholders show as text and are never linked. Identifiers stay LTR.
+import type { Lang } from "../../i18n/config";
+import { getSite, isPlaceholder } from "../../lib/content";
+import Copy from "./Copy.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { contact } = await getSite();
+const t = {
+  en: { phone: "Phone", email: "Email", web: "Web" },
+  ar: { phone: "الهاتف", email: "البريد الإلكتروني", web: "الموقع" },
+}[lang];
+const routes = [
+  { key: t.phone, value: contact.phone, href: `tel:${contact.phone.replace(/[^+\d]/g, "")}` },
+  { key: t.email, value: contact.email, href: `mailto:${contact.email}` },
+  { key: t.web, value: contact.domain },
+];
+---
+
+<div class="contact">
+  <div class="contact__who">
+    <p class="contact__name">
+      <Copy text={contact.name} lang={lang} />
+    </p>
+    <p class="label contact__title">
+      <Copy text={contact.title[lang]} lang={lang} />
+    </p>
+  </div>
+  <dl class="contact__routes">
+    {routes.map((r) => (
+      <div>
+        <dt class="label">{r.key}</dt>
+        <dd>
+          {r.href && !isPlaceholder(r.value) ? (
+            <a href={r.href} lang="en" dir="ltr">
+              {r.value}
+            </a>
+          ) : (
+            <span lang="en" dir="ltr">
+              {r.value}
+            </span>
+          )}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</div>
+
+<style>
+  /* Off-screen until the visitor reaches it, so its faces (Cormorant for a Latin name on an Arabic
+     page) are not fetched before the LCP. The remembered size avoids a shift once rendered. */
+  .contact {
+    content-visibility: auto;
+    contain-intrinsic-block-size: auto 320px;
+    display: grid;
+    gap: 32px;
+    padding: 32px var(--gutter);
+    background: var(--color-night);
+    color: var(--color-ivory);
+
+    @media (width >= 48rem) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      padding: 48px;
+    }
+  }
+
+  .contact .label {
+    margin: 0;
+    color: var(--color-copper-light);
+  }
+
+  .contact__name {
+    margin-block: 0 4px;
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    line-height: 1.15;
+  }
+
+  .contact__routes {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+  }
+
+  .contact__routes dd {
+    margin: 0;
+    font-family: var(--font-mono);
+  }
+
+  .contact__routes :is(a, span) {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  .contact__routes a {
+    color: var(--color-ivory);
+    text-underline-offset: 0.2em;
+  }
+
+  .contact__routes a:focus-visible {
+    outline-color: var(--color-copper-light);
+  }
+</style>

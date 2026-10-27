@@ -4,7 +4,7 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 ## Current state
 
-**Phases 0–2 are complete; Phase 3 (section components 04, 07, 03, 06) is in progress.** Phase 3 decisions: `docs/decisions/0013`. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
+**Phases 0–3 are complete (06 static until real layers exist); Phase 4 (studio and conversion) is in progress.** Phase 4 decisions: `docs/decisions/0018`. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
 
 What exists today: an Astro 7 static site with every PRD §5 route in `/en/` and `/ar/` (placeholder content from `src/content/`), localised 404s, sitemap, hreflang, the root language redirect, tokens and type for both scripts, and CI. The Phase 0 spike pages are no longer built for production; `npm run test:spikes` builds them with `MKN_SPIKES=1`. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static) |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static), 0018 Phase 4 decisions + studio |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -100,7 +100,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences; each has a provenance record (`manifest.json` → `sequences`) |
 | `tests/spikes/` | Playwright spike measurements |
-| `design/renders/` | 24 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type) + `provenance.json` (captions, alt, light, rights; hand-edited). Source material, not served directly. Known gaps: PRD §12.3 |
+| `design/renders/` | 28 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type) + `provenance.json` (captions, alt, light, rights; hand-edited). Source material, not served directly. Known gaps: PRD §12.3 |
 
 ## Commands
 

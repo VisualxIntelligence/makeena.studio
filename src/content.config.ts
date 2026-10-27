@@ -83,6 +83,14 @@ const site = defineCollection({
   schema: z.object({
     legalLine: z.string(),
     copyrightHolder: z.string(),
+    /** Contact block (PRD §9.6): text, never a photo. `[PLACEHOLDER: …]` until supplied. */
+    contact: z.object({
+      name: z.string(),
+      title: localized,
+      phone: z.string(),
+      email: z.string(),
+      domain: z.string(),
+    }),
   }),
 });
 

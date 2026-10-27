@@ -9,7 +9,10 @@
     {
       "id": "studio",
       "label": "01 · الاستوديو",
-      "body": ["[PLACEHOLDER: studio paragraph and photography, built in Phase 4]"]
+      "body": [
+        "تأسست على عشرين عاماً في البث، في الجزيرة وABC.",
+        "يسير كل إنتاج وفق دليل تشغيل مكتوب، مع منتج أول ثانٍ في حالة استعداد."
+      ]
     },
     {
       "id": "register",
@@ -17,8 +20,12 @@
       "heading": "السجل المؤسسي."
     },
     {
+      "id": "contact",
+      "label": "03 · تواصل"
+    },
+    {
       "id": "brief",
-      "label": "03 · أرسل موجزاً",
+      "label": "04 · أرسل موجزاً",
       "heading": "أرسل موجزاً.",
       "body": ["[PLACEHOLDER: brief form with Turnstile, built in Phase 4]"]
     }

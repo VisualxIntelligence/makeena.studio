@@ -1,12 +1,16 @@
 ---
+import ContactBlock from "../../components/content/ContactBlock.astro";
+import OrganizationData from "../../components/content/OrganizationData.astro";
+import RegisterTable from "../../components/content/RegisterTable.astro";
 import FigureGrid from "../../components/media/FigureGrid.astro";
 import ProvenanceFigure from "../../components/media/ProvenanceFigure.astro";
 import type { Lang } from "../../i18n/config";
 import Page from "../../layouts/Page.astro";
-import { langPaths } from "../../lib/content";
+import { getPage, langPaths } from "../../lib/content";
 
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
+const page = await getPage("home", lang);
 
 // 03 teaser (PRD §5, §16): the flight's three chapter stills, at night under 13 after hours; the
 // full flight is on the aerial perspective page.
@@ -33,4 +37,14 @@ const teaserSizes =
       />
     ))}
   </FigureGrid>
+  <RegisterTable
+    slot="studio"
+    lang={lang}
+    rows={["entity", "licence", "tax-id"]}
+    label={lang === "ar" ? "السجل المؤسسي، باختصار" : "Corporate register, key rows"}
+  />
+  <Fragment slot="contact">
+    <ContactBlock lang={lang} />
+    <OrganizationData lang={lang} description={page.description} />
+  </Fragment>
 </Page>

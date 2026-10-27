@@ -4,7 +4,7 @@ _Last updated: 27 October 2026_
 
 ## Where we are
 
-**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: 04 (#17), 07 (#18), 03 (#20) and its night variants (#21) are merged; 06 is in review (`phase-3/axonometric`, static).
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion) is in progress: the studio page is in review (`phase-4/studio`).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -37,10 +37,23 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 
 Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spike pages off production; Arabic as marked drafts; `/api/brief` as a small Worker entry; Cloudflare Stream; `makeena.studio` at launch; exiftool local.
 
+## Phase 4 (studio and conversion), in progress
+
+Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRIEF_TO_EMAIL` = the Resend account's address); Cloudflare Web Analytics; briefs emailed and logged to D1.
+
+| # | Branch | Scope |
+|---|---|---|
+| 1 | `phase-4/studio` | **In review (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
+| 2 | `phase-4/brief-form` | Form + ON AIR tally light; `/api/brief` Worker entry: Turnstile Siteverify → Resend → D1. Needs from the founder: Turnstile widget (site key + secret), Resend API key, D1 database (or approval to create it), `BRIEF_TO_EMAIL` |
+| 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
+
+**To resume:** after the founder reviews `phase-4/studio`, start `phase-4/brief-form` from `main`. Exit (PRD §17): a real test brief arrives by email from a preview deployment.
+
 ## Open questions for the founder
 
 - Arabic names for the eight register services (The Twin … The Host), or keep the English brand names?
 - Home `<title>`: "Makeena · Production studio and AI content consultancy, Doha". OK?
+- Phase 4 facts still missing: full address, auditor, data statement (must cover the D1 brief log and its retention), final credential copy, the founder's name in Arabic (supplied 27 Oct: Ahmed Albadri, Founder, +974 66905704, ahmed@makeena.studio).
 - Rights terms, the four gates (names, descriptions, and how they map to asset QA), and the copy marked `[PLACEHOLDER]` (`grep -rn PLACEHOLDER src/content design/renders/provenance.json`).
 - 07 deliverables copy: four short paragraphs on what standing capacity delivers at months 00 / 06 / 14 / 24 (placeholders in `src/components/concepts/TimeLapse.astro`).
 - Arabic labels in MKN Sans 500 (PRD §6.2) cost 37 KB per Arabic page; switching them to 400 is a lever if Arabic LCP matters more (decision 0010).
@@ -97,11 +110,11 @@ Founder decisions (26 Oct, decision 0013): generate missing frames in Higgsfield
 | 2 | `phase-3/time-lapse` | **Merged (#18).** 07: discrete mode (radio-group thumbnails, wipe, live region), months 00/06/14/24; shared crossfade (decision 0014). Founder kept M00's white hoarding |
 | 3 | `phase-3/aerial` | **Merged (#20).** 03: scroll mode (pinned canvas sequence, placeholder frames, CSS-reserved scroll distance), home three-still teaser, provenance record for the sequence (decision 0015) |
 | 3b | `phase-3/aerial-night` | **Merged (#21).** Night keyframes `MKN-AER-FLT01-NIGHTA/B/C` (8.25 credits), night placeholder sequence at AVIF q28 (9.44 MB), the 13 swap mid-flight for the canvas, poster, sheet, thumbnails, stills and home teaser (decision 0016) |
-| 4 | `phase-3/axonometric` | **In review.** 06 static: the exploded image, six labelled layers with leader lines (desktop), numbered legend (phones), `<ol>` describing the figure. Generated layers did not hold the camera (two attempts, 5.5 credits); real layers need the Blender route (decision 0017) |
+| 4 | `phase-3/axonometric` | **Merged (#22).** 06 static: the exploded image, six labelled layers with leader lines (desktop), numbered legend (phones), `<ol>` describing the figure. Generated layers did not hold the camera (two attempts, 5.5 credits); real layers need the Blender route (decision 0017) |
 
 Asset notes: the SUN-SKY01 set is 1800 × 771 (21:9), not 1800 × 1018 like the tower sets. Check a generated frame against its set (edge correlation, decision 0013) before using it. The Higgsfield CLI isn't signed in on this machine; the connected Higgsfield account works through the chat tools.
 
-**To resume:** after the founder reviews `phase-3/axonometric`, Phase 3 is complete except 06's animated version, which waits for real layer cut-outs (decision 0017). Next, per PRD §17: Phase 4, studio and conversion (14 page, register, JSON-LD, brief form with Turnstile + Resend via `/api/brief`, tally light). It needs founder inputs first (PRD: address, auditor, data statement, rights terms, phone, email, analytics). Higgsfield balance 113.68 credits.
+**Phase 3 is complete** apart from 06's animated version, which waits for layers rendered from one fixed camera (decision 0017).
 
 Carry-over from 03: pinned sections reserve their scroll distance in CSS, pin with `pinSpacing: false` and are sticky until GSAP runs, so they need no early GSAP. Never request heavy media before the visitor interacts: Lighthouse counts requests started before the observed LCP as LCP dependencies. Reveal clears its transform (a transformed ancestor breaks a fixed pin).
 

@@ -1,0 +1,39 @@
+{
+  "id": "MKN-STU-CAM06-MASTERS",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · MASTER STORAGE",
+    "ar": "صورة مولّدة · تخزين الملفات الأصلية"
+  },
+  "alt": {
+    "en": "Generated image: racks of master storage drives with status lights in a machine room.",
+    "ar": "صورة مولّدة: رفوف أقراص تخزين الملفات الأصلية بمؤشراتها المضيئة في غرفة الأجهزة."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "4efa6faa-bd1d-4b48-8037-3960ca6fbd0e",
+    "derivedFrom": "MKN-STU-CAM01-CONTROL"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM06-MASTERS.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}

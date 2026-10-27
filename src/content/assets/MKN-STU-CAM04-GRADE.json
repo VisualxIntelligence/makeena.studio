@@ -1,0 +1,39 @@
+{
+  "id": "MKN-STU-CAM04-GRADE",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · COLOUR GRADING",
+    "ar": "صورة مولّدة · تصحيح الألوان"
+  },
+  "alt": {
+    "en": "Generated image: a colour-grading desk, its reference monitor showing a waterfront development from the air at dusk.",
+    "ar": "صورة مولّدة: مكتب تصحيح الألوان، وشاشته المرجعية تعرض مشروعاً على الواجهة البحرية من الجو عند الغسق."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "d761b550-8523-4f65-965a-397540cf5c2f",
+    "derivedFrom": "MKN-STU-CAM01-CONTROL"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM04-GRADE.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}

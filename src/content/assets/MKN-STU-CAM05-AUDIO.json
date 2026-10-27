@@ -1,0 +1,39 @@
+{
+  "id": "MKN-STU-CAM05-AUDIO",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · VOICE-OVER",
+    "ar": "صورة مولّدة · التعليق الصوتي"
+  },
+  "alt": {
+    "en": "Generated image: a microphone, headphones and audio faders at a voice-over desk.",
+    "ar": "صورة مولّدة: ميكروفون وسماعات وأذرع صوت على مكتب التعليق الصوتي."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "31ec5cc3-49d7-40cf-a904-c6885ddda9e7",
+    "derivedFrom": "MKN-STU-CAM01-CONTROL"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM05-AUDIO.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}

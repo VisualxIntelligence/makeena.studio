@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import { locales, type Lang, type RouteKey } from "../i18n/config";
 
 /** getStaticPaths for a route that exists in both locales. */
@@ -27,5 +27,17 @@ export async function getGates() {
 }
 
 export async function getRegister() {
-  return (await getCollection("register")).map((r) => r.data).sort((a, b) => a.order - b.order);
+  return (await getCollection("register"))
+    .map((r) => ({ id: r.id, ...r.data }))
+    .sort((a, b) => a.order - b.order);
 }
+
+/** Site-wide facts: legal line, contact details. */
+export async function getSite() {
+  const entry = await getEntry("site", "site");
+  if (!entry) throw new Error("Missing src/content/site.json");
+  return entry.data;
+}
+
+/** True for a `[PLACEHOLDER: …]` marker (never linked or put into structured data). */
+export const isPlaceholder = (text: string) => text.startsWith("[PLACEHOLDER");
