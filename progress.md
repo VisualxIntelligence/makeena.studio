@@ -1,6 +1,6 @@
 # Progress: makeena.studio
 
-_Last updated: 27 October 2026_
+_Last updated: 27 October 2026 (end of session)_
 
 ## Where we are
 
@@ -47,7 +47,13 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 | 2 | `phase-4/brief-form` | **In review.** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, created 27 Oct) → Resend. Verified locally with `wrangler dev`. Goes live when the founder sets the Turnstile widget (site key to commit), `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL` (production and Previews Base) |
 | 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
 
-**To resume:** when the founder sends the Turnstile site key, commit it (BriefForm's `siteKey`), check the preview sends a real brief (PRD §17 exit), then `phase-4/analytics` (needs the Web Analytics token). Decision 0019 lists the founder's setup steps.
+**To resume (PR #24, `phase-4/brief-form`):**
+
+1. **Workers Builds failed on #24** (27 Oct), so no preview was deployed (the branch URL returns 404); production is unaffected. It's the first build with Worker code and a D1 binding. The log is only in the Cloudflare dashboard (Workers & Pages → makeena-website → Builds). Suspects: the build's API token lacks D1 permission, or `wrangler preview` rejects part of the new config (the config validates against Wrangler 4.152's schema). Read the log first; don't run `wrangler preview` locally without the founder's go-ahead (it deploys).
+2. The founder sets up Turnstile (widget on `makeena.workers.dev` + `makeena.studio`; send the site key to commit as BriefForm's `siteKey`) and adds `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` for production and Previews Base (decision 0019).
+3. Exit test (PRD §17): a brief sent from the preview arrives by email. Then `phase-4/analytics` (needs the Web Analytics token).
+
+**CI flake:** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror; the tests themselves pass. A small CI PR should cache the apt packages or time-box that step.
 
 ## Open questions for the founder
 
