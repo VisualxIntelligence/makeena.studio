@@ -465,6 +465,82 @@
         "derivedFrom": "MKN-AER-FLT01-C"
       },
       "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM03-KIT",
+      "file": "MKN-STU-CAM03-KIT.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Cinema camera on a fluid head, matte box and follow focus, in the control room at night; no people. Generated 27 Oct 2026 with the control room (STU-CAM01-CONTROL) as the style reference.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "8206bcb3-7b21-4ac7-b913-c3bc6139dff6",
+        "derivedFrom": "MKN-STU-CAM01-CONTROL"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM04-GRADE",
+      "file": "MKN-STU-CAM04-GRADE.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Colour-grading desk: trackball panel, reference monitor showing a waterfront aerial at dusk, scopes; no people. Generated 27 Oct 2026 with the control room (STU-CAM01-CONTROL) as the style reference.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "d761b550-8523-4f65-965a-397540cf5c2f",
+        "derivedFrom": "MKN-STU-CAM01-CONTROL"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM05-AUDIO",
+      "file": "MKN-STU-CAM05-AUDIO.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Voice-over position: microphone on a boom arm with pop filter, headphones, audio faders; no people. Generated 27 Oct 2026 with the control room (STU-CAM01-CONTROL) as the style reference.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "31ec5cc3-49d7-40cf-a904-c6885ddda9e7",
+        "derivedFrom": "MKN-STU-CAM01-CONTROL"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-STU-CAM06-MASTERS",
+      "file": "MKN-STU-CAM06-MASTERS.jpg",
+      "width": 1800,
+      "height": 1195,
+      "concepts": [
+        "14"
+      ],
+      "description": "Machine room: racks of master drives and tape cartridges with status lights, a closed equipment case; blank labels, no people. Generated 27 Oct 2026 with the control room (STU-CAM01-CONTROL) as the style reference.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "4efa6faa-bd1d-4b48-8037-3960ca6fbd0e",
+        "derivedFrom": "MKN-STU-CAM01-CONTROL"
+      },
+      "status": "concept"
     }
   ],
   "sequences": [

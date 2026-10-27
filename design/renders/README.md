@@ -1,6 +1,6 @@
 # Concept renders
 
-24 generated images made for the concept board in October 2026 (added later to fill gaps: the sun study's morning frame and a daylight month 00 on 26 Oct, the aerial's three night keyframes on 27 Oct). All are AI-generated (IPTC digital source type `trainedAlgorithmicMedia`) and show fictional buildings and places.
+28 generated images made for the concept board in October 2026 (added later to fill gaps: the sun study's morning frame and a daylight month 00 on 26 Oct; the aerial's three night keyframes and four studio stills on 27 Oct). All are AI-generated (IPTC digital source type `trainedAlgorithmicMedia`) and show fictional buildings and places.
 
 - Files are web-sized JPEG derivatives, maximum 1800 px wide. Full-resolution PNG masters are in the founder's Higgsfield account; `manifest.json` lists each image's job ID.
 - Each file name is its asset ID (`MKN-{SERIES}-{CAM}-{VARIANT}`), which the provenance system uses.
@@ -16,5 +16,5 @@
 | `AER-FLT01` | A, B, C, NIGHTA, NIGHTB, NIGHTC | 03 scroll-flown aerial (keyframes), 08, 13 after hours (NIGHT*) |
 | `SUN-SKY01` | DAWN, MORNING, MIDDAY, GOLD, NIGHT | 04 sun study, 12, 13 |
 | `AXO-CAM01` | EXPLODED | 06 (reference / static fallback) |
-| `STU-CAM01/02` | CONTROL, RUNBOOK | 14 studio |
+| `STU-CAM01–06` | CONTROL, RUNBOOK, KIT, GRADE, AUDIO, MASTERS | 14 studio |
 | `PLN-TOP01` | SITE | Reference only |

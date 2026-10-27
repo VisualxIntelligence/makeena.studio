@@ -1,6 +1,7 @@
 ---
 // JSON-LD (PRD §9.6, §15): Organization + ProfessionalService. Only facts already on the site;
-// fields that are still `[PLACEHOLDER: …]` (street address, phone, email) are left out.
+// fields that are still `[PLACEHOLDER: …]` (street address; founder, phone, email until supplied)
+// are left out.
 import type { Lang } from "../../i18n/config";
 import { getSite, isPlaceholder } from "../../lib/content";
 
@@ -29,6 +30,9 @@ const data = {
       taxID: "T04998",
       identifier: { "@type": "PropertyValue", propertyID: "QFC licence", value: "04998" },
       address,
+      ...(isPlaceholder(contact.name)
+        ? {}
+        : { founder: { "@type": "Person", name: contact.name } }),
       ...reachable,
     },
     {

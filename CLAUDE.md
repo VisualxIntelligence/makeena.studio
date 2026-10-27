@@ -100,7 +100,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
 | `public/sequences/` | Encoded AVIF frame sequences; each has a provenance record (`manifest.json` → `sequences`) |
 | `tests/spikes/` | Playwright spike measurements |
-| `design/renders/` | 24 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type) + `provenance.json` (captions, alt, light, rights; hand-edited). Source material, not served directly. Known gaps: PRD §12.3 |
+| `design/renders/` | 28 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type) + `provenance.json` (captions, alt, light, rights; hand-edited). Source material, not served directly. Known gaps: PRD §12.3 |
 
 ## Commands
 

@@ -1,0 +1,39 @@
+{
+  "id": "MKN-STU-CAM03-KIT",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "14"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED IMAGE · CAMERA",
+    "ar": "صورة مولّدة · الكاميرا"
+  },
+  "alt": {
+    "en": "Generated image: a cinema camera on a tripod in the empty control room at night.",
+    "ar": "صورة مولّدة: كاميرا سينمائية على حامل ثلاثي في غرفة التحكم الخالية ليلاً."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "8206bcb3-7b21-4ac7-b913-c3bc6139dff6",
+    "derivedFrom": "MKN-STU-CAM01-CONTROL"
+  },
+  "source": {
+    "file": "design/renders/MKN-STU-CAM03-KIT.jpg",
+    "width": 1800,
+    "height": 1195
+  }
+}

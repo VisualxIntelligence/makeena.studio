@@ -11,21 +11,24 @@ import { getPage, langPaths } from "../../lib/content";
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
 const page = await getPage("studio", lang);
+
+// 14 (PRD §9.6): studio photography without faces, lazy loaded after the first.
+const studio = [
+  "MKN-STU-CAM01-CONTROL",
+  "MKN-STU-CAM02-RUNBOOK",
+  "MKN-STU-CAM03-KIT",
+  "MKN-STU-CAM04-GRADE",
+  "MKN-STU-CAM05-AUDIO",
+  "MKN-STU-CAM06-MASTERS",
+];
+const sizes = "(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)";
 ---
 
 <Page route="studio" lang={lang}>
   <FigureGrid slot="studio" cols={2}>
-    <ProvenanceFigure
-      assetId="MKN-STU-CAM01-CONTROL"
-      lang={lang}
-      priority
-      sizes="(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-STU-CAM02-RUNBOOK"
-      lang={lang}
-      sizes="(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
+    {studio.map((assetId, i) => (
+      <ProvenanceFigure assetId={assetId} lang={lang} priority={i === 0} sizes={sizes} />
+    ))}
   </FigureGrid>
   <Fragment slot="register">
     <RegisterTable lang={lang} label={lang === "ar" ? "السجل المؤسسي" : "Corporate register"} />

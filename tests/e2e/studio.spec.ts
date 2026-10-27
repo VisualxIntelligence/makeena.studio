@@ -19,15 +19,25 @@ test("the home page shows the register's key rows", async ({ page }) => {
 });
 
 for (const path of ["/en/studio/", "/ar/"]) {
-  test(`contact block: text routes, placeholders never linked: ${path}`, async ({ page }) => {
+  test(`contact block: name and title in text, phone and email linked: ${path}`, async ({
+    page,
+  }) => {
     await page.goto(path);
     const contact = page.locator("#contact .contact");
-    await expect(contact).toBeVisible();
+    await contact.scrollIntoViewIfNeeded();
     await expect(contact).toHaveCSS("background-color", "rgb(20, 20, 20)");
-    await expect(contact.locator("dd")).toHaveCount(3);
-    await expect(contact.locator('a[href^="tel:"], a[href^="mailto:"]')).toHaveCount(0);
-    await expect(contact).toContainText("makeena.studio");
+    await expect(contact).toContainText("Ahmed Albadri");
     await expect(contact.locator("img")).toHaveCount(0);
+    const phone = contact.locator('a[href="tel:+97466905704"]');
+    const email = contact.locator('a[href="mailto:ahmed@makeena.studio"]');
+    await expect(phone).toHaveText("+974 66905704");
+    await expect(phone).toHaveAttribute("dir", "ltr");
+    await expect(email).toHaveText("ahmed@makeena.studio");
+    for (const link of [phone, email]) {
+      const box = await link.boundingBox();
+      expect(box!.height).toBeGreaterThanOrEqual(44);
+    }
+    await expect(contact).toContainText("makeena.studio");
   });
 }
 
@@ -44,6 +54,9 @@ for (const path of ["/en/studio/", "/ar/"]) {
     expect(org.legalName).toBe("Makeena LLC");
     expect(org.identifier.value).toBe("04998");
     expect(org.address.addressCountry).toBe("QA");
+    expect(org.founder.name).toBe("Ahmed Albadri");
+    expect(org.telephone).toBe("+974 66905704");
+    expect(org.email).toBe("ahmed@makeena.studio");
     expect(studio.areaServed.map((c: { name: string }) => c.name)).toEqual(["QA", "AE", "SA"]);
     expect(studio.availableLanguage).toEqual(["en", "ar"]);
   });

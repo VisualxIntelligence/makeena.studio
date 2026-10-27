@@ -406,6 +406,46 @@
         "en": "Generated aerial flight over a fictional waterfront development at night: a high approach, a descent over the lit marina and a low pass along the promenade. Placeholder sequence.",
         "ar": "رحلة جوية مولّدة فوق مشروع متخيَّل على الواجهة البحرية ليلاً: اقتراب من ارتفاع عالٍ، ثم هبوط فوق المرسى المضاء، ثم مرور منخفض على امتداد الممشى. تسلسل مؤقت."
       }
+    },
+    "MKN-STU-CAM03-KIT": {
+      "caption": {
+        "en": "GENERATED IMAGE · CAMERA",
+        "ar": "صورة مولّدة · الكاميرا"
+      },
+      "alt": {
+        "en": "Generated image: a cinema camera on a tripod in the empty control room at night.",
+        "ar": "صورة مولّدة: كاميرا سينمائية على حامل ثلاثي في غرفة التحكم الخالية ليلاً."
+      }
+    },
+    "MKN-STU-CAM04-GRADE": {
+      "caption": {
+        "en": "GENERATED IMAGE · COLOUR GRADING",
+        "ar": "صورة مولّدة · تصحيح الألوان"
+      },
+      "alt": {
+        "en": "Generated image: a colour-grading desk, its reference monitor showing a waterfront development from the air at dusk.",
+        "ar": "صورة مولّدة: مكتب تصحيح الألوان، وشاشته المرجعية تعرض مشروعاً على الواجهة البحرية من الجو عند الغسق."
+      }
+    },
+    "MKN-STU-CAM05-AUDIO": {
+      "caption": {
+        "en": "GENERATED IMAGE · VOICE-OVER",
+        "ar": "صورة مولّدة · التعليق الصوتي"
+      },
+      "alt": {
+        "en": "Generated image: a microphone, headphones and audio faders at a voice-over desk.",
+        "ar": "صورة مولّدة: ميكروفون وسماعات وأذرع صوت على مكتب التعليق الصوتي."
+      }
+    },
+    "MKN-STU-CAM06-MASTERS": {
+      "caption": {
+        "en": "GENERATED IMAGE · MASTER STORAGE",
+        "ar": "صورة مولّدة · تخزين الملفات الأصلية"
+      },
+      "alt": {
+        "en": "Generated image: racks of master storage drives with status lights in a machine room.",
+        "ar": "صورة مولّدة: رفوف أقراص تخزين الملفات الأصلية بمؤشراتها المضيئة في غرفة الأجهزة."
+      }
     }
   }
 }
