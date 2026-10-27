@@ -4,7 +4,7 @@ _Last updated: 27 October 2026_
 
 ## Where we are
 
-**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion) is in progress: the studio page is in review (`phase-4/studio`).
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion) is in progress: the studio page is merged (#23); the brief form and `/api/brief` are in review (`phase-4/brief-form`), waiting for the founder's Turnstile and Resend keys.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -43,11 +43,11 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-4/studio` | **In review (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
-| 2 | `phase-4/brief-form` | Form + ON AIR tally light; `/api/brief` Worker entry: Turnstile Siteverify → Resend → D1. Needs from the founder: Turnstile widget (site key + secret), Resend API key, D1 database (or approval to create it), `BRIEF_TO_EMAIL` |
+| 1 | `phase-4/studio` | **Merged (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
+| 2 | `phase-4/brief-form` | **In review.** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, created 27 Oct) → Resend. Verified locally with `wrangler dev`. Goes live when the founder sets the Turnstile widget (site key to commit), `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL` (production and Previews Base) |
 | 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
 
-**To resume:** after the founder reviews `phase-4/studio`, start `phase-4/brief-form` from `main`. Exit (PRD §17): a real test brief arrives by email from a preview deployment.
+**To resume:** when the founder sends the Turnstile site key, commit it (BriefForm's `siteKey`), check the preview sends a real brief (PRD §17 exit), then `phase-4/analytics` (needs the Web Analytics token). Decision 0019 lists the founder's setup steps.
 
 ## Open questions for the founder
 

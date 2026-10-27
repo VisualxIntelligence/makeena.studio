@@ -1,0 +1,402 @@
+---
+// Brief form (PRD §9.6, decision 0019): Name, Company (optional), Email, Engagement (radio:
+// Fixed / Retained / Not sure), Message. Labels always visible; inline errors linked with
+// aria-describedby; submit disabled with a spinner while sending; success replaces the form with a
+// mono confirmation line in a live region. Posts to /api/brief (worker/brief.ts), which verifies
+// Turnstile, stores the brief in D1 and emails it. Turnstile loads only near the form.
+// - The ON AIR tally light (text, not colour alone) is on while the form is on screen or a field
+//   has focus; it pulses only when motion is allowed.
+// - #brief-fixed and #brief-retained (links from /engagement/) preselect the engagement.
+// - Without JS the form is hidden (Turnstile needs JS) and the direct contacts are offered.
+import type { Lang } from "../../i18n/config";
+import { getSite } from "../../lib/content";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const { contact } = await getSite();
+const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+
+// Arabic is a draft for native review (decision 0005).
+const t = {
+  en: {
+    on: "ON AIR",
+    off: "OFF AIR",
+    name: "Name",
+    company: "Company",
+    optional: "optional",
+    email: "Email",
+    engagement: "Engagement",
+    fixed: "Fixed",
+    retained: "Retained",
+    unsure: "Not sure",
+    message: "Message",
+    submit: "Send the brief",
+    sending: "Sending",
+    honeypot: "Leave this empty",
+    noscript: "This form needs JavaScript. You can reach the studio directly:",
+  },
+  ar: {
+    on: "على الهواء",
+    off: "خارج البث",
+    name: "الاسم",
+    company: "الشركة",
+    optional: "اختياري",
+    email: "البريد الإلكتروني",
+    engagement: "نوع التعاقد",
+    fixed: "ثابت",
+    retained: "مستمر",
+    unsure: "لست متأكداً",
+    message: "الرسالة",
+    submit: "أرسل الموجز",
+    sending: "جارٍ الإرسال",
+    honeypot: "اترك هذا الحقل فارغاً",
+    noscript: "يتطلب هذا النموذج JavaScript. يمكنك التواصل مع الاستوديو مباشرة:",
+  },
+}[lang];
+
+const messages = {
+  en: {
+    required: "Please fill this in.",
+    engagement: "Please choose one.",
+    invalid: "Please enter an email address like name@company.com.",
+    too_long: "This is too long (at most {n} characters).",
+    turnstile: "Please wait for the check above the button to finish, then send again.",
+    turnstileInvalid: "The check expired. Please send again.",
+    unavailable: `The form couldn't send just now. Please email ${contact.email}.`,
+    done: "BRIEF RECEIVED · REF {ref}",
+    thanks: "Thank you. The reply comes by email.",
+    errors: "Please check the highlighted fields.",
+  },
+  ar: {
+    required: "يرجى تعبئة هذا الحقل.",
+    engagement: "يرجى اختيار أحد الخيارات.",
+    invalid: "يرجى إدخال بريد إلكتروني صحيح مثل name@company.com.",
+    too_long: "النص أطول من المسموح ({n} حرفاً كحد أقصى).",
+    turnstile: "يرجى انتظار اكتمال التحقق أعلى الزر، ثم الإرسال مجدداً.",
+    turnstileInvalid: "انتهت صلاحية التحقق. يرجى الإرسال مجدداً.",
+    unavailable: `تعذّر إرسال النموذج الآن. يرجى مراسلتنا على ${contact.email}.`,
+    done: "تم استلام الموجز · المرجع {ref}",
+    thanks: "شكراً لك. يصلك الرد عبر البريد الإلكتروني.",
+    errors: "يرجى مراجعة الحقول المحددة.",
+  },
+}[lang];
+
+const limits = { name: 120, company: 160, email: 254, message: 5000 };
+---
+
+<div class="brief" data-brief data-sitekey={siteKey} data-lang={lang}>
+  <span id="brief-fixed" class="brief__anchor"></span>
+  <span id="brief-retained" class="brief__anchor"></span>
+
+  <p class="label brief__tally" data-tally>
+    <span class="brief__lamp" aria-hidden="true"></span>
+    <span data-tally-text data-on={t.on} data-off={t.off}>
+      {t.off}
+    </span>
+  </p>
+
+  <form class="brief__form" method="post" action="/api/brief" novalidate data-brief-form>
+    <input type="hidden" name="lang" value={lang} />
+
+    <div class="brief__field">
+      <label for="brief-name">{t.name}</label>
+      <input
+        id="brief-name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        required
+        maxlength={limits.name}
+        aria-describedby="brief-name-error"
+      />
+      <p class="brief__error" id="brief-name-error" hidden></p>
+    </div>
+
+    <div class="brief__field">
+      <label for="brief-company">
+        {t.company} <span class="brief__optional">({t.optional})</span>
+      </label>
+      <input
+        id="brief-company"
+        name="company"
+        type="text"
+        autocomplete="organization"
+        maxlength={limits.company}
+        aria-describedby="brief-company-error"
+      />
+      <p class="brief__error" id="brief-company-error" hidden></p>
+    </div>
+
+    <div class="brief__field">
+      <label for="brief-email">{t.email}</label>
+      <input
+        id="brief-email"
+        name="email"
+        type="email"
+        dir="ltr"
+        autocomplete="email"
+        inputmode="email"
+        required
+        maxlength={limits.email}
+        aria-describedby="brief-email-error"
+      />
+      <p class="brief__error" id="brief-email-error" hidden></p>
+    </div>
+
+    <fieldset class="brief__field brief__engagement" aria-describedby="brief-engagement-error">
+      <legend>{t.engagement}</legend>
+      {(["fixed", "retained", "unsure"] as const).map((value) => (
+        <label class="brief__option">
+          <input type="radio" name="engagement" value={value} checked={value === "unsure"} />
+          <span>{t[value]}</span>
+        </label>
+      ))}
+      <p class="brief__error" id="brief-engagement-error" hidden></p>
+    </fieldset>
+
+    <div class="brief__field">
+      <label for="brief-message">{t.message}</label>
+      <textarea
+        id="brief-message"
+        name="message"
+        rows="6"
+        required
+        maxlength={limits.message}
+        aria-describedby="brief-message-error"
+      ></textarea>
+      <p class="brief__error" id="brief-message-error" hidden></p>
+    </div>
+
+    <div class="brief__trap" aria-hidden="true">
+      <label>
+        {t.honeypot}
+        <input name="website" type="text" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
+    <div class="brief__turnstile" data-turnstile></div>
+    <p class="brief__error" id="brief-turnstile-error" hidden></p>
+
+    <p class="brief__error brief__form-error" data-form-error hidden></p>
+
+    <button class="brief__submit" type="submit" data-submit>
+      <span class="brief__spinner" aria-hidden="true" hidden></span>
+      <span data-submit-text data-sending={t.sending}>
+        {t.submit}
+      </span>
+    </button>
+  </form>
+
+  <div class="brief__done" data-brief-done tabindex="-1" hidden>
+    <p class="label" data-done-ref></p>
+    <p>{messages.thanks}</p>
+  </div>
+  <p class="visually-hidden" aria-live="polite" data-brief-live></p>
+
+  <p class="brief__nojs">
+    {t.noscript}
+    <a href={`mailto:${contact.email}`} lang="en" dir="ltr">
+      {contact.email}
+    </a>
+  </p>
+
+  <script
+    type="application/json"
+    data-brief-messages
+    is:inline
+    set:html={JSON.stringify(messages)}
+  />
+</div>
+
+<script>
+  import "./brief";
+</script>
+
+<style>
+  .brief {
+    max-inline-size: 40rem;
+  }
+
+  .brief__anchor {
+    display: block;
+  }
+
+  /* Without JS: no form (Turnstile needs JS); the direct contacts instead. */
+  :global(html:not(.js)) .brief__form,
+  :global(html:not(.js)) .brief__tally,
+  :global(html.js) .brief__nojs {
+    display: none;
+  }
+
+  .brief__tally {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0 0 24px;
+  }
+
+  .brief__lamp {
+    inline-size: 10px;
+    block-size: 10px;
+    border: 1px solid var(--color-copper);
+    border-radius: 0;
+  }
+
+  .brief__tally[data-on] .brief__lamp {
+    background: var(--color-copper);
+  }
+
+  .brief__tally[data-pulse] .brief__lamp {
+    animation: brief-pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes brief-pulse {
+    50% {
+      opacity: 0.35;
+    }
+  }
+
+  .brief__form {
+    display: grid;
+    gap: 20px;
+  }
+
+  .brief__field {
+    display: grid;
+    gap: 6px;
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .brief__field > label,
+  .brief__engagement legend {
+    font-weight: 500;
+  }
+
+  .brief__engagement legend {
+    margin-block-end: 6px;
+    padding: 0;
+  }
+
+  .brief__optional {
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+
+  .brief input:not([type="radio"]),
+  .brief textarea {
+    inline-size: 100%;
+    min-block-size: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-ink);
+    border-radius: 0;
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font: inherit;
+  }
+
+  .brief textarea {
+    resize: vertical;
+  }
+
+  .brief [aria-invalid="true"] {
+    border-color: var(--color-copper-deep);
+    outline: 1px solid var(--color-copper-deep);
+  }
+
+  .brief__option {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    min-block-size: 44px;
+    margin-inline-end: 24px;
+    cursor: pointer;
+  }
+
+  .brief__option input {
+    inline-size: 20px;
+    block-size: 20px;
+    margin: 0;
+    accent-color: var(--color-copper-deep);
+  }
+
+  .brief__error {
+    margin: 0;
+    color: var(--color-copper-deep);
+    font-size: 0.9375rem;
+  }
+
+  .brief__trap {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .brief__turnstile:empty {
+    display: none;
+  }
+
+  .brief__submit {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    min-block-size: 44px;
+    padding: 10px 24px;
+    border: 0;
+    border-radius: 0;
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .brief__submit:hover {
+    background: var(--color-copper-deep);
+  }
+
+  .brief__submit:disabled {
+    cursor: progress;
+    opacity: 0.8;
+  }
+
+  .brief__spinner {
+    inline-size: 14px;
+    block-size: 14px;
+    border: 2px solid currentcolor;
+    border-block-start-color: transparent;
+    animation: brief-spin 0.8s linear infinite;
+  }
+
+  .brief__spinner[hidden] {
+    display: none;
+  }
+
+  @keyframes brief-spin {
+    to {
+      rotate: 1turn;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brief__spinner {
+      animation-duration: 2.4s;
+    }
+  }
+
+  .brief__done p {
+    margin-block: 0 8px;
+  }
+
+  .brief__done:focus {
+    outline: none;
+  }
+</style>
