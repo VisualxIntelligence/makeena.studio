@@ -1,6 +1,6 @@
 ---
+import Axonometric from "../../../components/concepts/Axonometric.astro";
 import SunStudy from "../../../components/concepts/SunStudy.astro";
-import ProvenanceFigure from "../../../components/media/ProvenanceFigure.astro";
 import type { Lang } from "../../../i18n/config";
 import Page from "../../../layouts/Page.astro";
 import { langPaths } from "../../../lib/content";
@@ -11,5 +11,5 @@ const lang = Astro.params.lang as Lang;
 
 <Page route="offPlan" lang={lang}>
   <SunStudy slot="sun-study" lang={lang} priority />
-  <ProvenanceFigure slot="axonometric" assetId="MKN-AXO-CAM01-EXPLODED" lang={lang} />
+  <Axonometric slot="axonometric" lang={lang} />
 </Page>

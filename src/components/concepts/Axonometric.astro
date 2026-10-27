@@ -1,0 +1,165 @@
+---
+// 06 · exploded axonometric (PRD §9.4), static until six real layer cut-outs exist (decision 0013;
+// generated layers did not hold the camera, decision 0017). This is the PRD's reduced-motion and
+// no-JS state: the fully exploded drawing with all six layers labelled.
+// - The labels are a real <ol> in DOM order (foundations → roof) that describes the figure.
+// - Desktop: each label sits level with its layer, a leader line running to the drawing's edge;
+//   the lines draw in once (G1 effect, axonometric.ts), and are simply drawn without motion.
+// - Phones: numbers on the drawing and the labels as a numbered legend under it.
+// - RTL: labels and leader lines move to the other side (logical properties); the drawing does not
+//   mirror. It is near-symmetric, so the leaders meet its edge on either side.
+import type { Lang } from "../../i18n/config";
+import ProvenanceFigure from "../media/ProvenanceFigure.astro";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const id = "axonometric-layers";
+
+// `y`: the layer's height in the drawing, as a fraction of its height. Arabic names are drafts
+// for native review (decision 0005).
+const layers = [
+  { y: 0.84, en: "Foundations and basement", ar: "الأساسات والقبو" },
+  { y: 0.68, en: "Frame and cores", ar: "الهيكل والنوى" },
+  { y: 0.49, en: "Floor plates", ar: "البلاطات" },
+  { y: 0.31, en: "Services and MEP", ar: "الخدمات والأنظمة الكهروميكانيكية" },
+  { y: 0.2, en: "Façade", ar: "الواجهة" },
+  { y: 0.11, en: "Roof and plant", ar: "السطح والمعدات" },
+];
+const nn = (n: number) => String(n).padStart(2, "0");
+const label = lang === "ar" ? "طبقات المبنى" : "The building's layers";
+---
+
+<div class="axo" data-axonometric>
+  <div class="axo__drawing">
+    <ProvenanceFigure
+      assetId="MKN-AXO-CAM01-EXPLODED"
+      lang={lang}
+      sizes="(width >= 80rem) 640px, (width >= 64rem) 50vw, calc(100vw - 32px)"
+      describedby={id}
+    />
+    <ol class="axo__markers" aria-hidden="true">
+      {layers.map((layer, i) => (
+        <li style={`--y: ${layer.y}`} dir="ltr">
+          {nn(i + 1)}
+        </li>
+      ))}
+    </ol>
+  </div>
+  <ol class="axo__layers" id={id} aria-label={label}>
+    {layers.map((layer, i) => (
+      <li style={`--y: ${layer.y}`}>
+        <span class="axo__leader" aria-hidden="true"></span>
+        <span class="label">
+          <span dir="ltr">{nn(i + 1)}</span>
+        </span>
+        <span class="axo__name">{layer[lang]}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  import "./axonometric";
+</script>
+
+<style>
+  /* The drawing is 1440 × 1800 (4:5): a layer at fraction y of its height sits at
+     y × 1.25 × the drawing's width from its top. */
+  .axo {
+    --ratio: 1.25;
+
+    container-type: inline-size;
+    position: relative;
+  }
+
+  .axo__drawing {
+    position: relative;
+  }
+
+  .axo__markers,
+  .axo__layers {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Phones and tablets: numbers on the drawing, a numbered legend under it. */
+  .axo__markers li {
+    position: absolute;
+    inset-block-start: calc(var(--y) * var(--ratio) * 100cqi);
+    inset-inline-end: 4px;
+    translate: 0 -50%;
+    padding-inline: 4px;
+    background: var(--color-ivory);
+    color: var(--color-copper-deep);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .axo__layers {
+    display: grid;
+    gap: 8px;
+    margin-block-start: 16px;
+  }
+
+  .axo__layers li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .axo__layers .label {
+    margin: 0;
+  }
+
+  .axo__leader {
+    display: none;
+  }
+
+  /* Desktop: the drawing takes half the width; each label sits level with its layer, a leader
+     line running back to the drawing's edge (about 15 % in from each side). */
+  @media (width >= 64rem) {
+    .axo {
+      --drawing: 50cqi;
+      --gap: 48px;
+    }
+
+    .axo__drawing {
+      inline-size: var(--drawing);
+    }
+
+    .axo__markers {
+      display: none;
+    }
+
+    .axo__layers {
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline: calc(var(--drawing) + var(--gap)) 0;
+      display: block;
+      block-size: calc(var(--drawing) * var(--ratio));
+      margin: 0;
+    }
+
+    .axo__layers li {
+      position: absolute;
+      inset-block-start: calc(var(--y) * 100%);
+      inset-inline: 0;
+      translate: 0 -50%;
+    }
+
+    .axo__leader {
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-end: calc(100% + 8px);
+      display: block;
+      inline-size: calc(var(--drawing) * 0.15 + var(--gap) - 8px);
+      block-size: 1px;
+      background: var(--color-copper);
+    }
+  }
+</style>
