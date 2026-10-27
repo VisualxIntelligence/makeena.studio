@@ -34,9 +34,10 @@ test.describe("no unlabelled media", () => {
 
 test.describe("spec sheet", () => {
   test("opens with a click, matches the record, closes with Esc", async ({ page }) => {
-    // The home page's 03 teaser (on the aerial page the stills only show without the flight).
+    // The home page's 03 teaser (on the aerial page the stills only show without the flight); its
+    // day variant (the night one shows only after hours).
     await page.goto("/en/");
-    const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-B"]');
+    const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-B"] [data-variant="day"]');
     const record = records["MKN-AER-FLT01-B"];
     await expect(figure.locator("img")).toHaveAttribute("alt", record.alt.en);
     await expect(figure.locator("figcaption")).toHaveText(record.caption.en);
@@ -72,7 +73,7 @@ test.describe("spec sheet", () => {
 
   test("is in Arabic on /ar/ and the image is not mirrored", async ({ page }) => {
     await page.goto("/ar/");
-    const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-A"]');
+    const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-A"] [data-variant="day"]');
     await expect(figure.locator("img")).toHaveAttribute("alt", records["MKN-AER-FLT01-A"].alt.ar);
     await figure.locator(".pfig__info").click();
     await expect(figure.locator("[popover]")).toContainText("مولّدة بالذكاء الاصطناعي");

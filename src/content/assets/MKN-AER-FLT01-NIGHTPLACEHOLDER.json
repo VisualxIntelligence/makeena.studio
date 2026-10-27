@@ -1,0 +1,46 @@
+{
+  "id": "MKN-AER-FLT01-NIGHTPLACEHOLDER",
+  "type": "sequence",
+  "status": "concept",
+  "concepts": [
+    "03",
+    "13"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Night",
+      "ar": "الليل"
+    }
+  },
+  "aircraft": "none",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW · PLACEHOLDER FLIGHT",
+    "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران · رحلة مؤقتة"
+  },
+  "alt": {
+    "en": "Generated aerial flight over a fictional waterfront development at night: a high approach, a descent over the lit marina and a low pass along the promenade. Placeholder sequence.",
+    "ar": "رحلة جوية مولّدة فوق مشروع متخيَّل على الواجهة البحرية ليلاً: اقتراب من ارتفاع عالٍ، ثم هبوط فوق المرسى المضاء، ثم مرور منخفض على امتداد الممشى. تسلسل مؤقت."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "ffmpeg",
+    "model": "zoompan + xfade",
+    "derivedFrom": "MKN-AER-FLT01-NIGHTA"
+  },
+  "source": {
+    "file": "public/sequences/MKN-AER-FLT01-NIGHTPLACEHOLDER/sequence.json",
+    "width": 1600,
+    "height": 900
+  }
+}

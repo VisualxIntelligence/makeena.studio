@@ -338,6 +338,74 @@
         "en": "Generated aerial flight over a fictional waterfront development at golden hour: a high approach, a descent over the marina and a low pass along the promenade. Placeholder sequence.",
         "ar": "رحلة جوية مولّدة فوق مشروع متخيَّل على الواجهة البحرية في الساعة الذهبية: اقتراب من ارتفاع عالٍ، ثم هبوط فوق المرسى، ثم مرور منخفض على امتداد الممشى. تسلسل مؤقت."
       }
+    },
+    "MKN-AER-FLT01-NIGHTA": {
+      "aircraft": "none",
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        }
+      },
+      "caption": {
+        "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
+        "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
+      },
+      "alt": {
+        "en": "Generated aerial: a high oblique view of a fictional waterfront development at night, its windows and marina lit.",
+        "ar": "لقطة جوية مولّدة: منظر مائل من ارتفاع عالٍ لمشروع متخيَّل على الواجهة البحرية ليلاً، وقد أُضيئت نوافذه ومرساه."
+      }
+    },
+    "MKN-AER-FLT01-NIGHTB": {
+      "aircraft": "none",
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        }
+      },
+      "caption": {
+        "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
+        "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
+      },
+      "alt": {
+        "en": "Generated aerial: the same development at night, the camera lower over the lit marina.",
+        "ar": "لقطة جوية مولّدة: المشروع نفسه ليلاً والكاميرا أخفض فوق المرسى المضاء."
+      }
+    },
+    "MKN-AER-FLT01-NIGHTC": {
+      "aircraft": "none",
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        }
+      },
+      "caption": {
+        "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
+        "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
+      },
+      "alt": {
+        "en": "Generated aerial: a low pass at night along the development's lit promenade.",
+        "ar": "لقطة جوية مولّدة: مرور منخفض ليلاً على امتداد ممشى المشروع المضاء."
+      }
+    },
+    "MKN-AER-FLT01-NIGHTPLACEHOLDER": {
+      "aircraft": "none",
+      "light": {
+        "label": {
+          "en": "Night",
+          "ar": "الليل"
+        }
+      },
+      "caption": {
+        "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW · PLACEHOLDER FLIGHT",
+        "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران · رحلة مؤقتة"
+      },
+      "alt": {
+        "en": "Generated aerial flight over a fictional waterfront development at night: a high approach, a descent over the lit marina and a low pass along the promenade. Placeholder sequence.",
+        "ar": "رحلة جوية مولّدة فوق مشروع متخيَّل على الواجهة البحرية ليلاً: اقتراب من ارتفاع عالٍ، ثم هبوط فوق المرسى المضاء، ثم مرور منخفض على امتداد الممشى. تسلسل مؤقت."
+      }
     }
   }
 }

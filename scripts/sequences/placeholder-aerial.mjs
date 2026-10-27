@@ -2,9 +2,11 @@
 // so fake one from the three AER-FLT01 keyframes with a slow push-in on each
 // and a crossfade between them. Output is labelled PLACEHOLDER everywhere.
 //
-//   node scripts/sequences/placeholder-aerial.mjs
+//   npm run sequences:placeholder              day: keyframes A, B, C
+//   npm run sequences:placeholder -- --night   13 after hours: NIGHTA, NIGHTB, NIGHTC
 //
-// Needs ffmpeg on PATH. Writes public/sequences/MKN-AER-FLT01-PLACEHOLDER/.
+// Needs ffmpeg on PATH. Writes public/sequences/MKN-AER-FLT01-PLACEHOLDER/ (or
+// MKN-AER-FLT01-NIGHTPLACEHOLDER/). Both use the same camera moves, so day and night frames match.
 
 import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
@@ -12,14 +14,18 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import sharp from "sharp";
 
-const ID = "MKN-AER-FLT01-PLACEHOLDER";
+const NIGHT = process.argv.includes("--night");
+const ID = NIGHT ? "MKN-AER-FLT01-NIGHTPLACEHOLDER" : "MKN-AER-FLT01-PLACEHOLDER";
+const KEYS = ["A", "B", "C"].map((k) => `MKN-AER-FLT01-${NIGHT ? "NIGHT" : ""}${k}.jpg`);
 const RENDERS = "design/renders";
 const OUT = join("public/sequences", ID);
 const FPS = 24;
 const FRAMES_PER_KEY = 58; // 3 × 58 − 2 × 12 crossfade frames = 150
 const XFADE = 12;
 // q50 4:4:4 (the PRD starting point) gave 20 MB desktop; see docs/decisions/0003.
-const AVIF = { quality: 34, chromaSubsampling: "4:2:0", effort: 6 };
+// Night frames carry more detail (lit windows, reflections): q28 keeps them near the same
+// bytes per frame as the day sequence (docs/decisions/0016).
+const AVIF = { quality: NIGHT ? 28 : 34, chromaSubsampling: "4:2:0", effort: 6 };
 
 const variants = [
   { name: "desktop", width: 1600, height: 900, step: 1 }, // 150 frames
@@ -48,11 +54,11 @@ try {
       "-v",
       "error",
       "-i",
-      join(RENDERS, "MKN-AER-FLT01-A.jpg"),
+      join(RENDERS, KEYS[0]),
       "-i",
-      join(RENDERS, "MKN-AER-FLT01-B.jpg"),
+      join(RENDERS, KEYS[1]),
       "-i",
-      join(RENDERS, "MKN-AER-FLT01-C.jpg"),
+      join(RENDERS, KEYS[2]),
       "-filter_complex",
       filter,
       "-map",

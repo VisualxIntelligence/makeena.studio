@@ -4,7 +4,7 @@ _Last updated: 27 October 2026_
 
 ## Where we are
 
-**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: 04 (#17) and 07 (#18) are merged; 03 is in review (`phase-3/aerial`), its night variants and 06 are next.
+**Phases 0, 1 and 2 are complete and merged** (#1–#16). Phase 3 (section components) is in progress: 04 (#17), 07 (#18) and 03 (#20) are merged; 03's night variants are in review (`phase-3/aerial-night`); 06 is next.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -95,13 +95,13 @@ Founder decisions (26 Oct, decision 0013): generate missing frames in Higgsfield
 |---|---|---|
 | 1 | `phase-3/sun-study` | **Merged (#17).** `MatchedFrameScrubber` (continuous) + 04 on off-plan; generated MORNING and M00 frames |
 | 2 | `phase-3/time-lapse` | **Merged (#18).** 07: discrete mode (radio-group thumbnails, wipe, live region), months 00/06/14/24; shared crossfade (decision 0014). Founder kept M00's white hoarding |
-| 3 | `phase-3/aerial` | **In review.** 03: scroll mode (pinned canvas sequence, placeholder frames, CSS-reserved scroll distance), home three-still teaser, provenance record for the sequence (decision 0015) |
-| 3b | `phase-3/aerial-night` | Night keyframes `MKN-AER-FLT01-NIGHTA/B/C` (generated 27 Oct, 8.25 credits; masters in Higgsfield, jobs 3a210721…, 724290dc…, 1eb1f9f8…), a night placeholder sequence, the 13 swap for the flight, stills and teaser |
+| 3 | `phase-3/aerial` | **Merged (#20).** 03: scroll mode (pinned canvas sequence, placeholder frames, CSS-reserved scroll distance), home three-still teaser, provenance record for the sequence (decision 0015) |
+| 3b | `phase-3/aerial-night` | **In review.** Night keyframes `MKN-AER-FLT01-NIGHTA/B/C` (8.25 credits), night placeholder sequence at AVIF q28 (9.44 MB), the 13 swap mid-flight for the canvas, poster, sheet, thumbnails, stills and home teaser (decision 0016) |
 | 4 | `phase-3/axonometric` | 06: static exploded image + numbered layer list until layers exist |
 
 Asset notes: the SUN-SKY01 set is 1800 × 771 (21:9), not 1800 × 1018 like the tower sets. Check a generated frame against its set (edge correlation, decision 0013) before using it. The Higgsfield CLI isn't signed in on this machine; the connected Higgsfield account works through the chat tools.
 
-**To resume:** after the founder reviews `phase-3/aerial`, start `phase-3/aerial-night` from `main` (download the three night renders from the Higgsfield jobs above, 1800 px JPEG, add them to the manifest). Higgsfield balance after the night renders: 119.18 credits. Then 06.
+**To resume:** after the founder reviews `phase-3/aerial-night`, start `phase-3/axonometric` (06) from `main`: static exploded image plus the numbered layer list (decision 0013), and try generating the six layers in Higgsfield (balance 119.18 credits; check first).
 
 Carry-over from 03: pinned sections reserve their scroll distance in CSS, pin with `pinSpacing: false` and are sticky until GSAP runs, so they need no early GSAP. Never request heavy media before the visitor interacts: Lighthouse counts requests started before the observed LCP as LCP dependencies. Reveal clears its transform (a transformed ancestor breaks a fixed pin).
 

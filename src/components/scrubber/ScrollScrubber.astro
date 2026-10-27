@@ -11,6 +11,9 @@
 // - The poster under the canvas is the first chapter still, the page's LCP (never the canvas). It
 //   loads in both modes (the page's one high-priority image) at the same URLs as the first still,
 //   so the stills reuse it.
+// - 13 after hours: with `nightSequence` and per-frame `night` stills, html[data-hours="night"]
+//   swaps the poster, caption, spec sheet, thumbnails and stills by CSS (night images are lazy and
+//   hidden, so fetched only once after hours is on), and scroll.ts swaps the canvas's frames.
 // - RTL: the filmstrip and rail follow `dir`; the frame and the timecode never mirror.
 import { Picture } from "astro:assets";
 import { readFileSync } from "node:fs";
@@ -27,6 +30,7 @@ const {
   lang,
   frames,
   sequence,
+  nightSequence,
   label,
   skip,
   stillsLabel,
@@ -39,6 +43,12 @@ const seq = JSON.parse(readFileSync(record.source.file, "utf8"));
 const chapters = [...frames].sort((a, b) => a.value - b.value);
 const stills = await Promise.all(chapters.map((c) => getAsset(c.assetId)));
 const sheet = nextSheetId(record.id);
+const night = nightSequence ? await getAsset(nightSequence) : undefined;
+const nightSeq = night && JSON.parse(readFileSync(night.source.file, "utf8"));
+const nightStills = night
+  ? await Promise.all(chapters.map((c) => (c.night ? getAsset(c.night) : undefined)))
+  : [];
+const nightSheet = night && nextSheetId(night.id);
 const after = `${sheet}-after`;
 const nn = (n: number) => String(n).padStart(2, "0");
 const pad = (n: number) => String(n).padStart(4, "0");
@@ -47,7 +57,13 @@ const config = {
   mobile: seq.variants.mobile,
   virtualFrames: seq.virtualFrames,
   alts: stills.map((s) => s.alt[lang]),
+  night: nightSeq && {
+    desktop: nightSeq.variants.desktop,
+    mobile: nightSeq.variants.mobile,
+    alts: nightStills.map((s, i) => (s ?? stills[i]).alt[lang]),
+  },
 };
+const thumb = { widths: [240, 480], sizes: "(width >= 64rem) 120px, 30vw" };
 ---
 
 <div class="flight" data-scrubber data-mode={mode}>
@@ -79,18 +95,39 @@ const config = {
   </a>
 
   <div class="flight__track">
-    <figure class="flight__stage" data-provenance={record.id} aria-label={label}>
+    <figure
+      class="flight__stage"
+      data-provenance={record.id}
+      data-night={night?.id}
+      aria-label={label}
+    >
       <div class="flight__frame">
         <div class="pfig__media flight__media">
-          <Picture
-            src={imageFor(stills[0])}
-            alt=""
-            widths={[480, 828, 1200, 1600]}
-            sizes={sizes}
-            formats={["avif", "webp"]}
-            loading={priority ? "eager" : "lazy"}
-            fetchpriority={priority ? "high" : "auto"}
-          />
+          <div data-variant="day" data-provenance={record.id}>
+            <Picture
+              src={imageFor(stills[0])}
+              alt=""
+              widths={[480, 828, 1200, 1600]}
+              sizes={sizes}
+              formats={["avif", "webp"]}
+              loading={priority ? "eager" : "lazy"}
+              fetchpriority={priority ? "high" : "auto"}
+            />
+            <InfoButton sheet={sheet} assetId={record.id} lang={lang} />
+          </div>
+          {night && nightStills[0] && (
+            <div data-variant="night" data-provenance={night.id}>
+              <Picture
+                src={imageFor(nightStills[0])}
+                alt=""
+                widths={[480, 828, 1200, 1600]}
+                sizes={sizes}
+                formats={["avif", "webp"]}
+                loading="lazy"
+              />
+              <InfoButton sheet={nightSheet!} assetId={night.id} lang={lang} />
+            </div>
+          )}
           <canvas
             class="flight__canvas"
             role="img"
@@ -99,10 +136,16 @@ const config = {
             height={seq.variants.desktop.height}
           ></canvas>
           <span class="pfig__corners" aria-hidden="true"></span>
-          <InfoButton sheet={sheet} assetId={record.id} lang={lang} />
         </div>
         <figcaption class="flight__caption">
-          <span class="label pfig__caption">{record.caption[lang]}</span>
+          <span class="label pfig__caption" data-variant="day">
+            {record.caption[lang]}
+          </span>
+          {night && (
+            <span class="label pfig__caption" data-variant="night">
+              {night.caption[lang]}
+            </span>
+          )}
           <span class="label flight__timecode" lang="en" dir="ltr" aria-hidden="true">
             FRAME <span data-flight-timecode>{pad(0)}</span> / {pad(seq.virtualFrames)}
           </span>
@@ -116,15 +159,28 @@ const config = {
         <ol class="flight__filmstrip">
           {chapters.map((chapter, i) => (
             <li aria-current={i === 0 ? "step" : undefined}>
-              <Picture
-                src={imageFor(stills[i])}
-                alt=""
-                widths={[240, 480]}
-                sizes="(width >= 64rem) 120px, 30vw"
-                formats={["avif", "webp"]}
-                loading="lazy"
-                fetchpriority="low"
-              />
+              <span class="flight__thumb" data-variant="day">
+                <Picture
+                  src={imageFor(stills[i])}
+                  alt=""
+                  {...thumb}
+                  formats={["avif", "webp"]}
+                  loading="lazy"
+                  fetchpriority="low"
+                />
+              </span>
+              {nightStills[i] && (
+                <span class="flight__thumb" data-variant="night">
+                  <Picture
+                    src={imageFor(nightStills[i]!)}
+                    alt=""
+                    {...thumb}
+                    formats={["avif", "webp"]}
+                    loading="lazy"
+                    fetchpriority="low"
+                  />
+                </span>
+              )}
               <span class="label">
                 <span dir="ltr">{nn(chapter.value)}</span>
               </span>
@@ -134,6 +190,7 @@ const config = {
         </ol>
       </div>
       <ProvenanceSheet asset={record} lang={lang} id={sheet} />
+      {night && <ProvenanceSheet asset={night} lang={lang} id={nightSheet!} />}
     </figure>
   </div>
 
@@ -143,7 +200,12 @@ const config = {
         <p class="label">
           <span dir="ltr">{nn(chapter.value)}</span> · {chapter.label[lang]}
         </p>
-        <ProvenanceFigure assetId={stills[i].id} lang={lang} sizes={sizes} />
+        <ProvenanceFigure
+          assetId={stills[i].id}
+          night={nightStills[i]?.id}
+          lang={lang}
+          sizes={sizes}
+        />
       </li>
     ))}
   </ol>
@@ -168,6 +230,16 @@ const config = {
   .flight:not([data-flight="sequence"]) .flight__track,
   .flight[data-flight="sequence"] .flight__stills {
     display: none;
+  }
+
+  /* 13 after hours: one variant at a time (stills use ProvenanceFigure's own rules). */
+  :global(html:not([data-hours="night"])) .flight [data-variant="night"],
+  :global(html[data-hours="night"]) .flight__stage[data-night] [data-variant="day"] {
+    display: none;
+  }
+
+  .flight__thumb {
+    display: block;
   }
 
   .flight__skip {
@@ -311,7 +383,7 @@ const config = {
       column-gap: 12px;
     }
 
-    .flight__filmstrip li > :global(picture) {
+    .flight__filmstrip li > .flight__thumb {
       grid-row: span 2;
     }
   }

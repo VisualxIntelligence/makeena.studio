@@ -5,6 +5,8 @@ export interface ScrubberFrame {
   /** Position on the control (minutes after midnight for 04, month for 07, chapter for 03). */
   value: number;
   label: { en: string; ar: string };
+  /** Night variant shown under 13 after hours (scroll mode). */
+  night?: string;
 }
 
 interface Common {
@@ -54,6 +56,8 @@ export interface ScrollProps extends Common {
   mode: "scroll";
   /** Provenance ID of the sequence in public/sequences/{id}/ (its sequence.json). */
   sequence: string;
+  /** The same flight at night, for 13 after hours: same frame count and size. */
+  nightSequence?: string;
   /** PRD §9.1: 03 falls back to stepped stills. */
   reducedMotion: "stills";
   /** The "Skip the flight" link before the pinned section. */

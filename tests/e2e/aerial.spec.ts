@@ -18,6 +18,22 @@ function countFrames(page: Page): () => number {
   return () => frames;
 }
 
+/** Counts requests for night sequence frames (13 after hours). */
+function countNight(page: Page): () => number {
+  let frames = 0;
+  page.on("request", (request) => {
+    if (request.url().includes("/sequences/MKN-AER-FLT01-NIGHTPLACEHOLDER/")) frames++;
+  });
+  return () => frames;
+}
+
+/** The frame on the canvas (-1 before the first draw after a source change). */
+const drawn = (page: Page) =>
+  flight(page).evaluate(
+    (el) =>
+      (el as HTMLElement & { flightPlayer: { stats: { drawn: number } } }).flightPlayer.stats.drawn,
+  );
+
 /** Scrolls through the whole flight in steps, then to its end. */
 async function fly(page: Page, to = 1): Promise<void> {
   const { top, distance } = await page.locator(".flight__track").evaluate((track: HTMLElement) => {
@@ -128,7 +144,10 @@ test.describe("the flight", () => {
     expect(frame).toBeGreaterThan(side);
     await expect(page.locator(".flight__timecode")).toHaveCSS("direction", "ltr");
     await expect(page.locator(".flight__canvas")).toHaveCSS("transform", "none");
-    await expect(page.locator(".flight__media img")).toHaveCSS("transform", "none");
+    await expect(page.locator('.flight__media [data-variant="day"] img')).toHaveCSS(
+      "transform",
+      "none",
+    );
   });
 
   test("turning motion off in the footer switches to the stills", async ({ page }) => {
@@ -141,6 +160,45 @@ test.describe("the flight", () => {
     await page.locator("[data-motion-toggle]").click();
     await expect(flight(page)).toHaveAttribute("data-flight", "sequence");
   });
+  test("after hours flies the night sequence, fetched only once it is on", async ({ page }) => {
+    const night = countNight(page);
+    await page.goto(path("en"));
+    await fly(page, 0.5);
+    await expect(page.locator(".flight__canvas")).toHaveAttribute("data-ready", "");
+    expect(night()).toBe(0);
+
+    await page.keyboard.press("n");
+    await expect(page.locator("html")).toHaveAttribute("data-hours", "night");
+    await expect.poll(night).toBeGreaterThan(0);
+    await expect(page.locator(".flight__canvas")).toHaveAttribute(
+      "aria-label",
+      record("MKN-AER-FLT01-NIGHTB").alt.en,
+    );
+    await expect(page.locator('.flight__media [data-variant="night"] .pfig__info')).toHaveAttribute(
+      "aria-label",
+      /MKN-AER-FLT01-NIGHTPLACEHOLDER/,
+    );
+    await expect(page.locator('.flight__media [data-variant="day"]')).toBeHidden();
+    await expect.poll(() => drawn(page)).toBeGreaterThan(0);
+
+    await page.keyboard.press("n");
+    await expect(page.locator("html")).not.toHaveAttribute("data-hours", "night");
+    await expect(page.locator(".flight__canvas")).toHaveAttribute(
+      "aria-label",
+      record("MKN-AER-FLT01-B").alt.en,
+    );
+    await expect(page.locator('.flight__media [data-variant="night"]')).toBeHidden();
+  });
+
+  test("a page loaded after hours fetches only night frames", async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem("mkn-hours", "night"));
+    const all = countFrames(page);
+    const night = countNight(page);
+    await page.goto(path("ar"));
+    await fly(page, 0.3);
+    await expect.poll(night).toBeGreaterThan(0);
+    expect(all()).toBe(night());
+  });
 });
 
 test.describe("the stills", () => {
@@ -151,7 +209,7 @@ test.describe("the stills", () => {
     const stills = page.locator(".flight__stills figure[data-provenance]");
     await expect(stills).toHaveCount(3);
     await stills.last().scrollIntoViewIfNeeded();
-    await expect(stills.last().locator("img")).toBeVisible();
+    await expect(stills.last().locator('[data-variant="day"] img')).toBeVisible();
     await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
     await page.waitForTimeout(500);
     expect(frames()).toBe(0);
@@ -182,6 +240,25 @@ test.describe("the stills", () => {
     await expectStills(page, frames);
   });
 
+  test("after hours, the stills are the night keyframes", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.addInitScript(() => localStorage.setItem("mkn-hours", "night"));
+    await page.goto(path("en"));
+    for (const [i, id] of ["NIGHTA", "NIGHTB", "NIGHTC"].entries()) {
+      const variant = page
+        .locator(".flight__stills figure")
+        .nth(i)
+        .locator('[data-variant="night"]');
+      await expect(variant).toHaveAttribute("data-provenance", `MKN-AER-FLT01-${id}`);
+    }
+    await expect(
+      page.locator(".flight__stills figure").first().locator('[data-variant="night"]'),
+    ).toBeVisible();
+    await expect(
+      page.locator(".flight__stills figure").first().locator('[data-variant="day"]'),
+    ).toBeHidden();
+  });
+
   test("without JS, the stills", async ({ browser }) => {
     const context = await browser.newContext({ javaScriptEnabled: false });
     const page = await context.newPage();
@@ -205,4 +282,12 @@ test("the home page teases the flight with its three stills, and fetches no fram
   await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
   await page.waitForTimeout(300);
   expect(frames()).toBe(0);
+
+  // 13: the teaser turns to night with the hero.
+  await page.keyboard.press("n");
+  await expect(teaser.first().locator('[data-variant="night"]')).toBeVisible();
+  await expect(teaser.first().locator('[data-variant="night"]')).toHaveAttribute(
+    "data-provenance",
+    "MKN-AER-FLT01-NIGHTA",
+  );
 });

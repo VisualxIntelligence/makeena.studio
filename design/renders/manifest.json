@@ -405,6 +405,66 @@
         "derivedFrom": null
       },
       "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-NIGHTA",
+      "file": "MKN-AER-FLT01-NIGHTA.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03",
+        "13"
+      ],
+      "description": "Night variant of flight keyframe A (high approach) for 13 after hours, about 21:40. Generated 27 Oct 2026 as an edit of AER-FLT01-A; edge correlation with it 0.68 (the accepted SUN-SKY01 midday/night pair: 0.66).",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "3a210721-f4af-4aa1-acb1-9a4e17550641",
+        "derivedFrom": "MKN-AER-FLT01-A"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-NIGHTB",
+      "file": "MKN-AER-FLT01-NIGHTB.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03",
+        "13"
+      ],
+      "description": "Night variant of flight keyframe B (descent over the marina) for 13 after hours, about 21:40. Generated 27 Oct 2026 as an edit of AER-FLT01-B; edge correlation with it 0.71 (the accepted SUN-SKY01 midday/night pair: 0.66).",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "724290dc-b8dc-435b-bb9e-4fe9034b9b59",
+        "derivedFrom": "MKN-AER-FLT01-B"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-NIGHTC",
+      "file": "MKN-AER-FLT01-NIGHTC.jpg",
+      "width": 1800,
+      "height": 1018,
+      "concepts": [
+        "03",
+        "13"
+      ],
+      "description": "Night variant of flight keyframe C (low pass along the promenade) for 13 after hours, about 21:40. Generated 27 Oct 2026 as an edit of AER-FLT01-C; edge correlation with it 0.60 (the accepted SUN-SKY01 midday/night pair: 0.66).",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "Higgsfield",
+        "model": "gpt_image_2_5",
+        "quality": "high",
+        "jobId": "1eb1f9f8-70a9-47a3-8d76-8569f283dd64",
+        "derivedFrom": "MKN-AER-FLT01-C"
+      },
+      "status": "concept"
     }
   ],
   "sequences": [
@@ -421,6 +481,23 @@
         "service": "ffmpeg",
         "model": "zoompan + xfade",
         "derivedFrom": "MKN-AER-FLT01-A"
+      },
+      "status": "concept"
+    },
+    {
+      "id": "MKN-AER-FLT01-NIGHTPLACEHOLDER",
+      "width": 1600,
+      "height": 900,
+      "concepts": [
+        "03",
+        "13"
+      ],
+      "description": "PLACEHOLDER night flight for 03 under 13 after hours: the same camera moves as MKN-AER-FLT01-PLACEHOLDER over keyframes NIGHTA, NIGHTB and NIGHTC, by scripts/sequences/placeholder-aerial.mjs --night (AVIF q28). 75-frame 828 px mobile variant. Lives in public/sequences/MKN-AER-FLT01-NIGHTPLACEHOLDER/.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "ffmpeg",
+        "model": "zoompan + xfade",
+        "derivedFrom": "MKN-AER-FLT01-NIGHTA"
       },
       "status": "concept"
     }

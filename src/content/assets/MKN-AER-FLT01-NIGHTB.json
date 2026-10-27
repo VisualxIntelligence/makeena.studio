@@ -1,0 +1,47 @@
+{
+  "id": "MKN-AER-FLT01-NIGHTB",
+  "type": "image",
+  "status": "concept",
+  "concepts": [
+    "03",
+    "13"
+  ],
+  "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+  "light": {
+    "label": {
+      "en": "Night",
+      "ar": "الليل"
+    }
+  },
+  "aircraft": "none",
+  "gatesCleared": [],
+  "metadataRetained": {
+    "iptc": false,
+    "c2pa": false,
+    "on": "master"
+  },
+  "rights": {
+    "en": "[PLACEHOLDER: rights terms]",
+    "ar": "[PLACEHOLDER: rights terms]"
+  },
+  "caption": {
+    "en": "GENERATED AERIAL · NO AIRCRAFT · NO FLIGHT WINDOW",
+    "ar": "لقطة جوية مولّدة · بلا طائرة · بلا نافذة طيران"
+  },
+  "alt": {
+    "en": "Generated aerial: the same development at night, the camera lower over the lit marina.",
+    "ar": "لقطة جوية مولّدة: المشروع نفسه ليلاً والكاميرا أخفض فوق المرسى المضاء."
+  },
+  "arReviewed": false,
+  "generator": {
+    "service": "Higgsfield",
+    "model": "gpt_image_2_5",
+    "jobId": "724290dc-b8dc-435b-bb9e-4fe9034b9b59",
+    "derivedFrom": "MKN-AER-FLT01-B"
+  },
+  "source": {
+    "file": "design/renders/MKN-AER-FLT01-NIGHTB.jpg",
+    "width": 1800,
+    "height": 1018
+  }
+}

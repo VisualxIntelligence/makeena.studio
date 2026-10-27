@@ -1,7 +1,8 @@
 ---
 // 03 · scroll-flown aerial (PRD §9.2): a generated drone path flown by scrolling, in three
 // chapters. A MatchedFrameScrubber in scroll mode. The flight is the Phase 0 placeholder
-// sequence (decision 0013) until a real one exists; its provenance record says so.
+// sequence (decision 0013) until a real one exists; its provenance record says so. Under 13 after
+// hours it flies the night placeholder over the night keyframes (decision 0016).
 import type { Lang } from "../../i18n/config";
 import MatchedFrameScrubber from "../scrubber/MatchedFrameScrubber.astro";
 import type { ScrubberFrame } from "../scrubber/types";
@@ -17,16 +18,19 @@ const { lang, priority = false } = Astro.props;
 const frames: ScrubberFrame[] = [
   {
     assetId: "MKN-AER-FLT01-A",
+    night: "MKN-AER-FLT01-NIGHTA",
     value: 1,
     label: { en: "High approach", ar: "اقتراب من ارتفاع عالٍ" },
   },
   {
     assetId: "MKN-AER-FLT01-B",
+    night: "MKN-AER-FLT01-NIGHTB",
     value: 2,
     label: { en: "Descent over the marina", ar: "هبوط فوق المرسى" },
   },
   {
     assetId: "MKN-AER-FLT01-C",
+    night: "MKN-AER-FLT01-NIGHTC",
     value: 3,
     label: { en: "Low pass along the promenade", ar: "مرور منخفض على امتداد الممشى" },
   },
@@ -51,6 +55,7 @@ const t = {
   lang={lang}
   frames={frames}
   sequence="MKN-AER-FLT01-PLACEHOLDER"
+  nightSequence="MKN-AER-FLT01-NIGHTPLACEHOLDER"
   reducedMotion="stills"
   label={t.label}
   skip={t.skip}
