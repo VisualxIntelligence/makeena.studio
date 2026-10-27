@@ -1,6 +1,5 @@
 ---
-import FigureGrid from "../../../components/media/FigureGrid.astro";
-import ProvenanceFigure from "../../../components/media/ProvenanceFigure.astro";
+import AerialFlight from "../../../components/concepts/AerialFlight.astro";
 import type { Lang } from "../../../i18n/config";
 import Page from "../../../layouts/Page.astro";
 import { langPaths } from "../../../lib/content";
@@ -10,22 +9,5 @@ const lang = Astro.params.lang as Lang;
 ---
 
 <Page route="aerial" lang={lang}>
-  <FigureGrid slot="flight" cols={3}>
-    <ProvenanceFigure
-      assetId="MKN-AER-FLT01-A"
-      lang={lang}
-      priority
-      sizes="(width >= 80rem) 410px, (width >= 64rem) 31vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-AER-FLT01-B"
-      lang={lang}
-      sizes="(width >= 80rem) 410px, (width >= 64rem) 31vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-    <ProvenanceFigure
-      assetId="MKN-AER-FLT01-C"
-      lang={lang}
-      sizes="(width >= 80rem) 410px, (width >= 64rem) 31vw, (width >= 48rem) 47vw, calc(100vw - 32px)"
-    />
-  </FigureGrid>
+  <AerialFlight slot="flight" lang={lang} priority />
 </Page>

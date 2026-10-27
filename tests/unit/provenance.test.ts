@@ -14,6 +14,8 @@ interface Localized {
 }
 interface ProvenanceRecord {
   id: string;
+  type: string;
+  source: { file: string; width: number; height: number };
   digitalSourceType: string;
   aircraft?: string;
   caption: Localized;
@@ -37,8 +39,25 @@ describe("provenance records", () => {
     const renders = readdirSync(new URL("design/renders/", root))
       .filter((f) => /\.(jpe?g|png|avif|webp)$/i.test(f))
       .map((f) => f.replace(/\.[^.]+$/, ""));
-    expect(records.map((r) => r.id).sort()).toEqual(renders.sort());
+    const images = records.filter((r) => r.type !== "sequence");
+    expect(images.map((r) => r.id).sort()).toEqual(renders.sort());
     for (const r of records) expect(r.id).toMatch(ID_PATTERN);
+  });
+
+  it("cover every frame sequence in public/sequences, by its sequence.json", () => {
+    const dirs = readdirSync(new URL("public/sequences/", root), { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .map((d) => d.name);
+    const sequences = records.filter((r) => r.type === "sequence");
+    expect(sequences.map((r) => r.id).sort()).toEqual(dirs.sort());
+    for (const r of sequences) {
+      const seq = JSON.parse(read(r.source.file));
+      expect(seq.id, r.id).toBe(r.id);
+      expect([seq.variants.desktop.width, seq.variants.desktop.height], r.id).toEqual([
+        r.source.width,
+        r.source.height,
+      ]);
+    }
   });
 
   it("say what is shown and that it is generated (PRD §14)", () => {

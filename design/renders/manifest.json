@@ -406,5 +406,23 @@
       },
       "status": "concept"
     }
+  ],
+  "sequences": [
+    {
+      "id": "MKN-AER-FLT01-PLACEHOLDER",
+      "width": 1600,
+      "height": 900,
+      "concepts": [
+        "03"
+      ],
+      "description": "PLACEHOLDER flight for 03, not a real one (decision 0013): 150 frames faked from keyframes A, B and C with a slow push-in on each and 0.5 s crossfades, by scripts/sequences/placeholder-aerial.mjs. AVIF only; 75-frame 828 px mobile variant. Lives in public/sequences/MKN-AER-FLT01-PLACEHOLDER/.",
+      "digitalSourceType": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+      "generator": {
+        "service": "ffmpeg",
+        "model": "zoompan + xfade",
+        "derivedFrom": "MKN-AER-FLT01-A"
+      },
+      "status": "concept"
+    }
   ]
 }

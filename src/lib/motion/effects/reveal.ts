@@ -17,7 +17,16 @@ registerEffect({
       start: "top 92%",
       once: true,
       onEnter: (batch) =>
-        gsap.to(batch, { opacity: 1, y: 0, duration: 0.3, ease: "power1.out", stagger: 0.06 }),
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power1.out",
+          stagger: 0.06,
+          // A leftover transform would make the block the containing block of anything fixed
+          // inside it, and break 03's pin.
+          clearProps: "opacity,transform",
+        }),
     });
   },
 });

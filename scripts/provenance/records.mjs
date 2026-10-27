@@ -1,5 +1,7 @@
 // Builds provenance records (PRD §10.2) from design/renders/manifest.json (generator facts) and
-// design/renders/provenance.json (editorial fields). Pure, so tests/unit/provenance.test.ts can
+// design/renders/provenance.json (editorial fields). `manifest.assets` are renders in
+// design/renders; `manifest.sequences` are frame sequences in public/sequences/{id}/, whose record
+// points at their sequence.json. Pure, so tests/unit/provenance.test.ts can
 // check that src/content/assets/ is in sync without running exiftool.
 
 export const DIGITAL_SOURCE_TYPES = [
@@ -24,8 +26,27 @@ function clean(value) {
   return value;
 }
 
+/** The record's source: a render in design/renders, or a sequence's sequence.json. */
+function sourceOf(entry, kind) {
+  if (kind === "sequence") {
+    return {
+      file: `public/sequences/${entry.id}/sequence.json`,
+      width: entry.width,
+      height: entry.height,
+    };
+  }
+  if (`${entry.id}.${entry.file.split(".").pop()}` !== entry.file) {
+    throw new Error(`${entry.id}: file name ${entry.file} must equal the asset ID`);
+  }
+  return { file: `design/renders/${entry.file}`, width: entry.width, height: entry.height };
+}
+
 export function buildRecords(manifest, editorial) {
-  const ids = manifest.assets.map((a) => a.id);
+  const entries = [
+    ...manifest.assets.map((a) => [a, "image"]),
+    ...(manifest.sequences ?? []).map((a) => [a, "sequence"]),
+  ];
+  const ids = entries.map(([a]) => a.id);
   const problems = [];
   for (const id of ids) {
     if (!ID_PATTERN.test(id)) problems.push(`${id}: does not match MKN-{SERIES}-{CAM}-{VARIANT}`);
@@ -37,14 +58,12 @@ export function buildRecords(manifest, editorial) {
   if (problems.length) throw new Error(`Provenance sources disagree:\n  ${problems.join("\n  ")}`);
 
   const d = editorial.defaults;
-  return manifest.assets.map((a) => {
+  return entries.map(([a, kind]) => {
     const e = editorial.assets[a.id];
-    if (`${a.id}.${a.file.split(".").pop()}` !== a.file) {
-      throw new Error(`${a.id}: file name ${a.file} must equal the asset ID`);
-    }
+    const source = sourceOf(a, kind);
     return clean({
       id: a.id,
-      type: e.type ?? d.type,
+      type: kind === "sequence" ? "sequence" : (e.type ?? d.type),
       status: a.status,
       concepts: a.concepts,
       digitalSourceType: a.digitalSourceType,
@@ -63,7 +82,7 @@ export function buildRecords(manifest, editorial) {
         jobId: a.generator.jobId,
         derivedFrom: a.generator.derivedFrom,
       },
-      source: { file: `design/renders/${a.file}`, width: a.width, height: a.height },
+      source,
     });
   });
 }

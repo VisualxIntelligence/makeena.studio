@@ -9,8 +9,7 @@
   "sections": [
     {
       "id": "flight",
-      "label": "01 · الرحلة",
-      "body": ["[PLACEHOLDER: 03 scroll-flown aerial, built in Phase 3]"]
+      "label": "01 · الرحلة"
     },
     {
       "id": "argument",

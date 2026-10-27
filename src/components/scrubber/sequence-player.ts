@@ -1,9 +1,10 @@
-// Phase 0 spike for concept 03 (PRD §9.2). Canvas image sequence:
+// Canvas image sequence for MatchedFrameScrubber's scroll mode (03, PRD §9.2), from the Phase 0
+// spike (decision 0003):
 // - compressed frames are fetched once and kept as Blobs (cheap);
 // - only a window of ±WINDOW frames around the target is decoded to ImageBitmap
 //   (a 1600 × 900 bitmap is ~5.8 MB, so decoding everything crashes iOS tabs);
 // - scroll only sets `target`; drawing happens in requestAnimationFrame.
-// Phase 3 folds this into MatchedFrameScrubber (scroll mode).
+// `stats` feed the spike page's ?debug readout and the e2e memory check.
 
 export interface PlayerStats {
   fetched: number;

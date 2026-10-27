@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -92,13 +92,13 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/lib/crossfade.ts` | Same-document crossfade for 13 and 07 (`html[data-vt="fade"]`) |
 | `src/lib/hours.ts` | 13 after hours: `data-hours`, footer toggles, N / doha shortcuts, crossfade, toast |
 | `docs/qa/` | Manual device checklists (iOS Safari) |
-| `src/components/scrubber/`, `src/components/concepts/` | `MatchedFrameScrubber` (PRD §9.1; one file per mode) and the concept sections built on it (04 `SunStudy`, 07 `TimeLapse`) |
+| `src/components/scrubber/`, `src/components/concepts/` | `MatchedFrameScrubber` (PRD §9.1; one file per mode, `sequence-player.ts` for 03's canvas) and the concept sections built on it (03 `AerialFlight`, 04 `SunStudy`, 07 `TimeLapse`) |
 | `src/components/media/` | `ProvenanceFigure` (08: every image goes through it, `priority` on a page's first in-view figure) and `FigureGrid` |
 | `src/lib/motion/`, `src/lib/lifecycle.ts` | G1 motion controller (`motion`, `registerEffect`, effects in `effects/`) and `onPage()` for the ClientRouter lifecycle |
-| `src/spikes/` | Phase 0 spike code (aerial sequence player, draft spike copy); reused in Phase 3 |
+| `src/spikes/` | Phase 0 spike paths and draft spike copy (the spike pages build only with `MKN_SPIKES=1`) |
 | `scripts/provenance/`, `src/content/assets/` | Provenance records (PRD §10.2): built from `design/renders/manifest.json` + `provenance.json` by `npm run provenance`; generated, never hand-edited |
 | `scripts/sequences/` | Frame-sequence generation (Phase 0 placeholder aerial) |
-| `public/sequences/` | Encoded AVIF frame sequences |
+| `public/sequences/` | Encoded AVIF frame sequences; each has a provenance record (`manifest.json` → `sequences`) |
 | `tests/spikes/` | Playwright spike measurements |
 | `design/renders/` | 19 concept-stage renders + `manifest.json` (IDs, concepts, Higgsfield job IDs, digital source type) + `provenance.json` (captions, alt, light, rights; hand-edited). Source material, not served directly. Known gaps: PRD §12.3 |
 

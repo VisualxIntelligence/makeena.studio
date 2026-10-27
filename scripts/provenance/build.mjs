@@ -44,9 +44,40 @@ function exiftool(args) {
   }
 }
 
+/** A sequence's sequence.json names it, matches the manifest's size, and every frame exists. */
+function verifySequence(record) {
+  const file = join(ROOT, record.source.file);
+  if (!existsSync(file)) return [`${record.id}: ${record.source.file} not found`];
+  const seq = read(file);
+  const problems = [];
+  if (seq.id !== record.id) problems.push(`${record.id}: sequence.json says id ${seq.id}`);
+  const desktop = seq.variants?.desktop;
+  if (desktop?.width !== record.source.width || desktop?.height !== record.source.height) {
+    problems.push(
+      `${record.id}: desktop frames are ${desktop?.width}×${desktop?.height}, manifest says ${record.source.width}×${record.source.height}`,
+    );
+  }
+  for (const [name, variant] of Object.entries(seq.variants ?? {})) {
+    for (let n = 1; n <= variant.count; n++) {
+      const frame = join(
+        ROOT,
+        "public",
+        variant.path.replace("{NNNN}", String(n).padStart(4, "0")),
+      );
+      if (!existsSync(frame)) {
+        problems.push(`${record.id}: ${name} frame ${n} missing`);
+        break;
+      }
+    }
+  }
+  return problems;
+}
+
 /** Files exist, dimensions match the manifest, and any embedded source type agrees. */
 function verify() {
-  const files = records.map((r) => join(ROOT, r.source.file));
+  const renders = records.filter((r) => r.type !== "sequence");
+  const sequences = records.filter((r) => r.type === "sequence");
+  const files = renders.map((r) => join(ROOT, r.source.file));
   const tags = JSON.parse(
     exiftool([
       "-json",
@@ -57,8 +88,8 @@ function verify() {
       ...files,
     ]),
   );
-  const problems = [];
-  for (const record of records) {
+  const problems = sequences.flatMap(verifySequence);
+  for (const record of renders) {
     const tag = tags.find((t) => resolve(t.SourceFile) === resolve(ROOT, record.source.file));
     if (!tag) {
       problems.push(`${record.id}: ${record.source.file} not found`);
@@ -79,7 +110,9 @@ function verify() {
     console.error(`exiftool check failed:\n  ${problems.join("\n  ")}`);
     process.exit(1);
   }
-  console.log(`exiftool: ${records.length} renders verified`);
+  console.log(
+    `exiftool: ${renders.length} renders verified; ${sequences.length} sequence(s) checked`,
+  );
 }
 
 function write() {
@@ -105,7 +138,7 @@ function tag(dir) {
     process.exit(1);
   }
   let tagged = 0;
-  for (const record of records) {
+  for (const record of records.filter((r) => r.type !== "sequence")) {
     const file = ["png", "jpg", "jpeg", "tif", "tiff"]
       .map((ext) => join(target, `${record.id}.${ext}`))
       .find(existsSync);

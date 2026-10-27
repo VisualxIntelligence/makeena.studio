@@ -3,14 +3,22 @@
 // entry point for every mode; each mode lives in its own file.
 // - continuous (04 sun study): a range input crossfades the two nearest frames.
 // - discrete (07 time-lapse): stops as a radio group, a before/after wipe, a live region.
-// - scroll (03 aerial): next.
+// - scroll (03 aerial): a pinned canvas frame sequence flown by scrolling; stepped stills as the
+//   fallback.
 import ContinuousScrubber from "./ContinuousScrubber.astro";
 import DiscreteScrubber from "./DiscreteScrubber.astro";
-import type { ContinuousProps, DiscreteProps } from "./types";
+import ScrollScrubber from "./ScrollScrubber.astro";
+import type { ContinuousProps, DiscreteProps, ScrollProps } from "./types";
 
-type Props = ContinuousProps | DiscreteProps;
+type Props = ContinuousProps | DiscreteProps | ScrollProps;
 
 const props = Astro.props;
 ---
 
-{props.mode === "continuous" ? <ContinuousScrubber {...props} /> : <DiscreteScrubber {...props} />}
+{props.mode === "continuous" ? (
+  <ContinuousScrubber {...props} />
+) : props.mode === "discrete" ? (
+  <DiscreteScrubber {...props} />
+) : (
+  <ScrollScrubber {...props} />
+)}
