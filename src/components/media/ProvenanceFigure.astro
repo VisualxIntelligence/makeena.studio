@@ -29,6 +29,8 @@ interface Props {
    */
   priority?: boolean;
   caption?: boolean;
+  /** Id of an element that describes the figure (06's layer list). */
+  describedby?: string;
   class?: string;
 }
 
@@ -40,6 +42,7 @@ const {
   widths = [480, 828, 1200, 1600],
   priority = false,
   caption = true,
+  describedby,
   class: className,
 } = Astro.props;
 
@@ -48,7 +51,12 @@ const nightAsset = night ? await getAsset(night) : undefined;
 const shared = { lang, sizes, widths, caption };
 ---
 
-<figure class:list={["pfig", className]} data-provenance={day.id} data-night={nightAsset?.id}>
+<figure
+  class:list={["pfig", className]}
+  data-provenance={day.id}
+  data-night={nightAsset?.id}
+  aria-describedby={describedby}
+>
   <ProvenanceVariant asset={day} variant="day" priority={priority} {...shared} />
   {nightAsset && (
     <ProvenanceVariant asset={nightAsset} variant="night" priority={false} {...shared} />
