@@ -33,6 +33,8 @@ export class SequencePlayer {
   private raf = 0;
   private started = false;
   private destroyed = false;
+  /** Bumped by setSource(): fetches and decodes from an older source are dropped. */
+  private generation = 0;
   private frameTimes: number[] = [];
   readonly stats: PlayerStats = {
     fetched: 0,
@@ -48,7 +50,7 @@ export class SequencePlayer {
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
-    private readonly urls: string[],
+    private urls: string[],
     private readonly frameWidth: number,
     private readonly frameHeight: number,
   ) {
@@ -78,26 +80,63 @@ export class SequencePlayer {
   start() {
     if (this.started) return;
     this.started = true;
+    this.fetchAll(this.order(false));
+  }
+
+  /**
+   * Swaps to another sequence with the same frame count and size (13's night flight). Frames
+   * around the current target are fetched first; the canvas keeps the frame on screen until the
+   * new one has decoded.
+   */
+  setSource(urls: string[]) {
+    if (urls.length !== this.count) throw new Error("setSource: frame counts differ");
+    this.urls = urls;
+    this.generation++;
+    this.blobs.fill(undefined);
+    for (const bmp of this.bitmaps.values()) bmp.close();
+    this.bitmaps.clear();
+    this.decoding.clear();
+    this.drawn = -1;
+    if (this.started) this.fetchAll(this.order(true));
+  }
+
+  /** Fetch order: optionally the window around the target first, then progressive. */
+  private order(targetFirst: boolean): number[] {
     const order: number[] = [];
     const seen = new Set<number>();
-    for (const step of [8, 4, 2, 1]) {
-      for (let i = 0; i < this.count; i += step) {
-        if (!seen.has(i)) {
-          seen.add(i);
-          order.push(i);
-        }
+    const add = (i: number) => {
+      if (i >= 0 && i < this.count && !seen.has(i)) {
+        seen.add(i);
+        order.push(i);
+      }
+    };
+    if (targetFirst) {
+      for (let d = 0; d <= WINDOW; d++) {
+        add(this.target - d);
+        add(this.target + d);
       }
     }
-    if (!seen.has(this.count - 1)) order.splice(1, 0, this.count - 1);
+    for (const step of [8, 4, 2, 1]) {
+      for (let i = 0; i < this.count; i += step) {
+        if (step === 8 && i === 8) add(this.count - 1);
+        add(i);
+      }
+    }
+    return order;
+  }
 
+  private fetchAll(order: number[]) {
+    const generation = this.generation;
+    const urls = this.urls;
     let next = 0;
     const worker = async () => {
-      while (next < order.length && !this.destroyed) {
+      while (next < order.length && !this.destroyed && generation === this.generation) {
         const i = order[next++];
         try {
-          const res = await fetch(this.urls[i]);
+          const res = await fetch(urls[i]);
           if (!res.ok) continue;
           const blob = await res.blob();
+          if (generation !== this.generation) return;
           this.blobs[i] = blob;
           this.stats.fetched++;
           this.stats.fetchedBytes += blob.size;
@@ -164,8 +203,13 @@ export class SequencePlayer {
         const blob = this.blobs[i];
         if (!blob) continue;
         this.decoding.add(i);
+        const generation = this.generation;
         createImageBitmap(blob)
           .then((bmp) => {
+            if (generation !== this.generation) {
+              bmp.close();
+              return;
+            }
             this.decoding.delete(i);
             if (this.destroyed || Math.abs(i - this.target) > WINDOW) {
               bmp.close();
@@ -178,7 +222,9 @@ export class SequencePlayer {
               (this.bitmaps.size * this.frameWidth * this.frameHeight * 4) / 1e6;
             this.schedule();
           })
-          .catch(() => this.decoding.delete(i));
+          .catch(() => {
+            if (generation === this.generation) this.decoding.delete(i);
+          });
         if (this.decoding.size >= DECODE_CONCURRENCY) return;
       }
     }

@@ -1,0 +1,22 @@
+{
+  "id": "MKN-AER-FLT01-NIGHTPLACEHOLDER",
+  "placeholder": true,
+  "fps": 24,
+  "virtualFrames": 960,
+  "variants": {
+    "desktop": {
+      "width": 1600,
+      "height": 900,
+      "count": 150,
+      "bytes": 9435749,
+      "path": "/sequences/MKN-AER-FLT01-NIGHTPLACEHOLDER/desktop/MKN-AER-FLT01-NIGHTPLACEHOLDER_{NNNN}.avif"
+    },
+    "mobile": {
+      "width": 828,
+      "height": 466,
+      "count": 75,
+      "bytes": 1488355,
+      "path": "/sequences/MKN-AER-FLT01-NIGHTPLACEHOLDER/mobile/MKN-AER-FLT01-NIGHTPLACEHOLDER_{NNNN}.avif"
+    }
+  }
+}

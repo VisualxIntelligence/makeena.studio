@@ -532,7 +532,7 @@ Environment variables (never committed; set in the Worker's Settings > Variables
 - Matches are close but not pixel-exact (no blockout yet).
 - 03 has three keyframes, not a frame sequence. For the Phase 0 spike, generate a placeholder sequence (e.g. interpolate or pan/zoom across the three keyframes with ffmpeg) and label it as a placeholder.
 - 04 lacks a morning frame. 07 lacks a daytime month-00 frame. 06 needs per-layer cut-outs.
-- Night variants exist for the tower hero and skyline; the aerial needs night variants for 13.
+- Night variants exist for the tower hero and skyline. The aerial's (`AER-FLT01-NIGHTA/B/C`, plus a night placeholder sequence) were added on 27 Oct 2026 (decision 0016).
 
 ## 13. Performance budget and loading
 

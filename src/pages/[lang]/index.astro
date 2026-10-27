@@ -8,8 +8,8 @@ import { langPaths } from "../../lib/content";
 export const getStaticPaths = langPaths;
 const lang = Astro.params.lang as Lang;
 
-// 03 teaser (PRD §5, §16): the flight's three chapter stills; the full flight is on the aerial
-// perspective page.
+// 03 teaser (PRD §5, §16): the flight's three chapter stills, at night under 13 after hours; the
+// full flight is on the aerial perspective page.
 const teaser = ["MKN-AER-FLT01-A", "MKN-AER-FLT01-B", "MKN-AER-FLT01-C"];
 const teaserSizes =
   "(width >= 80rem) 410px, (width >= 64rem) 31vw, (width >= 48rem) 47vw, calc(100vw - 32px)";
@@ -25,7 +25,12 @@ const teaserSizes =
   />
   <FigureGrid slot="capability" cols={3}>
     {teaser.map((assetId) => (
-      <ProvenanceFigure assetId={assetId} lang={lang} sizes={teaserSizes} />
+      <ProvenanceFigure
+        assetId={assetId}
+        night={assetId.replace("FLT01-", "FLT01-NIGHT")}
+        lang={lang}
+        sizes={teaserSizes}
+      />
     ))}
   </FigureGrid>
 </Page>

@@ -7,7 +7,9 @@
 //   and decoded in a small window around the target (sequence-player.ts). A visitor who never
 //   scrolls never downloads the sequence, and nothing competes with the LCP poster;
 // - under reduced motion, Save-Data, low device memory or without an AVIF decoder the effect
-//   shows the stills instead, and switches live when the motion preference changes.
+//   shows the stills instead, and switches live when the motion preference changes;
+// - 13 after hours: the night sequence plays while html[data-hours="night"], and the frames swap
+//   when it changes (the night sequence is fetched only once after hours is on).
 import { motion, registerEffect } from "../../lib/motion";
 import { SequencePlayer } from "./sequence-player";
 
@@ -18,11 +20,15 @@ interface Variant {
   path: string;
 }
 
-interface Config {
+interface Frames {
   desktop: Variant;
   mobile: Variant;
-  virtualFrames: number;
   alts: string[];
+}
+
+interface Config extends Frames {
+  virtualFrames: number;
+  night?: Frames;
 }
 
 // A 2 × 2 AVIF: decoding it tells whether the browser can play the sequence, with no request.
@@ -82,11 +88,19 @@ function setup(
   const chapters = [...root.querySelectorAll<HTMLLIElement>(".flight__filmstrip li")];
   root.dataset.flight = "sequence";
 
-  const variant = matchMedia("(width < 48rem)").matches ? config.mobile : config.desktop;
-  const urls = Array.from({ length: variant.count }, (_, i) =>
-    variant.path.replace("{NNNN}", String(i + 1).padStart(4, "0")),
-  );
-  const player = new SequencePlayer(canvas, urls, variant.width, variant.height);
+  const mobile = matchMedia("(width < 48rem)").matches;
+  const html = document.documentElement;
+  const frames = (): Frames => (html.dataset.hours === "night" && config.night) || config;
+  const urls = (f: Frames) => {
+    const variant = mobile ? f.mobile : f.desktop;
+    return Array.from({ length: variant.count }, (_, i) =>
+      variant.path.replace("{NNNN}", String(i + 1).padStart(4, "0")),
+    );
+  };
+  const variant = mobile ? config.mobile : config.desktop;
+  let current = frames();
+  const player = new SequencePlayer(canvas, urls(current), variant.width, variant.height);
+  canvas.setAttribute("aria-label", current.alts[0]);
   // Read by the e2e tests (decoded-window bound).
   (root as HTMLElement & { flightPlayer?: SequencePlayer }).flightPlayer = player;
   const resize = new ResizeObserver(() => player.resize());
@@ -113,7 +127,7 @@ function setup(
       if (next !== chapter) {
         chapters[chapter].removeAttribute("aria-current");
         chapters[next].setAttribute("aria-current", "step");
-        canvas.setAttribute("aria-label", config.alts[next]);
+        canvas.setAttribute("aria-label", current.alts[next]);
         chapter = next;
       }
     },
@@ -139,7 +153,18 @@ function setup(
   );
   near.observe(root);
 
+  // 13: swap the frames when after hours changes (same frame count and size).
+  const hours = new MutationObserver(() => {
+    const next = frames();
+    if (next === current) return;
+    current = next;
+    player.setSource(urls(current));
+    canvas.setAttribute("aria-label", current.alts[chapter]);
+  });
+  hours.observe(html, { attributes: true, attributeFilter: ["data-hours"] });
+
   return () => {
+    hours.disconnect();
     near.disconnect();
     resize.disconnect();
     trigger.kill(true);
