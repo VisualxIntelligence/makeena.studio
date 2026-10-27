@@ -1,0 +1,50 @@
+---
+// JSON-LD (PRD §9.6, §15): Organization + ProfessionalService. Only facts already on the site;
+// fields that are still `[PLACEHOLDER: …]` (street address, phone, email) are left out.
+import type { Lang } from "../../i18n/config";
+import { getSite, isPlaceholder } from "../../lib/content";
+
+interface Props {
+  lang: Lang;
+  description: string;
+}
+
+const { lang, description } = Astro.props;
+const { contact } = await getSite();
+const origin = Astro.site!.origin;
+const address = { "@type": "PostalAddress", addressLocality: "Doha", addressCountry: "QA" };
+const reachable = {
+  ...(isPlaceholder(contact.phone) ? {} : { telephone: contact.phone }),
+  ...(isPlaceholder(contact.email) ? {} : { email: contact.email }),
+};
+const data = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${origin}/#organization`,
+      name: "Makeena",
+      legalName: "Makeena LLC",
+      url: `${origin}/${lang}/`,
+      taxID: "T04998",
+      identifier: { "@type": "PropertyValue", propertyID: "QFC licence", value: "04998" },
+      address,
+      ...reachable,
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${origin}/#studio`,
+      name: "Makeena",
+      description,
+      url: `${origin}/${lang}/`,
+      parentOrganization: { "@id": `${origin}/#organization` },
+      address,
+      areaServed: ["QA", "AE", "SA"].map((name) => ({ "@type": "Country", name })),
+      availableLanguage: ["en", "ar"],
+      ...reachable,
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(data)} />

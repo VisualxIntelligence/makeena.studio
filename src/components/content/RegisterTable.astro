@@ -1,0 +1,67 @@
+---
+// Corporate register (PRD §9.6, /studio/#register): a real table, one row per field, the field
+// name as a row header. Identifiers stay LTR with Western digits. `rows` picks a subset by id
+// (the home page's studio summary shows the entity, licence and tax ID).
+import type { Lang } from "../../i18n/config";
+import { getRegister } from "../../lib/content";
+import Copy from "./Copy.astro";
+
+interface Props {
+  lang: Lang;
+  rows?: string[];
+  /** Accessible name of the table. */
+  label: string;
+}
+
+const { lang, rows, label } = Astro.props;
+const all = await getRegister();
+const shown = rows ? all.filter((r) => rows.includes(r.id)) : all;
+---
+
+<table class="register" aria-label={label}>
+  <tbody>
+    {shown.map((r) => (
+      <tr>
+        <th scope="row" class="label">
+          {r.key[lang]}
+        </th>
+        <td>
+          {r.ltr ? (
+            <span dir="ltr" lang="en">
+              {r.value[lang]}
+            </span>
+          ) : (
+            <Copy text={r.value[lang]} lang={lang} />
+          )}
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+<style>
+  .register {
+    inline-size: 100%;
+    max-inline-size: 48rem;
+    border-collapse: collapse;
+  }
+
+  tr {
+    border-block-end: 1px solid color-mix(in srgb, var(--color-ink) 15%, transparent);
+  }
+
+  th,
+  td {
+    padding-block: 12px;
+    vertical-align: baseline;
+    text-align: start;
+  }
+
+  th {
+    inline-size: 33%;
+    min-inline-size: 8rem;
+    margin: 0;
+    padding-inline-end: 16px;
+    font-weight: inherit;
+  }
+</style>

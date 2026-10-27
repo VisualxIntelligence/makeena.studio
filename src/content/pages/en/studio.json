@@ -9,7 +9,10 @@
     {
       "id": "studio",
       "label": "01 · STUDIO",
-      "body": ["[PLACEHOLDER: studio paragraph and photography, built in Phase 4]"]
+      "body": [
+        "Founded on twenty years in broadcast, at Al Jazeera and ABC.",
+        "Every production runs from a written runbook, with a second senior producer on call."
+      ]
     },
     {
       "id": "register",
@@ -17,8 +20,12 @@
       "heading": "Corporate register."
     },
     {
+      "id": "contact",
+      "label": "03 · CONTACT"
+    },
+    {
       "id": "brief",
-      "label": "03 · SEND A BRIEF",
+      "label": "04 · SEND A BRIEF",
       "heading": "Send a brief.",
       "body": ["[PLACEHOLDER: brief form with Turnstile, built in Phase 4]"]
     }

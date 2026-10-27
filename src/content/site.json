@@ -2,6 +2,16 @@
   {
     "id": "site",
     "legalLine": "MAKEENA LLC · QFC LICENCE 04998 · TIN T04998",
-    "copyrightHolder": "Makeena LLC"
+    "copyrightHolder": "Makeena LLC",
+    "contact": {
+      "name": "[PLACEHOLDER: founder name]",
+      "title": {
+        "en": "[PLACEHOLDER: founder title]",
+        "ar": "[PLACEHOLDER: founder title]"
+      },
+      "phone": "[PLACEHOLDER: phone]",
+      "email": "[PLACEHOLDER: email]",
+      "domain": "makeena.studio"
+    }
   }
 ]
