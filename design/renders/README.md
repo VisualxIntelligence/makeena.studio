@@ -6,6 +6,7 @@
 - Each file name is its asset ID (`MKN-{SERIES}-{CAM}-{VARIANT}`), which the provenance system uses.
 - Images in a series were made as edits of one base image, so their camera views match closely but not pixel-exactly.
 - These are concept-stage assets for spikes and early layouts. Production assets follow the pipeline in `docs/PRD.md` §12, and the known gaps are listed in §12.3.
+- `manifest.json` → `sequences` lists the frame sequences in `public/sequences/` (03's placeholder flight, `MKN-AER-FLT01-PLACEHOLDER`), so they get provenance records too; their record points at the sequence's `sequence.json`.
 - Metadata is not embedded in these web derivatives. `provenance.json` holds captions, alt text, light and rights for each asset; `npm run provenance` turns both JSON files into the site's provenance records, and `npm run provenance:tag -- <folder>` embeds IPTC metadata into the master files (decision 0009).
 
 | Series | Files | Used by |

@@ -34,7 +34,8 @@ test.describe("no unlabelled media", () => {
 
 test.describe("spec sheet", () => {
   test("opens with a click, matches the record, closes with Esc", async ({ page }) => {
-    await page.goto("/en/capability/aerial-perspective/");
+    // The home page's 03 teaser (on the aerial page the stills only show without the flight).
+    await page.goto("/en/");
     const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-B"]');
     const record = records["MKN-AER-FLT01-B"];
     await expect(figure.locator("img")).toHaveAttribute("alt", record.alt.en);
@@ -70,7 +71,7 @@ test.describe("spec sheet", () => {
   });
 
   test("is in Arabic on /ar/ and the image is not mirrored", async ({ page }) => {
-    await page.goto("/ar/capability/aerial-perspective/");
+    await page.goto("/ar/");
     const figure = page.locator('figure[data-provenance="MKN-AER-FLT01-A"]');
     await expect(figure.locator("img")).toHaveAttribute("alt", records["MKN-AER-FLT01-A"].alt.ar);
     await figure.locator(".pfig__info").click();

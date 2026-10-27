@@ -373,7 +373,7 @@ const chapters = [
       const [{ gsap }, { ScrollTrigger }, { SequencePlayer }] = await Promise.all([
         import("gsap"),
         import("gsap/ScrollTrigger"),
-        import("../../../spikes/aerial/sequence-player"),
+        import("../../../components/scrubber/sequence-player"),
       ]);
       gsap.registerPlugin(ScrollTrigger);
       // iOS/Android address-bar show/hide resizes the viewport; don't re-pin on every scroll.

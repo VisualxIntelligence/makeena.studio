@@ -1,0 +1,59 @@
+---
+// 03 · scroll-flown aerial (PRD §9.2): a generated drone path flown by scrolling, in three
+// chapters. A MatchedFrameScrubber in scroll mode. The flight is the Phase 0 placeholder
+// sequence (decision 0013) until a real one exists; its provenance record says so.
+import type { Lang } from "../../i18n/config";
+import MatchedFrameScrubber from "../scrubber/MatchedFrameScrubber.astro";
+import type { ScrubberFrame } from "../scrubber/types";
+
+interface Props {
+  lang: Lang;
+  priority?: boolean;
+}
+
+const { lang, priority = false } = Astro.props;
+
+// Arabic chapter names are drafts for native review (decision 0005).
+const frames: ScrubberFrame[] = [
+  {
+    assetId: "MKN-AER-FLT01-A",
+    value: 1,
+    label: { en: "High approach", ar: "اقتراب من ارتفاع عالٍ" },
+  },
+  {
+    assetId: "MKN-AER-FLT01-B",
+    value: 2,
+    label: { en: "Descent over the marina", ar: "هبوط فوق المرسى" },
+  },
+  {
+    assetId: "MKN-AER-FLT01-C",
+    value: 3,
+    label: { en: "Low pass along the promenade", ar: "مرور منخفض على امتداد الممشى" },
+  },
+];
+
+const t = {
+  en: {
+    label: "Generated aerial flight",
+    skip: "Skip the flight",
+    stills: "The flight in three stills",
+  },
+  ar: {
+    label: "رحلة جوية مولّدة",
+    skip: "تخطَّ الرحلة",
+    stills: "الرحلة في ثلاث لقطات",
+  },
+}[lang];
+---
+
+<MatchedFrameScrubber
+  mode="scroll"
+  lang={lang}
+  frames={frames}
+  sequence="MKN-AER-FLT01-PLACEHOLDER"
+  reducedMotion="stills"
+  label={t.label}
+  skip={t.skip}
+  stillsLabel={t.stills}
+  priority={priority}
+/>

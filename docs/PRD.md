@@ -541,7 +541,7 @@ Environment variables (never committed; set in the Worker's Settings > Variables
 | HTML + CSS (gzip) | ≤ 45 KB | ≤ 45 KB |
 | Initial JS (gzip) | ≤ 70 KB | ≤ 85 KB |
 | Critical fonts | ≤ 120 KB (Latin subsets; Arabic subsets on `/ar/`) | same |
-| LCP element | AVIF still ≤ 150 KB, `fetchpriority="high"` | first aerial frame ≤ 120 KB, preloaded |
+| LCP element | AVIF still ≤ 150 KB, `fetchpriority="high"` | first chapter still (the poster under the canvas) ≤ 120 KB, `fetchpriority="high"` (decision 0015) |
 | Above the fold | ≤ 450 KB | ≤ 450 KB |
 | Deferred media | hero loop ≤ 2.5 MB after `load` | sequence 6–9 MB desktop / ≤ 3 MB mobile, progressive |
 | Full scroll | ≤ 6 MB desktop / ≤ 3.5 MB mobile | ≤ 11 MB desktop / ≤ 4.5 MB mobile |

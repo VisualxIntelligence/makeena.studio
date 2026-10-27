@@ -1,0 +1,341 @@
+---
+// MatchedFrameScrubber, scroll mode (PRD §9.1, §9.2; used by 03). A pinned stage: scrolling flies
+// a canvas frame sequence (scroll.ts, sequence-player.ts) beside a filmstrip of the chapters, a
+// progress rail and a virtual timecode.
+// - The scroll distance is reserved in CSS (the track), and GSAP pins the stage without adding
+//   spacing, so the page never changes height when the pin starts. Until then (GSAP loads on the
+//   first interaction) the stage is sticky, so the flight already holds its place.
+// - Sequence or stills is decided before first paint by the inline script below; reduced motion,
+//   the footer control, Save-Data, low device memory and no JS all get the chapter stills as a
+//   stepped figure. No AVIF decoder and live preference changes switch later, in scroll.ts.
+// - The poster under the canvas is the first chapter still, the page's LCP (never the canvas). It
+//   loads in both modes (the page's one high-priority image) at the same URLs as the first still,
+//   so the stills reuse it.
+// - RTL: the filmstrip and rail follow `dir`; the frame and the timecode never mirror.
+import { Picture } from "astro:assets";
+import { readFileSync } from "node:fs";
+import { getAsset, imageFor, nextSheetId } from "../../lib/assets";
+import InfoButton from "../media/InfoButton.astro";
+import ProvenanceFigure from "../media/ProvenanceFigure.astro";
+import ProvenanceSheet from "../media/ProvenanceSheet.astro";
+import type { ScrollProps } from "./types";
+
+type Props = ScrollProps;
+
+const {
+  mode,
+  lang,
+  frames,
+  sequence,
+  label,
+  skip,
+  stillsLabel,
+  priority = false,
+  sizes = "(width >= 80rem) 840px, (width >= 64rem) 64vw, calc(100vw - 32px)",
+} = Astro.props;
+
+const record = await getAsset(sequence);
+const seq = JSON.parse(readFileSync(record.source.file, "utf8"));
+const chapters = [...frames].sort((a, b) => a.value - b.value);
+const stills = await Promise.all(chapters.map((c) => getAsset(c.assetId)));
+const sheet = nextSheetId(record.id);
+const after = `${sheet}-after`;
+const nn = (n: number) => String(n).padStart(2, "0");
+const pad = (n: number) => String(n).padStart(4, "0");
+const config = {
+  desktop: seq.variants.desktop,
+  mobile: seq.variants.mobile,
+  virtualFrames: seq.virtualFrames,
+  alts: stills.map((s) => s.alt[lang]),
+};
+---
+
+<div class="flight" data-scrubber data-mode={mode}>
+  <script is:inline data-astro-rerun>
+    // Before first paint, so the reserved height never changes: the sequence only when motion is
+    // allowed (OS and footer control, as in src/lib/motion/preferences.ts), Save-Data is off and
+    // the device has at least 4 GB. Everything else keeps the stills.
+    (function (el) {
+      let off = false;
+      try {
+        off = localStorage.getItem("mkn-motion") === "off";
+      } catch {
+        // Storage blocked: the OS setting decides.
+      }
+      const c = navigator.connection;
+      if (
+        !off &&
+        !matchMedia("(prefers-reduced-motion: reduce)").matches &&
+        !(c && c.saveData) &&
+        !((navigator.deviceMemory || 8) < 4)
+      ) {
+        el.dataset.flight = "sequence";
+      }
+    })(document.currentScript.parentElement);
+  </script>
+
+  <a class="flight__skip" href={`#${after}`}>
+    {skip}
+  </a>
+
+  <div class="flight__track">
+    <figure class="flight__stage" data-provenance={record.id} aria-label={label}>
+      <div class="flight__frame">
+        <div class="pfig__media flight__media">
+          <Picture
+            src={imageFor(stills[0])}
+            alt=""
+            widths={[480, 828, 1200, 1600]}
+            sizes={sizes}
+            formats={["avif", "webp"]}
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : "auto"}
+          />
+          <canvas
+            class="flight__canvas"
+            role="img"
+            aria-label={stills[0].alt[lang]}
+            width={seq.variants.desktop.width}
+            height={seq.variants.desktop.height}
+          ></canvas>
+          <span class="pfig__corners" aria-hidden="true"></span>
+          <InfoButton sheet={sheet} assetId={record.id} lang={lang} />
+        </div>
+        <figcaption class="flight__caption">
+          <span class="label pfig__caption">{record.caption[lang]}</span>
+          <span class="label flight__timecode" lang="en" dir="ltr" aria-hidden="true">
+            FRAME <span data-flight-timecode>{pad(0)}</span> / {pad(seq.virtualFrames)}
+          </span>
+        </figcaption>
+      </div>
+
+      <div class="flight__side">
+        <div class="flight__rail" aria-hidden="true">
+          <span data-flight-rail></span>
+        </div>
+        <ol class="flight__filmstrip">
+          {chapters.map((chapter, i) => (
+            <li aria-current={i === 0 ? "step" : undefined}>
+              <Picture
+                src={imageFor(stills[i])}
+                alt=""
+                widths={[240, 480]}
+                sizes="(width >= 64rem) 120px, 30vw"
+                formats={["avif", "webp"]}
+                loading="lazy"
+                fetchpriority="low"
+              />
+              <span class="label">
+                <span dir="ltr">{nn(chapter.value)}</span>
+              </span>
+              <span class="flight__chapter">{chapter.label[lang]}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <ProvenanceSheet asset={record} lang={lang} id={sheet} />
+    </figure>
+  </div>
+
+  <ol class="flight__stills" aria-label={stillsLabel}>
+    {chapters.map((chapter, i) => (
+      <li>
+        <p class="label">
+          <span dir="ltr">{nn(chapter.value)}</span> · {chapter.label[lang]}
+        </p>
+        <ProvenanceFigure assetId={stills[i].id} lang={lang} sizes={sizes} />
+      </li>
+    ))}
+  </ol>
+
+  <span class="flight__after" id={after} tabindex="-1"></span>
+  <script type="application/json" data-flight-config is:inline set:html={JSON.stringify(config)} />
+</div>
+
+<script>
+  import "./scroll";
+</script>
+
+<style>
+  .flight {
+    --flight-top: var(--header-height);
+    --flight-stage: calc(100svh - var(--flight-top));
+  }
+
+  /* Stills: the default, and the state without JS, under reduced motion, Save-Data, low memory
+     and without an AVIF decoder. */
+  .flight:not([data-flight="sequence"]) .flight__skip,
+  .flight:not([data-flight="sequence"]) .flight__track,
+  .flight[data-flight="sequence"] .flight__stills {
+    display: none;
+  }
+
+  .flight__skip {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 44px;
+  }
+
+  /* The flight's scroll distance (three viewports) is reserved here, so pinning never changes
+     the page's height. */
+  .flight__track {
+    block-size: calc(var(--flight-stage) + 300svh);
+  }
+
+  /* Sticky until GSAP pins the stage (GSAP loads on the visitor's first interaction). */
+  .flight__stage {
+    position: sticky;
+    inset-block-start: var(--flight-top);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 16px;
+    block-size: var(--flight-stage);
+    margin: 0;
+    background: var(--color-ivory);
+  }
+
+  @media (width >= 64rem) {
+    .flight__stage {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      align-items: center;
+      column-gap: var(--gutter);
+    }
+  }
+
+  /* The frame fits the stage's height with room for the caption. */
+  .flight__frame {
+    inline-size: 100%;
+    max-inline-size: calc((var(--flight-stage) - 96px) * 16 / 9);
+  }
+
+  .flight__media :global(img),
+  .flight__canvas {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  /* The canvas covers the poster once it has drawn a real frame. */
+  .flight__canvas {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+  }
+
+  .flight__canvas[data-ready] {
+    opacity: 1;
+  }
+
+  .flight__caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    padding-block-start: 8px;
+  }
+
+  .flight__caption .label {
+    margin: 0;
+  }
+
+  .flight__timecode {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .flight__rail {
+    block-size: 2px;
+    margin-block-end: 16px;
+    background: var(--color-sand);
+  }
+
+  .flight__rail span {
+    display: block;
+    block-size: 100%;
+    inline-size: calc(var(--p, 0) * 100%);
+    background: var(--color-copper);
+  }
+
+  .flight__filmstrip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flight__filmstrip li {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .flight__filmstrip .label {
+    margin: 0;
+  }
+
+  /* Only the thumbnails dim: the text keeps AA contrast in every state. */
+  .flight__filmstrip li[aria-current] {
+    color: var(--color-ink);
+  }
+
+  .flight__filmstrip :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-block-start: 2px solid transparent;
+    opacity: 0.55;
+    transition: opacity var(--duration-micro);
+  }
+
+  .flight__filmstrip li[aria-current] :global(img) {
+    border-block-start-color: var(--color-copper);
+    opacity: 1;
+  }
+
+  @media (width >= 64rem) {
+    .flight__filmstrip {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .flight__filmstrip li {
+      grid-template-columns: 120px minmax(0, 1fr);
+      column-gap: 12px;
+    }
+
+    .flight__filmstrip li > :global(picture) {
+      grid-row: span 2;
+    }
+  }
+
+  /* Short phone screens: the stage keeps the frame, the rail and the chapter names. */
+  @media (width < 64rem) and (height <= 700px) {
+    .flight__filmstrip :global(img) {
+      display: none;
+    }
+  }
+
+  .flight__stills {
+    display: grid;
+    gap: 48px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flight__stills li {
+    max-inline-size: 52.5rem;
+  }
+
+  .flight__stills .label {
+    margin-block: 0 8px;
+  }
+</style>
