@@ -43,7 +43,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-4/studio` | **In review.** Credentials line (draft from PRD facts), register as a `<table>`, night contact block (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
+| 1 | `phase-4/studio` | **In review (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
 | 2 | `phase-4/brief-form` | Form + ON AIR tally light; `/api/brief` Worker entry: Turnstile Siteverify → Resend → D1. Needs from the founder: Turnstile widget (site key + secret), Resend API key, D1 database (or approval to create it), `BRIEF_TO_EMAIL` |
 | 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
 
@@ -53,7 +53,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 - Arabic names for the eight register services (The Twin … The Host), or keep the English brand names?
 - Home `<title>`: "Makeena · Production studio and AI content consultancy, Doha". OK?
-- Phase 4 facts: founder name and title, phone, email, full address, auditor, data statement (must cover the D1 brief log and its retention), final credential copy.
+- Phase 4 facts still missing: full address, auditor, data statement (must cover the D1 brief log and its retention), final credential copy, the founder's name in Arabic (supplied 27 Oct: Ahmed Albadri, Founder, +974 66905704, ahmed@makeena.studio).
 - Rights terms, the four gates (names, descriptions, and how they map to asset QA), and the copy marked `[PLACEHOLDER]` (`grep -rn PLACEHOLDER src/content design/renders/provenance.json`).
 - 07 deliverables copy: four short paragraphs on what standing capacity delivers at months 00 / 06 / 14 / 24 (placeholders in `src/components/concepts/TimeLapse.astro`).
 - Arabic labels in MKN Sans 500 (PRD §6.2) cost 37 KB per Arabic page; switching them to 400 is a lever if Arabic LCP matters more (decision 0010).
