@@ -4,7 +4,7 @@ _Last updated: 28 October 2026_
 
 ## Where we are
 
-**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). **Phase 4 is complete** (#23–#25, 28 Oct): studio page, brief form + `/api/brief` (live on production), Web Analytics. Phase 5 (content, Arabic, QA) is in progress: the founder chose CI fix → accessibility audit → cross-browser pass, while founder content is pending.
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). **Phase 4 is complete** (#23–#25, 28 Oct): studio page, brief form + `/api/brief` (live on production), Web Analytics. Phase 5 (content, Arabic, QA) is in progress: CI fix (#26) and accessibility audit (#27) are merged; the cross-browser pass is next, while founder content is pending.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -43,9 +43,9 @@ Exit (PRD §17): §3.3 targets met; launch checklist signed off. Order agreed 28
 
 | # | Branch | Scope |
 |---|---|---|
-| 1 | `phase-5/ci-playwright-cache` | **In review.** The e2e job runs in Playwright's container (`mcr.microsoft.com/playwright:v1.64.1-noble`): browsers and system libraries are preinstalled, so no `install-deps` (apt). A first step fails fast if `@playwright/test` and the image tag drift apart. Also records Phase 4's completion |
-| 2 | (next) | Accessibility audit: every route in both locales, keyboard and screen-reader paths beyond axe |
-| 3 | (next) | Cross-browser pass: Firefox fallbacks, WebKit, phones, against §3.3 |
+| 1 | `phase-5/ci-playwright-cache` | **Merged (#26).** The e2e job runs in Playwright's container (`mcr.microsoft.com/playwright:v1.64.1-noble`): browsers and system libraries are preinstalled, so no `install-deps` (apt). A first step fails fast if `@playwright/test` and the image tag drift apart |
+| 2 | `phase-5/a11y-audit` | **Merged (#27).** Audit of all 18 pages (decision 0021, `npm run audit:a11y`): 32 findings → 0, no axe violations in any state. Fixed: header reflow at 320 px, 03's ⓘ button under the canvas, 44 px targets (wordmark, language switches, footer, capability links), `scroll-padding` for focus under the sticky header. Guarded by `tests/e2e/a11y-layout.spec.ts`. Screen readers: `docs/qa/screen-reader-checklist.md` (founder or tester, not run yet) |
+| 3 | `phase-5/cross-browser` | **In review.** Whole e2e suite passes in Firefox (desktop + phone width); CI's `firefox` project now runs every spec. Fixed: WebKit doesn't scroll to some focused elements (it broke `main`'s CI after #27: brief fields behind the header) → `src/lib/focus.ts`; the Turnstile widget pushed the page down 74 px on load → reserved space. Decision 0022. Still needs a person: macOS Safari keyboard check, screen readers; field CWV once there's traffic |
 
 Waiting on the founder: final copy and credentials, Arabic service names and the native review, address, auditor, data statement (brief log, retention, analytics), rights terms and the four gates (open questions below).
 
@@ -63,7 +63,7 @@ Exit (PRD §17): a real test brief arrived by email from a preview deployment (2
 
 **Brief form, done 28 Oct (#24, decision 0019).** The D1 database `makeena-briefs` (`52029875-02a2-4b9b-bbd0-421722002dab`) is in the Worker's account; the first copy had been created in the wrong account through the claude.ai connector and was deleted. The Turnstile widget, site key and the three secrets are set for production, Previews Base and the brief-form preview. Previews Base secrets only reach previews created after they're set.
 
-**CI flake (fix in review, Phase 5 #1):** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror (usually 30 s – 2 min); the tests themselves pass.
+**CI flake (fixed by #26):** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror (usually 30 s – 2 min); the tests themselves pass.
 
 ## Open questions for the founder
 

@@ -341,8 +341,11 @@ const limits = { name: 120, company: 160, email: 254, message: 5000 };
     clip-path: inset(50%);
   }
 
-  .brief__turnstile:empty {
-    display: none;
+  /* The managed widget renders 74 px tall (65 px iframe + line gap) once it loads, near the form or
+     on focus. Reserved up front so the submit button and footer don't jump 74 px: a keyboard user
+     coming back up from the footer saw the focused link pushed off-screen (decision 0022). */
+  .brief__turnstile {
+    min-block-size: 74px;
   }
 
   .brief__submit {
