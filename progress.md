@@ -44,7 +44,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 | # | Branch | Scope |
 |---|---|---|
 | 1 | `phase-4/studio` | **Merged (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
-| 2 | `phase-4/brief-form` | **Exit test passed 28 Oct; ready to merge (#24).** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, created 27 Oct) → Resend. Verified locally with `wrangler dev`. Goes live when the founder sets the Turnstile widget (site key to commit), `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY`, `BRIEF_TO_EMAIL` (production and Previews Base) |
+| 2 | `phase-4/brief-form` | **Exit test passed 28 Oct; ready to merge (#24).** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, recreated in the Worker's account 28 Oct) → Resend. Verified locally with `wrangler dev` and end to end on the preview; widget, site key and secrets set (decision 0019) |
 | 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
 
 **To resume (PR #24, `phase-4/brief-form`):**
