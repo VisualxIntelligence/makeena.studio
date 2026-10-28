@@ -113,6 +113,12 @@ const current = Astro.url.pathname;
 
   .site-header__mark {
     flex: none;
+
+    /* A 44 px target (PRD §14). inline-block + line-height, not inline-flex: the flex box made
+       Playwright's Windows WebKit crash far more often after routed view transitions (5 of 6
+       runs; decision 0011's engine bug). */
+    display: inline-block;
+    line-height: 44px;
     font-family: var(--ff-mono);
     font-weight: 500;
     font-size: 0.9375rem;
@@ -142,6 +148,12 @@ const current = Astro.url.pathname;
     min-block-size: 44px;
     color: var(--color-ink);
     text-decoration: none;
+  }
+
+  /* "عربي" is narrower than the 44 px target (PRD §14). */
+  .site-header__actions :global(.site-header__lang) {
+    justify-content: center;
+    min-inline-size: 44px;
   }
 
   .site-nav a:hover,
@@ -235,13 +247,29 @@ const current = Astro.url.pathname;
     }
   }
 
+  /* Small phones and 400% zoom (WCAG 1.4.10 at 320 px): tighter spacing keeps the bar on one row;
+     if it still doesn't fit (larger default text), the actions wrap instead of the page scrolling
+     sideways. */
   @media (width < 24rem) {
+    .site-header__bar {
+      flex-wrap: wrap;
+      gap: 0 8px;
+    }
+
     .site-header__actions {
-      gap: 8px;
+      gap: 4px;
+    }
+
+    .site-header__actions .button {
+      padding-inline: 10px;
     }
 
     .site-header__mark {
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
+    }
+
+    :global(html.js) .site-header__menu {
+      padding-inline: 8px;
     }
   }
 </style>

@@ -110,9 +110,17 @@
     --text-label--letter-spacing: 0.14em;
   }
 
+  /* Anchored sections and keyboard focus clear the sticky header (WCAG 2.4.11): scroll-padding
+     applies to #anchors and to elements scrolled into view by Tab / Shift+Tab. The header can
+     wrap to two rows below 24rem (Nav.astro). */
   html {
+    scroll-padding-block-start: calc(var(--header-height) + 16px);
     background: var(--color-ivory);
     color: var(--color-ink);
+
+    @media (width < 24rem) {
+      scroll-padding-block-start: 104px;
+    }
   }
 
   body {
@@ -134,11 +142,6 @@
     text-decoration: underline;
     text-underline-offset: 0.15em;
     transition: color var(--duration-micro);
-  }
-
-  /* Anchored sections clear the sticky header. */
-  [id] {
-    scroll-margin-block-start: calc(var(--header-height) + 16px);
   }
 
   :focus-visible {
