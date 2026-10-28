@@ -4,9 +4,9 @@ Bilingual (English / Arabic) website for **Makeena**, a Doha production studio a
 
 ## Current state
 
-**Phases 0–3 are complete (06 static until real layers exist); Phase 4 (studio and conversion) is in progress.** Phase 4 decisions: `docs/decisions/0018`. Read **`progress.md`** first: it has the current status, decisions made, carry-over findings, environment gotchas and the Phase 1 plan. Keep it up to date at the end of each work session.
+**Phases 0–4 are complete (06 static until real layers exist); Phase 5 (content, Arabic, QA) is in progress.** Read **`progress.md`** first: it has the current status, the Phase 5 order, decisions made, carry-over findings and environment gotchas. Keep it up to date at the end of each work session.
 
-What exists today: an Astro 7 static site with every PRD §5 route in `/en/` and `/ar/` (placeholder content from `src/content/`), localised 404s, sitemap, hreflang, the root language redirect, tokens and type for both scripts, and CI. The Phase 0 spike pages are no longer built for production; `npm run test:spikes` builds them with `MKN_SPIKES=1`. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
+What exists today: an Astro 7 static site with every PRD §5 route in `/en/` and `/ar/` (placeholder content from `src/content/`), localised 404s, sitemap, hreflang, the root language redirect, tokens and type for both scripts, CI, the studio page, the brief form with its `/api/brief` Worker (Turnstile, D1, Resend) and Cloudflare Web Analytics on production. The Phase 0 spike pages are no longer built for production; `npm run test:spikes` builds them with `MKN_SPIKES=1`. Production deploys from `main` to https://makeena-website.makeena.workers.dev; branch previews are at `https://<branch-with-dashes>-makeena-website.makeena.workers.dev`.
 
 ## Stack (PRD §11)
 

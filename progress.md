@@ -4,7 +4,7 @@ _Last updated: 28 October 2026_
 
 ## Where we are
 
-**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion): the studio page (#23) and the brief form + `/api/brief` (#24, exit test passed 28 Oct) are merged; Web Analytics (#25, `phase-4/analytics`) is in review. Phase 4 is complete once #25 merges; Phase 5 (content, Arabic, QA) is next.
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). **Phase 4 is complete** (#23–#25, 28 Oct): studio page, brief form + `/api/brief` (live on production), Web Analytics. Phase 5 (content, Arabic, QA) is in progress: the founder chose CI fix → accessibility audit → cross-browser pass, while founder content is pending.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -37,7 +37,19 @@ Exit criteria (PRD §17): both locales build and deploy; every §5 route exists 
 
 Phase 1 founder decisions (26 Oct, decision 0005): ClientRouter in Phase 1; spike pages off production; Arabic as marked drafts; `/api/brief` as a small Worker entry; Cloudflare Stream; `makeena.studio` at launch; exiftool local.
 
-## Phase 4 (studio and conversion), in progress
+## Phase 5 (content, Arabic, QA), in progress
+
+Exit (PRD §17): §3.3 targets met; launch checklist signed off. Order agreed 28 Oct: 1 → 2 → 3, then founder content as it arrives.
+
+| # | Branch | Scope |
+|---|---|---|
+| 1 | `phase-5/ci-playwright-cache` | **In review.** The e2e job runs in Playwright's container (`mcr.microsoft.com/playwright:v1.64.1-noble`): browsers and system libraries are preinstalled, so no `install-deps` (apt). A first step fails fast if `@playwright/test` and the image tag drift apart. Also records Phase 4's completion |
+| 2 | (next) | Accessibility audit: every route in both locales, keyboard and screen-reader paths beyond axe |
+| 3 | (next) | Cross-browser pass: Firefox fallbacks, WebKit, phones, against §3.3 |
+
+Waiting on the founder: final copy and credentials, Arabic service names and the native review, address, auditor, data statement (brief log, retention, analytics), rights terms and the four gates (open questions below).
+
+## Phase 4 (studio and conversion), complete
 
 Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRIEF_TO_EMAIL` = the Resend account's address); Cloudflare Web Analytics; briefs emailed and logged to D1.
 
@@ -45,17 +57,13 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 |---|---|---|
 | 1 | `phase-4/studio` | **Merged (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
 | 2 | `phase-4/brief-form` | **Merged (#24), exit test passed 28 Oct.** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, recreated in the Worker's account 28 Oct) → Resend. Verified locally with `wrangler dev` and end to end on the preview; widget, site key and secrets set (decision 0019) |
-| 3 | `phase-4/analytics` | **In review (#25).** Cloudflare Web Analytics beacon on the exact production hostname only (previews and localhost stay silent); `makeena.studio` needs its own site token at launch (decision 0020) |
+| 3 | `phase-4/analytics` | **Merged (#25).** Cloudflare Web Analytics beacon on the exact production hostname only (previews and localhost stay silent); `makeena.studio` needs its own site token at launch (decision 0020). Verified on production 28 Oct: the beacon loads and its RUM posts return 204 |
 
-**To resume (PR #25, `phase-4/analytics`):**
-
-1. The founder reviews #25 (the preview deliberately has no beacon; check pages behave as before) and merges it.
-2. After the merge, verify on production (decision 0020): `beacon.min.js` loads on https://makeena-website.makeena.workers.dev/en/, and visits appear under Web Analytics within minutes.
-3. Then Phase 5 (PRD §17: final copy, native Arabic review, accessibility audit, field CWV, cross-browser). Most of it waits on founder content (open questions below).
+Exit (PRD §17): a real test brief arrived by email from a preview deployment (28 Oct). Met.
 
 **Brief form, done 28 Oct (#24, decision 0019).** The D1 database `makeena-briefs` (`52029875-02a2-4b9b-bbd0-421722002dab`) is in the Worker's account; the first copy had been created in the wrong account through the claude.ai connector and was deleted. The Turnstile widget, site key and the three secrets are set for production, Previews Base and the brief-form preview. Previews Base secrets only reach previews created after they're set.
 
-**CI flake:** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror; the tests themselves pass. A small CI PR should cache the apt packages or time-box that step.
+**CI flake (fix in review, Phase 5 #1):** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror (usually 30 s – 2 min); the tests themselves pass.
 
 ## Open questions for the founder
 
@@ -89,6 +97,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 - Merge PRs with **"Create a merge commit"** and delete the branch.
 - `npm run test:spikes` and `npm run build` both write `dist/`: never run them at the same time.
 - Playwright's Windows WebKit can't decode AVIF (those spike tests skip).
+- **Upgrading Playwright:** CI's e2e job runs in `mcr.microsoft.com/playwright:v<version>-noble`. Bump the image tag and the version check in `.github/workflows/ci.yml` together with `@playwright/test`; the check fails the job with that instruction if they differ.
 - Version pins (26 Oct 2026): **TypeScript 6.0** (typescript-eslint and @astrojs/check don't support 7 yet); **eslint-plugin-jsx-a11y-x** (the original has no ESLint 10 support).
 - Stylelint 17.16 crashes on `[attr] :global(x)`; the config ignores `:global` in that rule.
 - Local tools: Python 3.14 with `fonttools[woff]` 4.62.1 (`npm run fonts:arabic`); exiftool 13.59 at `%LOCALAPPDATA%\Programs\ExifTool` (found automatically by `npm run provenance`); Lighthouse locally needs `CHROME_PATH` (Playwright's Chromium works).
