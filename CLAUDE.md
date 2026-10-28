@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static), 0018 Phase 4 decisions + studio |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static), 0018 Phase 4 decisions + studio, 0019 brief form + /api/brief |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -93,6 +93,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/lib/hours.ts` | 13 after hours: `data-hours`, footer toggles, N / doha shortcuts, crossfade, toast |
 | `docs/qa/` | Manual device checklists (iOS Safari) |
 | `src/components/scrubber/`, `src/components/concepts/` | `MatchedFrameScrubber` (PRD §9.1; one file per mode, `sequence-player.ts` for 03's canvas) and the concept sections built on it (03 `AerialFlight`, 04 `SunStudy`, 06 `Axonometric`, 07 `TimeLapse`) |
+| `src/components/brief/`, `worker/`, `migrations/` | 14 brief form (fields, Turnstile, ON AIR tally) and the Worker behind it: `worker/index.ts` runs only for `/api/*`; `worker/brief.ts` validates, verifies Turnstile, stores in D1 (`makeena-briefs`), emails through Resend. D1 schema in `migrations/` |
 | `src/components/media/` | `ProvenanceFigure` (08: every image goes through it, `priority` on a page's first in-view figure) and `FigureGrid` |
 | `src/lib/motion/`, `src/lib/lifecycle.ts` | G1 motion controller (`motion`, `registerEffect`, effects in `effects/`) and `onPage()` for the ClientRouter lifecycle |
 | `src/spikes/` | Phase 0 spike paths and draft spike copy (the spike pages build only with `MKN_SPIKES=1`) |
@@ -108,7 +109,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 |---|---|
 | `npm run dev` | Astro dev server on localhost |
 | `npm run build` | Static build into `dist/` (what Workers Builds runs) |
-| `npm run preview` | Build, then serve `dist/` through `wrangler dev` (closest to production) |
+| `npm run preview` | Build, then serve `dist/` and the Worker through `wrangler dev` (closest to production). The brief API needs `.dev.vars` (copy `.dev.vars.example`) and `npx wrangler d1 migrations apply makeena-briefs --local` once |
 | `npm run lint` | ESLint, Stylelint and the Tailwind class check (design bans: gradients, `backdrop-filter`, shadows, physical left/right, radius > 2 px), Prettier check |
 | `npm run format` | Prettier write |
 | `npm run typecheck` | `astro check` |

@@ -1,18 +1,52 @@
-// Cloudflare Workers with static assets (PRD §11.3).
-// Static-only for now: no `main`. Phase 1 decides between the Astro Cloudflare
-// adapter and a small Worker entry for /api/brief (docs/decisions/).
+// Cloudflare Workers with static assets (PRD §11.3). The Astro build stays static; a small Worker
+// (worker/index.ts) handles /api/* only, for the brief form (decision 0018). Every other request
+// is served straight from the assets without running the Worker.
+// Secrets (never committed; Settings > Variables and secrets, for production AND under Previews
+// Base, because Previews inherit nothing): TURNSTILE_SECRET_KEY, RESEND_API_KEY, BRIEF_TO_EMAIL.
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "makeena-website",
   "compatibility_date": "2026-10-25",
+  "main": "./worker/index.ts",
   // Per-branch preview links on workers.dev for founder review. Wrangler's default is
   // false and the config overrides the dashboard toggle, so it must be set here.
   "preview_urls": true,
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
   },
-  // Required by `npx wrangler preview` (the Workers Builds preview command); may stay empty.
-  // Assets and compatibility settings stay top level.
-  "previews": {}
+  // Worker logs in the dashboard (brief delivery errors are logged, never shown to visitors).
+  "observability": { "enabled": true },
+  "vars": {
+    "ENVIRONMENT": "production",
+    // Resend's test sender until makeena.studio is verified at launch (decision 0018).
+    "BRIEF_FROM_EMAIL": "Makeena briefs <onboarding@resend.dev>"
+  },
+  // Brief log (decision 0018). Schema: migrations/; applied remotely on 28 Oct 2026 (decision 0019).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "makeena-briefs",
+      "database_id": "52029875-02a2-4b9b-bbd0-421722002dab",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Used by `npx wrangler preview` (the Workers Builds preview command). Previews inherit no
+  // bindings or vars: they share the brief log, and their rows are tagged "preview".
+  "previews": {
+    "vars": {
+      "ENVIRONMENT": "preview",
+      "BRIEF_FROM_EMAIL": "Makeena briefs <onboarding@resend.dev>"
+    },
+    "d1_databases": [
+      {
+        "binding": "DB",
+        "database_name": "makeena-briefs",
+        "database_id": "52029875-02a2-4b9b-bbd0-421722002dab",
+        "migrations_dir": "migrations"
+      }
+    ]
+  }
 }

@@ -371,7 +371,7 @@ One component, three modes, used by 04, 07 and 03. It owns keyboard support, lab
 | Rights | **[PLACEHOLDER: rights terms]** |
 
 - Contact block (night): `CONTACT` label, founder name and title in text (no photo), phone and email shown as selectable text with `tel:`/`mailto:` links. **[PLACEHOLDER: phone, email]**
-- Brief form (`id="brief"`): Name, Company, Engagement (radio: Fixed / Retained / Not sure), Message. Labels always visible; inline errors linked with `aria-describedby`; submit disabled with a spinner while sending; success replaces the form with a mono confirmation line in an `aria-live` region.
+- Brief form (`id="brief"`): Name, Company (optional), Email (required, the reply address; decision 0019), Engagement (radio: Fixed / Retained / Not sure), Message. Labels always visible; inline errors linked with `aria-describedby`; submit disabled with a spinner while sending; success replaces the form with a mono confirmation line in an `aria-live` region.
 - **Tally light:** a copper lamp next to the form heading that reads `ON AIR` (text, not colour alone) while the form is open or any field has focus. No pulse under reduced motion.
 
 **Back end:** an Astro endpoint on Cloudflare (`/api/brief`) validates input, verifies the **Cloudflare Turnstile** token server-side via Siteverify (tokens are single-use; rendering the widget without verifying gives no protection), then sends the brief by email via **Resend**, optionally logging to D1. Turnstile loads only when the form section is near the viewport.

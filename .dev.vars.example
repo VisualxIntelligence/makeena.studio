@@ -1,0 +1,9 @@
+# Local secrets for `npm run preview` (wrangler dev). Copy to .dev.vars (gitignored).
+# Turnstile's public test secret: always passes, and only accepts the test site key's dummy token.
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+# A real Resend key sends real email; any other value is rejected (401), logged, and the brief
+# stays in local D1 with emailed_at empty.
+RESEND_API_KEY=re_invalid_local_test
+BRIEF_TO_EMAIL=test@example.com
+ENVIRONMENT=local
+# First run: npx wrangler d1 migrations apply makeena-briefs --local
