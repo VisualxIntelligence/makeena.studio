@@ -1,4 +1,5 @@
 ---
+import BriefForm from "../../components/brief/BriefForm.astro";
 import ContactBlock from "../../components/content/ContactBlock.astro";
 import OrganizationData from "../../components/content/OrganizationData.astro";
 import RegisterTable from "../../components/content/RegisterTable.astro";
@@ -35,12 +36,5 @@ const sizes = "(width >= 80rem) 628px, (width >= 48rem) 47vw, calc(100vw - 32px)
     <OrganizationData lang={lang} description={page.description} />
   </Fragment>
   <ContactBlock slot="contact" lang={lang} />
-  <Fragment slot="brief">
-    <p id="brief-fixed" lang="en" dir="ltr">
-      [PLACEHOLDER: brief form, engagement preset to Fixed]
-    </p>
-    <p id="brief-retained" lang="en" dir="ltr">
-      [PLACEHOLDER: brief form, engagement preset to Retained]
-    </p>
-  </Fragment>
+  <BriefForm slot="brief" lang={lang} />
 </Page>

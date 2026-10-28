@@ -26,8 +26,7 @@
     {
       "id": "brief",
       "label": "04 · SEND A BRIEF",
-      "heading": "Send a brief.",
-      "body": ["[PLACEHOLDER: brief form with Turnstile, built in Phase 4]"]
+      "heading": "Send a brief."
     }
   ]
 }
