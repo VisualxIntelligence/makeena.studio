@@ -4,7 +4,7 @@ _Last updated: 28 October 2026_
 
 ## Where we are
 
-**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion) is in progress: the studio page is merged (#23); the brief form and `/api/brief` (#24, `phase-4/brief-form`) passed its exit test on 28 Oct and is ready to merge.
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). Phase 4 (studio and conversion): the studio page (#23) and the brief form + `/api/brief` (#24, exit test passed 28 Oct) are merged; Web Analytics (#25, `phase-4/analytics`) is in review. Phase 4 is complete once #25 merges; Phase 5 (content, Arabic, QA) is next.
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -44,14 +44,16 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 | # | Branch | Scope |
 |---|---|---|
 | 1 | `phase-4/studio` | **Merged (#23).** Credentials line (draft from PRD facts), six studio photos (four generated 27 Oct, 11 credits), register as a `<table>`, night contact block with the founder's details (studio + home), JSON-LD Organization + ProfessionalService, home register summary |
-| 2 | `phase-4/brief-form` | **Exit test passed 28 Oct; ready to merge (#24).** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, recreated in the Worker's account 28 Oct) → Resend. Verified locally with `wrangler dev` and end to end on the preview; widget, site key and secrets set (decision 0019) |
-| 3 | `phase-4/analytics` | Cloudflare Web Analytics beacon (needs the site token) |
+| 2 | `phase-4/brief-form` | **Merged (#24), exit test passed 28 Oct.** Form (Email added, decision 0019) + ON AIR tally; Worker for `/api/*`: Turnstile → D1 (`makeena-briefs`, recreated in the Worker's account 28 Oct) → Resend. Verified locally with `wrangler dev` and end to end on the preview; widget, site key and secrets set (decision 0019) |
+| 3 | `phase-4/analytics` | **In review (#25).** Cloudflare Web Analytics beacon on the exact production hostname only (previews and localhost stay silent); `makeena.studio` needs its own site token at launch (decision 0020) |
 
-**To resume (PR #24, `phase-4/brief-form`):**
+**To resume (PR #25, `phase-4/analytics`):**
 
-1. **Workers Builds failed on #24 (fixed 28 Oct).** The D1 database had been created in the wrong Cloudflare account (through the claude.ai connector), so `wrangler preview` failed with code 10181 "database not found". It was recreated in the Worker's account (`52029875-02a2-4b9b-bbd0-421722002dab`) with the schema applied, and `wrangler.jsonc` was updated (decision 0019). The preview builds again (28 Oct). The stray `682ee55c…` copy (empty) was deleted from the connector's account with the founder's OK.
-2. Turnstile widget created and its site key committed; `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` set for production, Previews Base and the existing `phase-4-brief-form` preview (all 28 Oct, decision 0019). Base secrets only reach previews created after they're set.
-3. **Exit test passed (28 Oct):** a brief sent from the preview arrived by email, and D1 logged it (`environment = 'preview'`, `emailed_at` and `resend_id` set). #24 is ready for the founder to merge. Next: `phase-4/analytics` (needs the Web Analytics token).
+1. The founder reviews #25 (the preview deliberately has no beacon; check pages behave as before) and merges it.
+2. After the merge, verify on production (decision 0020): `beacon.min.js` loads on https://makeena-website.makeena.workers.dev/en/, and visits appear under Web Analytics within minutes.
+3. Then Phase 5 (PRD §17: final copy, native Arabic review, accessibility audit, field CWV, cross-browser). Most of it waits on founder content (open questions below).
+
+**Brief form, done 28 Oct (#24, decision 0019).** The D1 database `makeena-briefs` (`52029875-02a2-4b9b-bbd0-421722002dab`) is in the Worker's account; the first copy had been created in the wrong account through the claude.ai connector and was deleted. The Turnstile widget, site key and the three secrets are set for production, Previews Base and the brief-form preview. Previews Base secrets only reach previews created after they're set.
 
 **CI flake:** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror; the tests themselves pass. A small CI PR should cache the apt packages or time-box that step.
 
@@ -59,7 +61,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 - Arabic names for the eight register services (The Twin … The Host), or keep the English brand names?
 - Home `<title>`: "Makeena · Production studio and AI content consultancy, Doha". OK?
-- Phase 4 facts still missing: full address, auditor, data statement (must cover the D1 brief log and its retention), final credential copy, the founder's name in Arabic (supplied 27 Oct: Ahmed Albadri, Founder, +974 66905704, ahmed@makeena.studio).
+- Phase 4 facts still missing: full address, auditor, data statement (must cover the D1 brief log and its retention, and Cloudflare Web Analytics), final credential copy, the founder's name in Arabic (supplied 27 Oct: Ahmed Albadri, Founder, +974 66905704, ahmed@makeena.studio).
 - Rights terms, the four gates (names, descriptions, and how they map to asset QA), and the copy marked `[PLACEHOLDER]` (`grep -rn PLACEHOLDER src/content design/renders/provenance.json`).
 - 07 deliverables copy: four short paragraphs on what standing capacity delivers at months 00 / 06 / 14 / 24 (placeholders in `src/components/concepts/TimeLapse.astro`).
 - Arabic labels in MKN Sans 500 (PRD §6.2) cost 37 KB per Arabic page; switching them to 400 is a lever if Arabic LCP matters more (decision 0010).
