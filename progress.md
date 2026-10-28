@@ -50,7 +50,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 **To resume (PR #24, `phase-4/brief-form`):**
 
 1. **Workers Builds failed on #24 (fixed 28 Oct).** The D1 database had been created in the wrong Cloudflare account (through the claude.ai connector), so `wrangler preview` failed with code 10181 "database not found". It was recreated in the Worker's account (`52029875-02a2-4b9b-bbd0-421722002dab`) with the schema applied, and `wrangler.jsonc` was updated (decision 0019). The preview builds again (28 Oct). The stray `682ee55c…` copy (empty) was deleted from the connector's account with the founder's OK.
-2. Turnstile widget created and its site key committed (28 Oct; the test key is used on localhost). Still to do: the founder adds `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` for production and Previews Base (decision 0019).
+2. Turnstile widget created and its site key committed; `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` set for production, Previews Base and the existing `phase-4-brief-form` preview (all 28 Oct, decision 0019). Base secrets only reach previews created after they're set.
 3. Exit test (PRD §17): a brief sent from the preview arrives by email. Then `phase-4/analytics` (needs the Web Analytics token).
 
 **CI flake:** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror; the tests themselves pass. A small CI PR should cache the apt packages or time-box that step.

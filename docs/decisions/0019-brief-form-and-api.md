@@ -53,6 +53,7 @@
    - Send the **site key** (it's public and goes in the code); keep the secret.
    - **Done 28 Oct:** widget "Makeena brief form", site key `0x4AAAAAAFpMouwQJ_FUQM41` (default in `BriefForm.astro`). On `localhost` the form uses Turnstile's test key instead (`brief.ts`), so `npm run dev` and `npm run preview` work with the test secret in `.dev.vars`.
 2. **Resend**: create an API key with sending access.
-3. **Worker `makeena-website` → Settings → Variables and secrets**: add `TURNSTILE_SECRET_KEY` and `RESEND_API_KEY` as secrets, and `BRIEF_TO_EMAIL` (the address on the Resend account; the test sender delivers only there). Add the same three again under **Previews Base**, then redeploy the preview.
+3. **Worker `makeena-website` → Settings → Variables and secrets**: add `TURNSTILE_SECRET_KEY` and `RESEND_API_KEY` as secrets, and `BRIEF_TO_EMAIL` (the address on the Resend account; the test sender delivers only there). Add the same three again under **Previews Base**. Base secrets reach only previews created afterwards, so an existing preview needs them set on it directly (`wrangler preview secret put … --name <branch>`).
+   - **Done 28 Oct** with Wrangler from a gitignored `*.env` file, so the values never entered the chat: `wrangler secret bulk` (production), `wrangler preview base-config secret bulk` (Previews Base) and `wrangler preview secret bulk --name phase-4-brief-form` (the existing preview). A probe with a fake Turnstile token now returns 403 (Siteverify reached with the real secret) instead of 503.
 
 Exit test (PRD §17): a brief sent from the preview arrives in that inbox.
