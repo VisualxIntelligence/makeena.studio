@@ -51,6 +51,7 @@
    - Managed mode.
    - Hostnames `makeena.workers.dev` (covers production and every preview) and `makeena.studio`.
    - Send the **site key** (it's public and goes in the code); keep the secret.
+   - **Done 28 Oct:** widget "Makeena brief form", site key `0x4AAAAAAFpMouwQJ_FUQM41` (default in `BriefForm.astro`). On `localhost` the form uses Turnstile's test key instead (`brief.ts`), so `npm run dev` and `npm run preview` work with the test secret in `.dev.vars`.
 2. **Resend**: create an API key with sending access.
 3. **Worker `makeena-website` → Settings → Variables and secrets**: add `TURNSTILE_SECRET_KEY` and `RESEND_API_KEY` as secrets, and `BRIEF_TO_EMAIL` (the address on the Resend account; the test sender delivers only there). Add the same three again under **Previews Base**, then redeploy the preview.
 

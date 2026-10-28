@@ -37,6 +37,10 @@ type Messages = Record<
 type FieldError = "required" | "invalid" | "too_long";
 
 const SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+// The real widget only accepts makeena.workers.dev and makeena.studio. On localhost (`npm run dev`,
+// `npm run preview`) use Turnstile's always-pass test key, which the test secret in .dev.vars accepts.
+const TEST_SITE_KEY = "1x00000000000000000000AA";
+const LOCAL = ["localhost", "127.0.0.1"].includes(location.hostname);
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const FIELDS = ["name", "company", "email", "engagement", "message", "turnstile"] as const;
 type Field = (typeof FIELDS)[number];
@@ -127,7 +131,7 @@ function setup(root: HTMLElement, signal: AbortSignal): () => void {
       .then((turnstile) => {
         if (signal.aborted) return;
         widget = turnstile.render(holder, {
-          sitekey: root.dataset.sitekey,
+          sitekey: LOCAL ? TEST_SITE_KEY : root.dataset.sitekey,
           language: root.dataset.lang,
           theme: "light",
           action: "brief",

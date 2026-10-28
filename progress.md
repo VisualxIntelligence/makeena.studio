@@ -49,8 +49,8 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 **To resume (PR #24, `phase-4/brief-form`):**
 
-1. **Workers Builds failed on #24 (fixed 28 Oct).** The D1 database had been created in the wrong Cloudflare account (through the claude.ai connector), so `wrangler preview` failed with code 10181 "database not found". It was recreated in the Worker's account (`52029875-02a2-4b9b-bbd0-421722002dab`) with the schema applied, and `wrangler.jsonc` was updated (decision 0019). Check the rebuilt preview on #24. The stray `682ee55c…` copy in the connector's account can be deleted once the founder agrees.
-2. The founder sets up Turnstile (widget on `makeena.workers.dev` + `makeena.studio`; send the site key to commit as BriefForm's `siteKey`) and adds `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` for production and Previews Base (decision 0019).
+1. **Workers Builds failed on #24 (fixed 28 Oct).** The D1 database had been created in the wrong Cloudflare account (through the claude.ai connector), so `wrangler preview` failed with code 10181 "database not found". It was recreated in the Worker's account (`52029875-02a2-4b9b-bbd0-421722002dab`) with the schema applied, and `wrangler.jsonc` was updated (decision 0019). The preview builds again (28 Oct). The stray `682ee55c…` copy (empty) was deleted from the connector's account with the founder's OK.
+2. Turnstile widget created and its site key committed (28 Oct; the test key is used on localhost). Still to do: the founder adds `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` for production and Previews Base (decision 0019).
 3. Exit test (PRD §17): a brief sent from the preview arrives by email. Then `phase-4/analytics` (needs the Web Analytics token).
 
 **CI flake:** twice on 27 Oct (#23, #24) the e2e job hit its 20-minute limit because `playwright install-deps` took 13–18 min on a slow Ubuntu mirror; the tests themselves pass. A small CI PR should cache the apt packages or time-box that step.

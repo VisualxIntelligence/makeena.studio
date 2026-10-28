@@ -17,7 +17,9 @@ interface Props {
 
 const { lang } = Astro.props;
 const { contact } = await getSite();
-const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
+// The "Makeena brief form" Turnstile widget (makeena.workers.dev + makeena.studio, managed; the
+// site key is public). brief.ts swaps in Turnstile's test key on localhost.
+const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAFpMouwQJ_FUQM41";
 
 // Arabic is a draft for native review (decision 0005).
 const t = {
