@@ -7,7 +7,9 @@
 | # | Decision | Consequence |
 |---|---|---|
 | 1 | **The form asks for an email, required** | The PRD's fields (Name, Company, Engagement, Message) had no way to reply. The email is the Reply-To of the brief, so the founder answers with Reply. Company is optional. |
-| 2 | **Claude creates the D1 database** | `makeena-briefs` (ID `682ee55c-a770-4c20-ad0f-066e567fd3fa`, Eastern Europe, free tier). Created 27 Oct, with the schema in `migrations/0001_briefs.sql` applied remotely and recorded in `d1_migrations`. |
+| 2 | **Claude creates the D1 database** | `makeena-briefs` (ID `52029875-02a2-4b9b-bbd0-421722002dab`, Eastern Europe, free tier) in the Worker's account (`56ac37aa…`). Created 28 Oct with `wrangler d1 create`, with the schema in `migrations/0001_briefs.sql` applied remotely and recorded in `d1_migrations`. |
+
+**Correction (28 Oct).** The first `makeena-briefs` (`682ee55c…`, 27 Oct) was created through the claude.ai Cloudflare connector, which is signed in to a different Cloudflare account with no Workers. Workers Builds then failed on #24 with `D1 binding 'DB' references database … which was not found [code: 10181]`. `wrangler deploy --dry-run` doesn't catch this, because it never checks that the database exists. Create Cloudflare resources for this project with Wrangler (`wrangler whoami` shows account `56ac37aa…`), not the connector. The stray copy holds only the empty schema.
 
 ## How it works
 

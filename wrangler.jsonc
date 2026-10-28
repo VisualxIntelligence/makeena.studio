@@ -24,12 +24,12 @@
     // Resend's test sender until makeena.studio is verified at launch (decision 0018).
     "BRIEF_FROM_EMAIL": "Makeena briefs <onboarding@resend.dev>"
   },
-  // Brief log (decision 0018). Schema: migrations/; applied remotely on 27 Oct 2026.
+  // Brief log (decision 0018). Schema: migrations/; applied remotely on 28 Oct 2026 (decision 0019).
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "makeena-briefs",
-      "database_id": "682ee55c-a770-4c20-ad0f-066e567fd3fa",
+      "database_id": "52029875-02a2-4b9b-bbd0-421722002dab",
       "migrations_dir": "migrations"
     }
   ],
@@ -44,7 +44,7 @@
       {
         "binding": "DB",
         "database_name": "makeena-briefs",
-        "database_id": "682ee55c-a770-4c20-ad0f-066e567fd3fa",
+        "database_id": "52029875-02a2-4b9b-bbd0-421722002dab",
         "migrations_dir": "migrations"
       }
     ]

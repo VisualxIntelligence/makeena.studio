@@ -1,6 +1,6 @@
 # Progress: makeena.studio
 
-_Last updated: 27 October 2026 (end of session)_
+_Last updated: 28 October 2026_
 
 ## Where we are
 
@@ -49,7 +49,7 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 
 **To resume (PR #24, `phase-4/brief-form`):**
 
-1. **Workers Builds failed on #24** (27 Oct), so no preview was deployed (the branch URL returns 404); production is unaffected. It's the first build with Worker code and a D1 binding. The log is only in the Cloudflare dashboard (Workers & Pages → makeena-website → Builds). Suspects: the build's API token lacks D1 permission, or `wrangler preview` rejects part of the new config (the config validates against Wrangler 4.152's schema). Read the log first; don't run `wrangler preview` locally without the founder's go-ahead (it deploys).
+1. **Workers Builds failed on #24 (fixed 28 Oct).** The D1 database had been created in the wrong Cloudflare account (through the claude.ai connector), so `wrangler preview` failed with code 10181 "database not found". It was recreated in the Worker's account (`52029875-02a2-4b9b-bbd0-421722002dab`) with the schema applied, and `wrangler.jsonc` was updated (decision 0019). Check the rebuilt preview on #24. The stray `682ee55c…` copy in the connector's account can be deleted once the founder agrees.
 2. The founder sets up Turnstile (widget on `makeena.workers.dev` + `makeena.studio`; send the site key to commit as BriefForm's `siteKey`) and adds `TURNSTILE_SECRET_KEY`, `RESEND_API_KEY` and `BRIEF_TO_EMAIL` for production and Previews Base (decision 0019).
 3. Exit test (PRD §17): a brief sent from the preview arrives by email. Then `phase-4/analytics` (needs the Web Analytics token).
 
@@ -82,7 +82,8 @@ Founder decisions (27 Oct, decision 0018): Resend test sender until launch (`BRI
 ## Environment gotchas
 
 - `wrangler.jsonc` needs `"previews": {}` and `"preview_urls": true` (the config overrides the dashboard toggle). Preview URLs only appeared after the first production deploy.
-- Cloudflare build logs are only in the dashboard. Wrangler isn't logged in on this machine, and Docker needs admin rights.
+- Cloudflare build logs are only in the dashboard. Wrangler is logged in on this machine (OAuth, account `56ac37aa…`, since 28 Oct); Docker needs admin rights.
+- **The claude.ai Cloudflare connector is signed in to a different account** from the Worker's. Don't create or change resources for this project through it; use Wrangler and check `wrangler whoami` first.
 - Merge PRs with **"Create a merge commit"** and delete the branch.
 - `npm run test:spikes` and `npm run build` both write `dist/`: never run them at the same time.
 - Playwright's Windows WebKit can't decode AVIF (those spike tests skip).
@@ -106,7 +107,7 @@ Founder decisions (26 Oct, decision 0010): generator hidden in the spec sheet; "
 
 Exit (PRD §17): the acceptance criteria in §8 are met, including real iOS Safari for G2.
 
-## Phase 3 (section components), in progress
+## Phase 3 (section components), complete
 
 Founder decisions (26 Oct, decision 0013): generate missing frames in Higgsfield; 03 ships the Phase 0 placeholder sequence; 06 ships static until six layers exist; sun positions for 21 June 2026; hero video later.
 
