@@ -78,34 +78,48 @@ test("03: the provenance button stays above the drawn canvas", async ({ page }, 
     .click({ trial: true, timeout: 5000 });
 });
 
-// The studio page has the most stops in <main> (the brief form): without scroll-padding, Shift+Tab
-// leaves the email field at the very top, under the header.
-test("Shift+Tab never leaves focus under the sticky header (WCAG 2.4.11)", async ({ page }) => {
-  await page.goto("/en/studio/");
-  await page.locator(".site-footer a").last().focus();
-  for (let i = 0; i < 60; i++) {
-    await page.keyboard.press("Shift+Tab");
-    const covered = await page.evaluate(() => {
-      const el = document.activeElement as HTMLElement;
-      // The skip link is meant to appear over the header.
-      // Past the first stop, focus leaves the page (activeElement falls back to <body>).
-      if (
-        !el ||
-        el === document.body ||
-        el.closest(".site-header") ||
-        el.classList.contains("skip-link")
-      )
-        return "";
-      const header = document.querySelector(".site-header")!.getBoundingClientRect();
-      const r = el.getBoundingClientRect();
-      // Only stops that are on screen but behind the header. Playwright's WebKit leaves keyboard
-      // focus on the provenance buttons entirely off-screen (no scroll at all; focus() does
-      // scroll): a separate issue, checked on real Safari in the cross-browser pass.
-      const behind = r.bottom > 0 && r.top < header.bottom - 1;
-      return behind
-        ? `${el.tagName} "${el.textContent?.trim().slice(0, 30)}" top ${Math.round(r.top)}`
-        : "";
-    });
-    expect(covered).toBe("");
-  }
-});
+/** Where the focused element sits, a frame after the key press, if it isn't fully visible. */
+const hiddenFocus = (page: Page) =>
+  page.evaluate(async () => {
+    // src/lib/focus.ts corrects the browser's focus scroll one frame later (WebKit).
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+    const el = document.activeElement as HTMLElement;
+    // Past the first stop, focus leaves the page (activeElement falls back to <body>); the skip
+    // link is meant to appear over the header; popovers are in the top layer.
+    if (
+      !el ||
+      el === document.body ||
+      el.closest(".site-header, [popover]") ||
+      el.classList.contains("skip-link") ||
+      el.tabIndex < 0
+    )
+      return "";
+    const header = document.querySelector(".site-header")!.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    // Below: off-screen if less than half shows. At the very bottom of /studio/, the contact
+    // block's content-visibility re-measures as it renders and scroll anchoring can leave the last
+    // footer links a few pixels past the edge: still visible, ring included.
+    const where =
+      r.top < header.bottom - 1
+        ? "behind the header"
+        : r.top + r.height / 2 > innerHeight
+          ? "below the screen"
+          : "";
+    return where
+      ? `${el.tagName}#${el.id || el.getAttribute("name") || el.getAttribute("aria-label")} ${where} (top ${Math.round(r.top)})`
+      : "";
+  });
+
+// The studio page has the most stops in <main>: the brief form (without scroll-padding, Shift+Tab
+// left the email field under the header; WebKit doesn't scroll to it at all) and the figure grid's
+// ⓘ buttons (WebKit left Tab focus on them off-screen).
+for (const key of ["Tab", "Shift+Tab"]) {
+  test(`${key}: focus is always fully visible (WCAG 2.4.7, 2.4.11)`, async ({ page }) => {
+    await page.goto("/en/studio/");
+    if (key === "Shift+Tab") await page.locator(".site-footer a").last().focus();
+    for (let i = 0; i < 60; i++) {
+      await page.keyboard.press(key);
+      expect(await hiddenFocus(page)).toBe("");
+    }
+  });
+}

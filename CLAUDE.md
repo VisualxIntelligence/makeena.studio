@@ -80,7 +80,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `progress.md` | Current status and resume point (read first) |
 | `docs/PRD.md` | Product requirements (source of truth for scope) |
 | `docs/reference/homepage-ux.md` | Original UX recommendation: tokens, copy, section logic |
-| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static), 0018 Phase 4 decisions + studio, 0019 brief form + /api/brief, 0020 Web Analytics, 0021 accessibility audit |
+| `docs/decisions/` | Decision records: 0001 Astro 7 + static Worker, 0002 section-cut + ClientRouter decision, 0003 aerial sequence, 0004 mirror-line + Arabic fonts, 0005 Phase 1 founder decisions, 0006 Arabic font subsets, 0007 layout + performance checks, 0008 G1 motion controller + router lifecycle, 0009 provenance records, 0010 Phase 2 decisions + ProvenanceFigure, 0011 transitions on the router, 0012 after hours, 0013 Phase 3 decisions + scrubber + 04, 0014 07 time-lapse + crossfades, 0015 03 aerial flight + scroll mode, 0016 aerial night variants, 0017 06 axonometric (static), 0018 Phase 4 decisions + studio, 0019 brief form + /api/brief, 0020 Web Analytics, 0021 accessibility audit, 0022 cross-browser pass |
 | `src/styles/` | `global.css` (Tailwind theme, base, `.display` / `.label` / `.wrap`), `contrast.ts` (allowed colour pairs), `view-transitions.css` |
 | `scripts/lint/` | Tailwind class linter for the design rules |
 | `scripts/fonts/`, `src/assets/fonts/arabic/` | Arabic font subsetting (Python fonttools) and its committed output + coverage map |
@@ -92,6 +92,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `src/lib/crossfade.ts` | Same-document crossfade for 13 and 07 (`html[data-vt="fade"]`) |
 | `src/lib/hours.ts` | 13 after hours: `data-hours`, footer toggles, N / doha shortcuts, crossfade, toast |
 | `src/lib/analytics/` | Cloudflare Web Analytics beacon, production hostname only (`hosts.ts`, decision 0020) |
+| `src/lib/focus.ts` | Keeps keyboard focus visible: corrects WebKit, which sometimes doesn't scroll to a focused element (decision 0022) |
 | `docs/qa/` | Manual checklists: iOS Safari (passed 26 Oct), screen readers (VoiceOver, NVDA; Phase 5) |
 | `src/components/scrubber/`, `src/components/concepts/` | `MatchedFrameScrubber` (PRD §9.1; one file per mode, `sequence-player.ts` for 03's canvas) and the concept sections built on it (03 `AerialFlight`, 04 `SunStudy`, 06 `Axonometric`, 07 `TimeLapse`) |
 | `src/components/brief/`, `worker/`, `migrations/` | 14 brief form (fields, Turnstile, ON AIR tally) and the Worker behind it: `worker/index.ts` runs only for `/api/*`; `worker/brief.ts` validates, verifies Turnstile, stores in D1 (`makeena-briefs`), emails through Resend. D1 schema in `migrations/` |
@@ -116,7 +117,7 @@ Use these numbers in branch names, commits, comments and PR titles.
 | `npm run format` | Prettier write |
 | `npm run typecheck` | `astro check` |
 | `npm run test:unit` | Vitest: token values and contrast pairs, class-lint rules |
-| `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, two phones, reduced motion, Firefox (transitions only) (run `npm run build` first; `npx playwright install chromium webkit` once) |
+| `npm run test:e2e` | Playwright smoke + axe in `tests/e2e/`: Chromium, WebKit, Firefox, two phones, reduced motion (run `npm run build` first; `npx playwright install chromium webkit` once) |
 | `npm run audit:a11y` | Full accessibility audit in Chromium (about 4 min; run `npm run build` first); prints findings grouped by check (decision 0021). Not in CI: its fixes are guarded by `tests/e2e/a11y-layout.spec.ts` |
 | `npm run budget` | Page-weight budgets on `dist/` (PRD §13): gzip HTML+CSS ≤ 45 KB, JS ≤ 70/85 KB |
 | `npm run lighthouse` | Lighthouse CI on `dist/` (locally set `CHROME_PATH`, e.g. Playwright's Chromium) |
