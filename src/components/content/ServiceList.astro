@@ -96,7 +96,11 @@ const number = (i: number) => String(i + 1).padStart(2, "0");
     line-height: 1.4;
   }
 
+  /* The padding makes a 44 px target (PRD §14); the negative margin keeps the heading's layout. */
   h3 a {
+    display: inline-block;
+    padding-block: 8px;
+    margin-block: -8px;
     color: var(--color-ink);
   }
 

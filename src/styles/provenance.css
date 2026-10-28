@@ -68,9 +68,11 @@
   opacity: 1;
 }
 
-/* 44 × 44 px target around a 20 px mark. */
+/* 44 × 44 px target around a 20 px mark. Above media drawn later in the figure (03's canvas
+   covered it, focus ring included). */
 .pfig__info {
   position: absolute;
+  z-index: 1;
   inset-block-end: 4px;
   inset-inline-end: 4px;
   display: grid;

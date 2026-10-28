@@ -81,10 +81,13 @@ const year = new Date().getFullYear();
     font-size: 0.875rem;
   }
 
-  a {
+  /* 44 × 44 targets (PRD §14), including the language switch, which comes from its own component. */
+  li :global(a) {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     min-block-size: 44px;
+    min-inline-size: 44px;
   }
 
   .site-footer__rights {
