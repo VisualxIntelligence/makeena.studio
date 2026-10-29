@@ -4,10 +4,10 @@
 
 **Why:** PRD §14 asks for VoiceOver (iOS and macOS) and NVDA (Windows) in both locales. The automated audit (decision 0021) covers axe, keyboard order, focus visibility, target sizes, reflow and text spacing, but only a person can hear whether the site makes sense read aloud.
 
-**What you need:** one of these, about 20 minutes per screen reader:
-- **iPhone:** Settings › Accessibility › VoiceOver (triple-click the side button to toggle it once you set Accessibility Shortcut). Swipe right to move, double-tap to activate, rotor (two-finger twist) › Headings to jump between headings.
-- **Mac:** Cmd+F5 starts VoiceOver in Safari. VO = Ctrl+Option. VO+→ moves, VO+Space activates, VO+U opens the rotor (headings, links, landmarks).
+**What you need:** about 20 minutes per screen reader. Run NVDA first; the Apple screen readers come last in Phase 5 (founder decision 29 Oct, `progress.md`).
 - **Windows:** NVDA (free, nvaccess.org) with Firefox or Chrome. ↓ reads on, H jumps to the next heading, D to the next landmark, Tab to the next control, Enter / Space activates.
+- **iPhone (at the end):** Settings › Accessibility › VoiceOver (triple-click the side button to toggle it once you set Accessibility Shortcut). Swipe right to move, double-tap to activate, rotor (two-finger twist) › Headings to jump between headings.
+- **Mac (at the end):** Cmd+F5 starts VoiceOver in Safari. VO = Ctrl+Option. VO+→ moves, VO+Space activates, VO+U opens the rotor (headings, links, landmarks).
 
 **Where:** production, https://makeena-website.makeena.workers.dev/en/ and `/ar/`. Do every item in English, then the pages marked **(ar)** in Arabic.
 
