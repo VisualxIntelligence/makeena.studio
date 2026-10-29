@@ -45,15 +45,16 @@ Exit (PRD §17): §3.3 targets met; launch checklist signed off. Order agreed 28
 |---|---|---|
 | 1 | `phase-5/ci-playwright-cache` | **Merged (#26).** The e2e job runs in Playwright's container (`mcr.microsoft.com/playwright:v1.64.1-noble`): browsers and system libraries are preinstalled, so no `install-deps` (apt). A first step fails fast if `@playwright/test` and the image tag drift apart |
 | 2 | `phase-5/a11y-audit` | **Merged (#27).** Audit of all 18 pages (decision 0021, `npm run audit:a11y`): 32 findings → 0, no axe violations in any state. Fixed: header reflow at 320 px, 03's ⓘ button under the canvas, 44 px targets (wordmark, language switches, footer, capability links), `scroll-padding` for focus under the sticky header. Guarded by `tests/e2e/a11y-layout.spec.ts`. Screen readers: `docs/qa/screen-reader-checklist.md` (founder or tester, not run yet) |
-| 3 | `phase-5/cross-browser` | **Merged (#28).** Verified on production 28 Oct: the layout bundle has the focus handler and the Turnstile slot reserves 74 px. Whole e2e suite passes in Firefox (desktop + phone width); CI's `firefox` project now runs every spec. Fixed: WebKit doesn't scroll to some focused elements (it broke `main`'s CI after #27: brief fields behind the header) → `src/lib/focus.ts`; the Turnstile widget pushed the page down 74 px on load → reserved space. Decision 0022. Still needs a person: macOS Safari keyboard check, screen readers; field CWV once there's traffic |
+| 3 | `phase-5/cross-browser` | **Merged (#28).** Verified on production 28 Oct: the layout bundle has the focus handler and the Turnstile slot reserves 74 px. Whole e2e suite passes in Firefox (desktop + phone width); CI's `firefox` project now runs every spec. Fixed: WebKit doesn't scroll to some focused elements (it broke `main`'s CI after #27: brief fields behind the header) → `src/lib/focus.ts`; the Turnstile widget pushed the page down 74 px on load → reserved space. Decision 0022. Still needs a person: screen readers (NVDA first); field CWV once there's traffic; the macOS Safari keyboard check is deferred to the Apple checks at the end |
 
 Waiting on the founder: final copy and credentials, Arabic service names and the native review, address, auditor, data statement (brief log, retention, analytics), rights terms and the four gates (open questions below).
 
 **To resume:**
 
-1. Founder checks (not run yet): the macOS Safari keyboard check (steps in #28 and decision 0022) and `docs/qa/screen-reader-checklist.md`. Fix whatever they find.
+1. Screen readers on Windows: `docs/qa/screen-reader-checklist.md` with NVDA (not run yet). Fix whatever it finds.
 2. Founder content, as it arrives: copy, Arabic, legal facts, data statement, gates. Everything else in Phase 5 is done.
 3. Field Core Web Vitals (§3.3) from Cloudflare Web Analytics once there's real traffic.
+4. **Apple checks, last** (founder decision 29 Oct: no Mac or Safari to hand, so everything that needs an Apple device waits until the end): the macOS Safari keyboard check (steps in #28 and decision 0022), VoiceOver on iPhone and Mac from the screen-reader checklist, and a re-run of `docs/qa/ios-safari-checklist.md` if transitions changed since 26 Oct. A real device or a BrowserStack/LambdaTest trial both work. Until then, WebKit in CI (`tests/e2e/a11y-layout.spec.ts`, Tab and Shift+Tab on `/en/studio/`) is the guard.
 
 **CI time:** with Firefox running every spec (#28) the "Unit and e2e tests" job took 9–14 min (limit 20). If it grows, run tests within a file in parallel or split the job by browser.
 
