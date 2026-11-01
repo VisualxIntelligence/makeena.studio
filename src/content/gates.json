@@ -4,7 +4,7 @@
     "number": "01",
     "name": {
       "en": "Match",
-      "ar": "[PLACEHOLDER: gate 01 name in Arabic (Match)]"
+      "ar": "تطابق"
     },
     "description": {
       "en": "The view matches the real site and plan.",
@@ -16,7 +16,7 @@
     "number": "02",
     "name": {
       "en": "Brand",
-      "ar": "[PLACEHOLDER: gate 02 name in Arabic (Brand)]"
+      "ar": "معيار"
     },
     "description": {
       "en": "It meets the client's brand standard.",
@@ -28,7 +28,7 @@
     "number": "03",
     "name": {
       "en": "Rights",
-      "ar": "[PLACEHOLDER: gate 03 name in Arabic (Rights)]"
+      "ar": "حقوق"
     },
     "description": {
       "en": "No real people, national symbols or third-party marks.",
@@ -40,7 +40,7 @@
     "number": "04",
     "name": {
       "en": "Label",
-      "ar": "[PLACEHOLDER: gate 04 name in Arabic (Label)]"
+      "ar": "ملصق"
     },
     "description": {
       "en": "Marked as generated, with its provenance record attached.",

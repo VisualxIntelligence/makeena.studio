@@ -60,11 +60,11 @@ Where: navigation, capability pages, home teasers, page titles. I wrote these dr
 
 ## 4. The four gates
 
-English chosen 1 Nov (option A, from the PRD's four QA steps: camera match, brand, rights, label); on the site in `src/content/gates.json`. Write the Arabic name and description for each.
+English chosen 1 Nov (option A, from the PRD's four QA steps: camera match, brand, rights, label); on the site in `src/content/gates.json`. Arabic names from the founder (1 Nov), on the site. Still to write: the Arabic descriptions.
 
 | # | English name | English description | Arabic name | Arabic description |
 |---|---|---|---|---|
-| 4.1 | Match | The view matches the real site and plan. | | |
-| 4.2 | Brand | It meets the client's brand standard. | | |
-| 4.3 | Rights | No real people, national symbols or third-party marks. | | |
-| 4.4 | Label | Marked as generated, with its provenance record attached. | | |
+| 4.1 | Match | The view matches the real site and plan. | تطابق | |
+| 4.2 | Brand | It meets the client's brand standard. | معيار | |
+| 4.3 | Rights | No real people, national symbols or third-party marks. | حقوق | |
+| 4.4 | Label | Marked as generated, with its provenance record attached. | ملصق | |
