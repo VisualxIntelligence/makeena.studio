@@ -12,7 +12,7 @@ const lang = Astro.params.lang as Lang;
 const t = ui[lang].notFound;
 ---
 
-<BaseLayout title={`${t.heading} · Makeena`} lang={lang} alternates={false}>
+<BaseLayout title={`${t.heading} · ${ui[lang].brand}`} lang={lang} alternates={false}>
   <div class="wrap not-found">
     <Label text={t.label} lang={lang} />
     <h1 class="display" id="page-title" tabindex="-1">
