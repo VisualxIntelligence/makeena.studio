@@ -111,6 +111,11 @@
   color: var(--color-ink);
 }
 
+/* Focused on open so screen readers read it; the sheet itself is the focus indicator. */
+.pfig__sheet:focus {
+  outline: none;
+}
+
 .pfig__sheet::backdrop {
   background: color-mix(in srgb, var(--color-night) 40%, transparent);
 }

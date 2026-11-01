@@ -25,7 +25,7 @@ test("the footer toggle swaps the hero to night and announces it", async ({ page
   await expect(toggle(page)).toHaveAttribute("aria-pressed", "true");
   await expect(heroImg(page, "night")).toBeVisible();
   await expect(heroImg(page, "day")).toBeHidden();
-  await expect(page.locator('[data-toast][role="status"]')).toBeAttached();
+  await expect(page.locator('[data-toast-text][role="status"]')).toBeAttached();
   await expect(toastText(page)).toHaveText("AFTER HOURS · THE CITY AT 21:40 AST");
   await expect.poll(() => nightRequests.length).toBeGreaterThan(0);
   // The night image really loads (WebKit skips lazy images that were hidden at load).

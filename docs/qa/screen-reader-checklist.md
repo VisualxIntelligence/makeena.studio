@@ -1,6 +1,8 @@
 # Screen-reader check (Phase 5 accessibility audit)
 
-**Result:** not run yet.
+**Result:**
+- **NVDA 2026.2 + Chromium, both locales: passed** (1 Nov 2026, automated with Guidepup, decision 0023), after four fixes. Still to do by hand: NVDA with an Arabic voice (the automated build had none), and NVDA with Firefox.
+- **VoiceOver (iPhone, Mac):** not run yet; with the Apple checks at the end of Phase 5.
 
 **Why:** PRD §14 asks for VoiceOver (iOS and macOS) and NVDA (Windows) in both locales. The automated audit (decision 0021) covers axe, keyboard order, focus visibility, target sizes, reflow and text spacing, but only a person can hear whether the site makes sense read aloud.
 

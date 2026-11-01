@@ -90,8 +90,13 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
         };
         perPage();
 
-        // After a routed navigation, move focus to <main> (unless a #section was requested) so
-        // keyboard and screen-reader users start at the new page's content.
+        // After a routed navigation, move focus to the page heading (unless a #section was
+        // requested) so keyboard and screen-reader users start at the new page's content. The
+        // heading, not <main>: NVDA reads a focused <main> out in full as one long phrase.
+        const start = function () {
+          const target = document.getElementById("page-title") || document.getElementById("main");
+          if (target) target.focus({ preventScroll: true });
+        };
         let routed = false;
         document.addEventListener("astro:after-swap", function () {
           perPage();
@@ -104,8 +109,7 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
         });
         document.addEventListener("astro:page-load", function () {
           if (!routed || location.hash) return;
-          const main = document.getElementById("main");
-          if (main) main.focus({ preventScroll: true });
+          start();
         });
 
         // 12: the language switch keeps the current section and flags the
@@ -147,17 +151,14 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
         // Full page loads from another page on the site (no router: spike pages, reloads).
         document.addEventListener("DOMContentLoaded", function () {
           const ref = document.referrer && new URL(document.referrer);
-          if (ref && ref.origin === location.origin && !location.hash) {
-            const main = document.getElementById("main");
-            if (main) main.focus({ preventScroll: true });
-          }
+          if (ref && ref.origin === location.origin && !location.hash) start();
         });
       })();
     </script>
     <slot name="head" />
   </head>
   <body>
-    <a class="skip-link" href="#main">
+    <a class="skip-link" href="#page-title">
       {t.skipLink}
     </a>
     {t.draftNotice && (
@@ -184,7 +185,9 @@ const href = (to: Lang) => new URL(counterpartPath(path, to), Astro.site).href;
 </html>
 
 <style>
-  main:focus {
+  /* Focus targets for the skip link and routed navigations, not controls: no ring. */
+  main:focus,
+  :global(#page-title:focus) {
     outline: none;
   }
 
