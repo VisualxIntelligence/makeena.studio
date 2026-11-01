@@ -4,7 +4,7 @@ _Last updated: 1 November 2026_
 
 ## Where we are
 
-**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). **Phase 4 is complete** (#23–#25, 28 Oct): studio page, brief form + `/api/brief` (live on production), Web Analytics. Phase 5 (content, Arabic, QA) is in progress: CI fix (#26) and accessibility audit (#27) are merged; the cross-browser pass (#28) is merged too. The NVDA pass (#31, decision 0023) passed after four fixes, and the Arabic names sheet for the founder (#32, `docs/content/arabic-names.md`) is on `main`; both merged 1 Nov.
+**Phases 0–3 are complete and merged** (#1–#22); 06 ships static until real layer cut-outs exist (decision 0017). **Phase 4 is complete** (#23–#25, 28 Oct): studio page, brief form + `/api/brief` (live on production), Web Analytics. Phase 5 (content, Arabic, QA) is in progress: CI fix (#26) and accessibility audit (#27) are merged; the cross-browser pass (#28) is merged too. The NVDA pass (#31, decision 0023) passed after four fixes, and the Arabic names sheet for the founder (#32, `docs/content/arabic-names.md`) is on `main`; both merged 1 Nov. The founder filled in the eight register service names (#34).
 
 - Production (`main`): https://makeena-website.makeena.workers.dev (every PRD §5 route in both locales, placeholder content, noindex)
 - Branch previews: `https://<branch-name-with-dashes>-makeena-website.makeena.workers.dev`. Cloudflare also posts a per-commit URL on each PR.
@@ -47,13 +47,14 @@ Exit (PRD §17): §3.3 targets met; launch checklist signed off. Order agreed 28
 | 2 | `phase-5/a11y-audit` | **Merged (#27).** Audit of all 18 pages (decision 0021, `npm run audit:a11y`): 32 findings → 0, no axe violations in any state. Fixed: header reflow at 320 px, 03's ⓘ button under the canvas, 44 px targets (wordmark, language switches, footer, capability links), `scroll-padding` for focus under the sticky header. Guarded by `tests/e2e/a11y-layout.spec.ts`. Screen readers: `docs/qa/screen-reader-checklist.md` (founder or tester, not run yet) |
 | 4 | `phase-5/screen-reader-nvda` | **Merged (#31).** NVDA 2026.2 + Chromium, both locales, automated with Guidepup (decision 0023). Fixed: focus after the skip link and routed navigations goes to the `h1` (`#page-title`), not `<main>` (NVDA read all of main as one phrase); the 08 sheet takes focus on open (`autofocus`) so it's read; "01Foundations" → hidden NBSP; the toast's Dismiss no longer read with the message. Still by hand: NVDA with an Arabic voice, NVDA + Firefox |
 | 5 | `phase-5/arabic-names` | **Merged (#32).** `docs/content/arabic-names.md`: every name on `/ar/` still in English or in an unreviewed draft (brand, entity, founder, ABC, the eight register services, the three lead services, gates later). The founder fills it in; then copy the names into `src/content/` |
+| 6 | `phase-5/arabic-register-names` | **#34.** The eight register services in Arabic on `/ar/capability/` (التوأم … المضيف), from the sheet's section 2 |
 | 3 | `phase-5/cross-browser` | **Merged (#28).** Verified on production 28 Oct: the layout bundle has the focus handler and the Turnstile slot reserves 74 px. Whole e2e suite passes in Firefox (desktop + phone width); CI's `firefox` project now runs every spec. Fixed: WebKit doesn't scroll to some focused elements (it broke `main`'s CI after #27: brief fields behind the header) → `src/lib/focus.ts`; the Turnstile widget pushed the page down 74 px on load → reserved space. Decision 0022. Still needs a person: screen readers (NVDA first); field CWV once there's traffic; the macOS Safari keyboard check is deferred to the Apple checks at the end |
 
 Waiting on the founder: final copy and credentials, Arabic service names and the native review, address, auditor, data statement (brief log, retention, analytics), rights terms and the four gates (open questions below).
 
 **To resume:**
 
-1. When the founder returns `docs/content/arabic-names.md`, copy the names into `src/content/` (one PR). NVDA with an Arabic voice and NVDA + Firefox still need a person (decision 0023).
+1. Sheet sections 1 (brand, entity, founder, ABC) and 3 (three lead-service drafts) are still blank: when the founder fills them in, copy them into `src/content/` (one PR). NVDA with an Arabic voice and NVDA + Firefox still need a person (decision 0023).
 2. Founder content, as it arrives: copy, Arabic, legal facts, data statement, gates. Everything else in Phase 5 is done.
 3. Field Core Web Vitals (§3.3) from Cloudflare Web Analytics once there's real traffic.
 4. **Apple checks, last** (founder decision 29 Oct: no Mac or Safari to hand, so everything that needs an Apple device waits until the end): the macOS Safari keyboard check (steps in #28 and decision 0022), VoiceOver on iPhone and Mac from the screen-reader checklist, and a re-run of `docs/qa/ios-safari-checklist.md` if transitions changed since 26 Oct. A real device or a BrowserStack/LambdaTest trial both work. Until then, WebKit in CI (`tests/e2e/a11y-layout.spec.ts`, Tab and Shift+Tab on `/en/studio/`) is the guard.
@@ -78,7 +79,7 @@ Exit (PRD §17): a real test brief arrived by email from a preview deployment (2
 
 ## Open questions for the founder
 
-- Arabic names: brand, entity, founder, ABC, the eight register services, check the three lead-service drafts. All in `docs/content/arabic-names.md`; the founder fills it in.
+- Arabic names: brand, entity, founder, ABC, check the three lead-service drafts (the eight register services are done, #34). All in `docs/content/arabic-names.md`; the founder fills it in.
 - Home `<title>`: "Makeena · Production studio and AI content consultancy, Doha". OK?
 - Phase 4 facts still missing: full address, auditor, data statement (must cover the D1 brief log and its retention, and Cloudflare Web Analytics), final credential copy, the founder's name in Arabic (supplied 27 Oct: Ahmed Albadri, Founder, +974 66905704, ahmed@makeena.studio).
 - Rights terms, the four gates (names, descriptions, and how they map to asset QA), and the copy marked `[PLACEHOLDER]` (`grep -rn PLACEHOLDER src/content design/renders/provenance.json`).
