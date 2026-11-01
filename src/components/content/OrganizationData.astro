@@ -25,14 +25,21 @@ const data = {
       "@type": "Organization",
       "@id": `${origin}/#organization`,
       name: "Makeena",
+      alternateName: "مكينة",
       legalName: "Makeena LLC",
       url: `${origin}/${lang}/`,
       taxID: "T04998",
       identifier: { "@type": "PropertyValue", propertyID: "QFC licence", value: "04998" },
       address,
-      ...(isPlaceholder(contact.name)
+      ...(isPlaceholder(contact.name.en)
         ? {}
-        : { founder: { "@type": "Person", name: contact.name } }),
+        : {
+            founder: {
+              "@type": "Person",
+              name: contact.name.en,
+              alternateName: contact.name.ar,
+            },
+          }),
       ...reachable,
     },
     {

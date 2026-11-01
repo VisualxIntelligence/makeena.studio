@@ -11,25 +11,25 @@ When you're done, tell me and I'll copy the names into `src/content/` and open a
 **1.1 Makeena (the brand name)**
 Where: the wordmark in the header, every Arabic page title ("الاستوديو · Makeena"), the home page description.
 Now: Makeena (Latin letters)
-Arabic:
-Note: if you give an Arabic form, say whether the header wordmark should change too, or only the page titles and running text.
+Arabic: مكينة
+Decided (1 Nov): مكينة in Arabic page titles and running text; the header wordmark stays the Latin "Makeena" (it's the logo).
 
 **1.2 Makeena LLC (the legal entity)**
 Where: the corporate register on `/ar/studio/` (row "الكيان القانوني").
 Now: Makeena LLC (Latin letters, left to right)
-Arabic:
-Note: use the Arabic name on the QFC licence if it has one. The footer line `MAKEENA LLC · QFC LICENCE 04998 · TIN T04998` stays in Latin letters in both languages, unless you want it changed too.
+Arabic: مكينة ذ.م.م
+Decided (1 Nov): the register row on `/ar/` uses مكينة ذ.م.م. The footer stays Latin in both languages: `MAKEENA LLC · QFC LICENCE 04998 · TIN T04998` and "© 2026 Makeena LLC".
 
 **1.3 Ahmed Albadri (founder)**
 Where: the contact block on `/ar/studio/` and the home page.
 Now: Ahmed Albadri (Latin letters)
-Arabic:
+Arabic: أحمد البدري
 
 **1.4 ABC (in the credentials line)**
 Where: "تأسست على عشرين عاماً في البث، في الجزيرة وABC." (home and studio)
 Now: ABC (Latin letters). Al Jazeera is already written الجزيرة.
-Arabic:
-Note: say which ABC this is (Australian Broadcasting Corporation, or the US network) so the Arabic is right.
+Arabic: هيئة الإذاعة الأسترالية
+Decided (1 Nov): the Australian Broadcasting Corporation, written هيئة الإذاعة الأسترالية (first draft: مؤسسة الأذاعة الأسترالية).
 
 ## 2. The eight register services
 

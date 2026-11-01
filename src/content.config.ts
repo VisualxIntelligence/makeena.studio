@@ -85,7 +85,7 @@ const site = defineCollection({
     copyrightHolder: z.string(),
     /** Contact block (PRD §9.6): text, never a photo. `[PLACEHOLDER: …]` until supplied. */
     contact: z.object({
-      name: z.string(),
+      name: localized,
       title: localized,
       phone: z.string(),
       email: z.string(),

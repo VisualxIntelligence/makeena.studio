@@ -18,7 +18,10 @@ test("the home page shows the register's key rows", async ({ page }) => {
   await expect(page.locator("#studio table")).toContainText("Makeena LLC");
 });
 
-for (const path of ["/en/studio/", "/ar/"]) {
+for (const [path, name] of [
+  ["/en/studio/", "Ahmed Albadri"],
+  ["/ar/", "أحمد البدري"],
+]) {
   test(`contact block: name and title in text, phone and email linked: ${path}`, async ({
     page,
   }) => {
@@ -26,7 +29,7 @@ for (const path of ["/en/studio/", "/ar/"]) {
     const contact = page.locator("#contact .contact");
     await contact.scrollIntoViewIfNeeded();
     await expect(contact).toHaveCSS("background-color", "rgb(20, 20, 20)");
-    await expect(contact).toContainText("Ahmed Albadri");
+    await expect(contact).toContainText(name);
     await expect(contact.locator("img")).toHaveCount(0);
     const phone = contact.locator('a[href="tel:+97466905704"]');
     const email = contact.locator('a[href="mailto:ahmed@makeena.studio"]');
@@ -55,6 +58,7 @@ for (const path of ["/en/studio/", "/ar/"]) {
     expect(org.identifier.value).toBe("04998");
     expect(org.address.addressCountry).toBe("QA");
     expect(org.founder.name).toBe("Ahmed Albadri");
+    expect(org.founder.alternateName).toBe("أحمد البدري");
     expect(org.telephone).toBe("+974 66905704");
     expect(org.email).toBe("ahmed@makeena.studio");
     expect(studio.areaServed.map((c: { name: string }) => c.name)).toEqual(["QA", "AE", "SA"]);

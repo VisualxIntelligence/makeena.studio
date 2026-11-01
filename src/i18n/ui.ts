@@ -8,6 +8,8 @@ interface Ui {
   /** Shown at the top of every page while the locale's copy is unreviewed; null when reviewed. */
   draftNotice: string | null;
   skipLink: string;
+  /** The brand in running text and page titles; the header wordmark stays Latin (it's the logo). */
+  brand: string;
   primaryNav: string;
   nav: Partial<Record<RouteKey, string>>;
   sendBrief: string;
@@ -57,6 +59,7 @@ export const ui: Record<Lang, Ui> = {
   en: {
     draftNotice: null,
     skipLink: "Skip to content",
+    brand: "Makeena",
     primaryNav: "Primary",
     nav: {
       capability: "Capability",
@@ -112,6 +115,7 @@ export const ui: Record<Lang, Ui> = {
   ar: {
     draftNotice: "AR DRAFT · NOT REVIEWED",
     skipLink: "انتقل إلى المحتوى",
+    brand: "مكينة",
     primaryNav: "التنقل الرئيسي",
     nav: {
       capability: "القدرات",
