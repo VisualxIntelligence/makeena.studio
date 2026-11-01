@@ -58,13 +58,13 @@ Where: navigation, capability pages, home teasers, page titles. I wrote these dr
 | 3.2 | Standing production | الإنتاج المستمر | |
 | 3.3 | Off-plan visualisation | تصوير المشاريع على الخارطة | |
 
-## 4. The four gates (later)
+## 4. The four gates
 
-The gates don't have names in English yet either (`[PLACEHOLDER: gate 01 name from the brief]`). When you have them, add both languages here.
+English chosen 1 Nov (option A, from the PRD's four QA steps: camera match, brand, rights, label); on the site in `src/content/gates.json`. Write the Arabic name and description for each.
 
-| # | English | Arabic |
-|---|---|---|
-| 4.1 | | |
-| 4.2 | | |
-| 4.3 | | |
-| 4.4 | | |
+| # | English name | English description | Arabic name | Arabic description |
+|---|---|---|---|---|
+| 4.1 | Match | The view matches the real site and plan. | | |
+| 4.2 | Brand | It meets the client's brand standard. | | |
+| 4.3 | Rights | No real people, national symbols or third-party marks. | | |
+| 4.4 | Label | Marked as generated, with its provenance record attached. | | |
