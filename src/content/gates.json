@@ -8,7 +8,7 @@
     },
     "description": {
       "en": "The view matches the real site and plan.",
-      "ar": "[PLACEHOLDER: gate 01 description in Arabic]"
+      "ar": "يتطابق المنظور مع الموقع الفعلي والمخطط."
     }
   },
   {
@@ -20,7 +20,7 @@
     },
     "description": {
       "en": "It meets the client's brand standard.",
-      "ar": "[PLACEHOLDER: gate 02 description in Arabic]"
+      "ar": "يلتزم بمعايير العلامة التجارية للعميل."
     }
   },
   {
@@ -32,7 +32,7 @@
     },
     "description": {
       "en": "No real people, national symbols or third-party marks.",
-      "ar": "[PLACEHOLDER: gate 03 description in Arabic]"
+      "ar": "لا يتضمن أشخاصًا حقيقيين أو رموزًا وطنية أو علامات تابعة لأطراف ثالثة."
     }
   },
   {
@@ -44,7 +44,7 @@
     },
     "description": {
       "en": "Marked as generated, with its provenance record attached.",
-      "ar": "[PLACEHOLDER: gate 04 description in Arabic]"
+      "ar": "مُعلَّم كمحتوى مُولَّد، مع إرفاق سجل مصدره."
     }
   }
 ]
