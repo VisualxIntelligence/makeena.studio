@@ -33,20 +33,20 @@ Note: say which ABC this is (Australian Broadcasting Corporation, or the US netw
 
 ## 2. The eight register services
 
-Where: the capability index (`/ar/capability/`), the home page register and the studio page. They are brand names, so keeping them in English is a fair choice; if you do, write **keep English** once here and I'll apply it to all eight.
+Where: the capability index (`/ar/capability/`). They are brand names, so keeping them in English is a fair choice; if you do, write **keep English** once here and I'll apply it to all eight.
 
-All eight: keep English, or give Arabic for each below:
+All eight: Arabic below (founder, 1 Nov 2026; on the site since `phase-5/arabic-register-names`).
 
 | # | English | Arabic |
 |---|---|---|
-| 2.1 | The Twin | |
-| 2.2 | The Velocity | |
-| 2.3 | The Launch | |
-| 2.4 | The Marquee | |
-| 2.5 | The Stage | |
-| 2.6 | The Season+ | |
-| 2.7 | The Pipeline | |
-| 2.8 | The Host | |
+| 2.1 | The Twin |التوأم |
+| 2.2 | The Velocity |السرعة |
+| 2.3 | The Launch |الإطلاق |
+| 2.4 | The Marquee |اللوحة الإعلانية |
+| 2.5 | The Stage |المسرح |
+| 2.6 | The Season+ |الموسم+ |
+| 2.7 | The Pipeline |خط الفرص |
+| 2.8 | The Host |المضيف |
 
 ## 3. The three lead services (my drafts; please check)
 
