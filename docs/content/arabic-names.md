@@ -48,23 +48,23 @@ All eight: Arabic below (founder, 1 Nov 2026; on the site since `phase-5/arabic-
 | 2.7 | The Pipeline |خط الفرص |
 | 2.8 | The Host |المضيف |
 
-## 3. The three lead services (my drafts; please check)
+## 3. The three lead services (confirmed 1 Nov)
 
-Where: navigation, capability pages, home teasers, page titles. I wrote these drafts; a native speaker hasn't checked them yet. Write **OK** or a correction.
+Where: navigation, capability pages, home teasers, page titles. Drafted by Claude, confirmed by the founder.
 
 | # | English | Draft Arabic | OK or correction |
 |---|---|---|---|
-| 3.1 | Aerial perspective | المنظور الجوي | |
-| 3.2 | Standing production | الإنتاج المستمر | |
-| 3.3 | Off-plan visualisation | تصوير المشاريع على الخارطة | |
+| 3.1 | Aerial perspective | المنظور الجوي | OK (founder, 1 Nov) |
+| 3.2 | Standing production | الإنتاج المستمر | OK (founder, 1 Nov) |
+| 3.3 | Off-plan visualisation | تصوير المشاريع على الخارطة | OK (founder, 1 Nov) |
 
 ## 4. The four gates
 
-English chosen 1 Nov (option A, from the PRD's four QA steps: camera match, brand, rights, label); on the site in `src/content/gates.json`. Write the Arabic name and description for each.
+English chosen 1 Nov (option A, from the PRD's four QA steps: camera match, brand, rights, label); on the site in `src/content/gates.json`. Arabic names and descriptions from the founder (1 Nov), on the site.
 
 | # | English name | English description | Arabic name | Arabic description |
 |---|---|---|---|---|
-| 4.1 | Match | The view matches the real site and plan. | | |
-| 4.2 | Brand | It meets the client's brand standard. | | |
-| 4.3 | Rights | No real people, national symbols or third-party marks. | | |
-| 4.4 | Label | Marked as generated, with its provenance record attached. | | |
+| 4.1 | Match | The view matches the real site and plan. | تطابق | يتطابق المنظور مع الموقع الفعلي والمخطط. |
+| 4.2 | Brand | It meets the client's brand standard. | معيار | يلتزم بمعايير العلامة التجارية للعميل. |
+| 4.3 | Rights | No real people, national symbols or third-party marks. | حقوق | لا يتضمن أشخاصًا حقيقيين أو رموزًا وطنية أو علامات تابعة لأطراف ثالثة. |
+| 4.4 | Label | Marked as generated, with its provenance record attached. | ملصق | مُعلَّم كمحتوى مُولَّد، مع إرفاق سجل مصدره. |
