@@ -67,8 +67,11 @@ test.describe("spec sheet", () => {
     await page.keyboard.press("Enter");
     const sheet = page.locator('figure[data-provenance="MKN-STU-CAM01-CONTROL"] [popover]');
     await expect(sheet).toBeVisible();
-    await sheet.locator(".pfig__close").click();
+    // Focus moves into the sheet so a screen reader reads it; Escape hands it back.
+    await expect(sheet).toBeFocused();
+    await page.keyboard.press("Escape");
     await expect(sheet).toBeHidden();
+    await expect(button).toBeFocused();
   });
 
   test("is in Arabic on /ar/ and the image is not mirrored", async ({ page }) => {

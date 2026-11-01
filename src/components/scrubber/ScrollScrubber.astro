@@ -183,6 +183,9 @@ const thumb = { widths: [240, 480], sizes: "(width >= 64rem) 120px, 30vw" };
               )}
               <span class="label">
                 <span dir="ltr">{nn(chapter.value)}</span>
+                {/* Keeps "01" and the chapter apart for screen readers: Chromium drops plain
+                    spaces between grid items. */}
+                <span class="visually-hidden">&nbsp;</span>
               </span>
               <span class="flight__chapter">{chapter.label[lang]}</span>
             </li>

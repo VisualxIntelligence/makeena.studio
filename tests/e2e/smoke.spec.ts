@@ -87,14 +87,19 @@ test("hreflang and canonical point at both locales", async ({ page }) => {
   );
 });
 
-test("the skip link is the first focus stop and targets main", async ({ page, browserName }) => {
+test("the skip link is the first focus stop and moves focus to the page heading", async ({
+  page,
+  browserName,
+}) => {
   test.skip(browserName === "webkit", "WebKit does not Tab to links by default");
   await page.goto("/en/");
   await page.keyboard.press("Tab");
   const skip = page.locator(".skip-link");
   await expect(skip).toBeFocused();
   await expect(skip).toBeVisible();
-  await expect(skip).toHaveAttribute("href", "#main");
+  await expect(skip).toHaveAttribute("href", "#page-title");
+  await page.keyboard.press("Enter");
+  await expect(page.locator("main h1")).toBeFocused();
 });
 
 // Cloudflare serves the nearest 404.html; `astro preview` always serves the root one, so check

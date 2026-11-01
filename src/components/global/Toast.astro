@@ -1,6 +1,7 @@
 ---
-// Status toast (PRD §8.4): role="status" so screen readers announce it; auto-dismisses after
-// 4 s and has a Dismiss button. Filled by src/lib/hours.ts.
+// Status toast (PRD §8.4): the text is role="status" so screen readers announce it (the Dismiss
+// button sits outside it, so it isn't read as part of the message); auto-dismisses after 4 s.
+// Filled by src/lib/hours.ts.
 import type { Lang } from "../../i18n/config";
 import { ui } from "../../i18n/ui";
 
@@ -11,8 +12,8 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<div class="toast" role="status" data-toast data-after-hours={ui[lang].afterHoursToast}>
-  <p class="label toast__text" data-toast-text></p>
+<div class="toast" data-toast data-after-hours={ui[lang].afterHoursToast}>
+  <p class="label toast__text" role="status" data-toast-text></p>
   <button class="toast__close" type="button" data-toast-close hidden>
     {ui[lang].dismiss}
   </button>

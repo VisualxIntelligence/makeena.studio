@@ -32,7 +32,11 @@ const formats = [asset.metadataRetained.iptc && "IPTC", asset.metadataRetained.c
   .join(", ");
 ---
 
-<div class="pfig__sheet" id={id} popover>
+{/* autofocus on a popover only acts when it opens, not on page load: focus moves into the sheet
+    so a screen reader reads it (it sits after the figure's other content in the DOM), and
+    closing returns focus to the button. */}
+{/* eslint-disable-next-line astro/jsx-a11y/no-autofocus */}
+<div class="pfig__sheet" id={id} popover tabindex="-1" autofocus>
   <div class="pfig__sheet-head">
     <p class="label">{t.heading}</p>
     {generated && <p class="pfig__badge label">{t.generated}</p>}

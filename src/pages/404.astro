@@ -10,7 +10,9 @@ const t = ui.en.notFound;
 <BaseLayout title={`${t.heading} · Makeena`} lang="en" alternates={false}>
   <div class="wrap not-found">
     <Label text={t.label} lang="en" />
-    <h1 class="display">{t.heading}</h1>
+    <h1 class="display" id="page-title" tabindex="-1">
+      {t.heading}
+    </h1>
     <p>{t.body}</p>
     <p>
       <a href="/en/">{t.home}</a>

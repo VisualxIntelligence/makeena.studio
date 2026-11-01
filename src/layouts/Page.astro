@@ -30,7 +30,9 @@ const extras = Object.fromEntries(
 <BaseLayout title={page.title} description={page.description} lang={lang}>
   <header class="wrap grid-12 page-header">
     <Label text={page.label} lang={lang} />
-    <h1 class="display">{page.heading}</h1>
+    <h1 class="display" id="page-title" tabindex="-1">
+      {page.heading}
+    </h1>
     {page.lede && <p class="page-header__lede">{page.lede}</p>}
     {Astro.slots.has("media") && (
       <div class="page-header__media">

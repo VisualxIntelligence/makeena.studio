@@ -22,14 +22,14 @@ const lastSection = "main section:last-of-type [data-reveal]";
 const interact = (page: Page) => page.keyboard.press("Shift");
 
 test.describe("ClientRouter", () => {
-  test("navigates without a full reload and focuses main", async ({ page }) => {
+  test("navigates without a full reload and focuses the page heading", async ({ page }) => {
     await page.goto("/en/");
     await page.evaluate(() => ((window as unknown as { marker: number }).marker = 1));
     await clickInPlace(page, 'footer a[href="/en/privacy/"]');
     await expect(page).toHaveURL(/\/en\/privacy\/$/);
     await expect(page.locator("main h1")).toHaveText("Privacy and data.");
     expect(await page.evaluate(() => (window as unknown as { marker?: number }).marker)).toBe(1);
-    await expect(page.locator("main")).toBeFocused();
+    await expect(page.locator("main h1")).toBeFocused();
     await expect(page.locator("html")).toHaveClass(/\bjs\b/);
   });
 

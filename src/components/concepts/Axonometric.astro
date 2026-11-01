@@ -54,6 +54,9 @@ const label = lang === "ar" ? "طبقات المبنى" : "The building's layers
         <span class="axo__leader" aria-hidden="true"></span>
         <span class="label">
           <span dir="ltr">{nn(i + 1)}</span>
+          {/* Keeps "01" and the name apart for screen readers: Chromium drops plain spaces
+              between flex items. */}
+          <span class="visually-hidden">&nbsp;</span>
         </span>
         <span class="axo__name">{layer[lang]}</span>
       </li>

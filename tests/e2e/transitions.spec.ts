@@ -61,7 +61,7 @@ for (const [lang, dir] of [
     const names = vt.animations!.join(" ");
     expect(names).toContain(`::view-transition-new(root):vt-reveal-${dir}`);
     expect(names).toContain(`::view-transition-group(cut-line):vt-line-${dir}`);
-    await expect(page.locator("main")).toBeFocused();
+    await expect(page.locator("main h1")).toBeFocused();
   });
 }
 
