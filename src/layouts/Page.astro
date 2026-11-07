@@ -121,9 +121,11 @@ const extras = Object.fromEntries(
     line-height: 1.4;
   }
 
+  /* Long identifiers (IPTC values on /method/) break rather than scroll sideways at 320 px. */
   .page-section__body {
     max-inline-size: var(--container-measure);
     margin-block: 0 16px;
+    overflow-wrap: break-word;
   }
 
   .page-section__extras {
