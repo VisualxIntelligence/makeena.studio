@@ -137,14 +137,12 @@ English:
 Arabic:
 
 **7.2 What the provenance metadata contains**
-Where: section 02 Provenance, "Provenance metadata retained on all delivered assets." I can draft this from the PRD (asset ID, how it was made, light, gates cleared, rights; IPTC fields on the master file): write **draft it** if you'd like that.
-English:
-Arabic:
+Where: section 02 Provenance, "Provenance metadata retained on all delivered assets."
+Drafted by Claude (7 Nov), on the site in both languages; Arabic marked for native review. Based on the fields `npm run provenance:tag` writes into master files (asset ID, Digital Source Type, creator, caption and alt text in both languages, rights). Correct it here or on the preview.
 
 **7.3 How to verify a file**
-Where: section 03 Verify a file. How a client checks a master file's metadata (for example, which tool to open it in, and what to look for). Web images don't keep the metadata, so this is about master files. I can draft this too: write **draft it**.
-English:
-Arabic:
+Where: section 03 Verify a file.
+Drafted by Claude (7 Nov), on the site in both languages; Arabic marked for native review. Names ExifTool and the three fields to check (Identifier, Digital Source Type, Creator). Doesn't mention C2PA / Content Credentials: master files aren't signed yet (PRD §12.1, decision later).
 
 ## 8. Engagement (`/engagement/`)
 
