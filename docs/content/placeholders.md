@@ -132,9 +132,8 @@ Arabic:
 ## 7. Method (`/method/`)
 
 **7.1 Method intro**
-Where: section 01 The gates, above the four gates (Match, Brand, Rights, Label). A short paragraph on why the gates exist.
-English:
-Arabic:
+Where: section 01 The gates, above the four gates (Match, Brand, Rights, Label).
+Drafted by Claude (7 Nov), on the site in both languages; Arabic marked for native review. One failure mode of generative tools per gate. The UX reference asked for this intro "verbatim from the brief": if the brief has its own wording, paste it here and it replaces the draft.
 
 **7.2 What the provenance metadata contains**
 Where: section 02 Provenance, "Provenance metadata retained on all delivered assets."
