@@ -16,12 +16,20 @@
       "id": "provenance",
       "label": "02 · PROVENANCE",
       "heading": "Provenance metadata retained on all delivered assets.",
-      "body": ["[PLACEHOLDER: what the provenance metadata contains]"]
+      "body": [
+        "Every delivered master file carries IPTC metadata written into the file itself: the asset ID; how it was made (the Digital Source Type field: generated with AI, or a 3D render restyled with AI); the creator, Makeena LLC; a caption and alt text in English and Arabic; and the rights terms.",
+        "On this site, the Provenance button on each image opens its record: asset ID, source, light, virtual camera, aircraft and the gates it has cleared.",
+        "Web images lose most embedded metadata when they are compressed, so the metadata lives on the master file, not in the image on the page."
+      ]
     },
     {
       "id": "verify",
       "label": "03 · VERIFY A FILE",
-      "body": ["[PLACEHOLDER: how to verify a file]"]
+      "body": [
+        "Open the master file in ExifTool, or in any application that shows XMP metadata.",
+        "Check three fields. Identifier matches the asset ID on your delivery. Digital Source Type ends in trainedAlgorithmicMedia (generated with AI) or compositeWithTrainedAlgorithmicMedia (a 3D render restyled with AI). Creator reads Makeena LLC.",
+        "If the fields are missing, the file has been exported or re-saved since delivery and has lost its metadata. Ask the studio for the original master."
+      ]
     }
   ]
 }
