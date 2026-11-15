@@ -10,7 +10,10 @@
     {
       "id": "gates",
       "label": "01 · THE GATES",
-      "body": ["[PLACEHOLDER: method intro copy from the brief]"]
+      "body": [
+        "Generative tools are fast, and they fail in predictable ways: a view that drifts from the real site, a finish below the brand's standard, a face or a mark nobody cleared, an image no one can tell was generated.",
+        "Each gate checks for one of those failures. An asset ships only once it has cleared all four."
+      ]
     },
     {
       "id": "provenance",
